@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/drawable/choose_teammates_content.xml" value="0.1065" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/drawable/choose_teammates_modal.xml" value="0.154" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/drawable/choose_teammates_model.xml" value="0.1165" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_choose_teammates.xml" value="0.25" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_main.xml" value="0.335" />
       </map>
     </option>

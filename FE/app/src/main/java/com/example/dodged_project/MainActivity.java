@@ -22,10 +22,7 @@ import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView takePicture;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     private SignInButton signInButton;
-
     private int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -39,14 +36,6 @@ public class MainActivity extends AppCompatActivity {
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
-
-        takePicture = findViewById(R.id.take_a_picture_image);
-        takePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
-            }
-        });
 
         signInButton = findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
@@ -123,17 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
             //Send token to the BE (account.getIdToken())
             //Move to another Activity
-        }
-    }
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            Bundle extras = takePictureIntent.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-        } catch (ActivityNotFoundException e) {
-            // display error state to the user
         }
     }
 }
