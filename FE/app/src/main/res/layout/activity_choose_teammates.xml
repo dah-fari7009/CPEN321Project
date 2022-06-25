@@ -8,69 +8,95 @@
     <!--        android:layout_height="wrap_content"-->
     <!--        android:layout_height="300dp"-->
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="343dp"
         android:layout_height="351dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="193dp"
-        android:clipToOutline="true"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
         app:cardBackgroundColor="#F8F8FA"
         app:cardCornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/modal_action"
-            android:layout_width="311dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="235dp"
-            android:layout_marginLeft="16dp"
-            app:cardBackgroundColor="#F8F8FA"
-            >
-
-            <Button
-                android:id="@+id/add_teammate"
-                android:layout_width="311dp"
-                android:layout_height="44dp"
-                android:text="@string/add_teammate"
-                android:backgroundTint="@color/button_color"
-                app:cornerRadius="8dp" />
-
-            <Button
-                android:id="@+id/upload_photo"
-                android:layout_width="311dp"
-                android:layout_height="44dp"
-                android:layout_marginTop="56dp"
-                android:backgroundTint="@color/button_color"
-                android:text="@string/upload_photo"
-                app:cornerRadius="8dp" />
-
-        </androidx.cardview.widget.CardView>
-
-
-        <TextView
-            android:id="@+id/choose_teammates_text"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_teammates_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="341dp"
+            android:layout_margin="8dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/choose_teammates_description_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_teammates_description_text"
-            android:textSize="14sp" />
-    </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/add_teammates_icon"
+                    android:layout_marginBottom="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/choose_teammates_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/lora"
+                    android:textFontWeight="700"
+                    android:text="@string/choose_teammates_text"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/choose_teammates_description_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/choose_teammates_description_text"
+                    android:textSize="14sp"
+                    android:textColor="#B7B8CA"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="311dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/button_color"
+                    android:text="@string/add_teammate"
+                    android:fontFamily="@font/poppins"
+                    app:cornerRadius="8dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/white" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="311dp"
+                    android:layout_height="44dp"
+                    app:cornerRadius="8dp"
+                    android:backgroundTint="@color/button_color"
+                    android:text="@string/upload_photo"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="12sp"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
