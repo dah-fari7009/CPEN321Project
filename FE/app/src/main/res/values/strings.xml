@@ -6,4 +6,12 @@
     <string name="choose_teammates_description_text">Press the <b>add teammate</b> button to individually add party members or use the <b>upload photo</b> feature to load from a lobby screen grab</string>
     <string name="add_teammate">Add Teammate</string>
     <string name="upload_photo">Upload Photo</string>
+    <string name="add_teammates_text"><b>Add Teammates</b></string>
+    <string name="teammate_1">#01</string>
+    <string name="teammate_2">#02</string>
+    <string name="teammate_3">#03</string>
+    <string name="teammate_4">#04</string>
+    <string name="teammate_5">#05</string>
+    <string name="confirm_button_text">Confirm</string>
+    <string name="cancel_button_text">Cancel</string>
 </resources>
