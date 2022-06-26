@@ -72,6 +72,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/add_teammates_button"
                     android:layout_width="311dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="8dp"
@@ -83,6 +84,7 @@
                     app:cornerRadius="8dp" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/upload_photo_button"
                     android:layout_width="311dp"
                     android:layout_height="48dp"
                     android:backgroundTint="@color/button_color"

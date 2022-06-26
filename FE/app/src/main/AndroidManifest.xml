@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.dodged_project">
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -20,10 +17,7 @@
         android:theme="@style/Theme.Dodged_Project"
         tools:targetApi="31">
         <activity
-            android:name=".AddTeammatesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChooseTeammatesActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AddTeammatesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChooseTeammatesActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

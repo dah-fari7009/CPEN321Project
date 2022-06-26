@@ -2,6 +2,7 @@ package com.example.dodged_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,12 +21,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class MainActivity extends AppCompatActivity {
 
     private SignInButton signInButton;
     private int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
+
+    private Button continueAsGuestButton;
+
+    private UiModeManager uiModeManager;
+    private SwitchMaterial switchMaterial;
 
 
     @Override
@@ -57,6 +65,25 @@ public class MainActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        continueAsGuestButton = findViewById(R.id.continue_as_guest_button);
+        continueAsGuestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent chooseTeammatesIntent = new Intent(MainActivity.this, ChooseTeammatesActivity.class);
+                startActivity(chooseTeammatesIntent);
+            }
+        });
+
+        uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+
+        switchMaterial = findViewById(R.id.dark_mode_switch);
+        switchMaterial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     @Override
@@ -79,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
             // Signed in successfully, show authenticated UI.
             Log.d("MainActivity", "LOGIN SUCCESSFUL");
             updateUI(account);
+            Intent chooseTeammatesIntent = new Intent(MainActivity.this, ChooseTeammatesActivity.class);
+            startActivity(chooseTeammatesIntent);
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
