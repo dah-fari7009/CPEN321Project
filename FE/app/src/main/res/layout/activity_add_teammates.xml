@@ -188,6 +188,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm_button"
                 android:layout_width="311dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="8dp"
