@@ -63,11 +63,6 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        Log.d("ChooseTeammatesActivity", String.valueOf(requestCode));
-        Log.d("ChooseTeammatesActivity", String.valueOf(grantResults[0]));
-        Log.d("ChooseTeammatesActivity", String.valueOf(grantResults[0]));
-        Log.d("ChooseTeammatesActivity", String.valueOf(grantResults[0]));
-
         if(grantResults[0] == 0) {
             Intent uploadImageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             uploadImageIntentLauncher.launch(uploadImageIntent);
