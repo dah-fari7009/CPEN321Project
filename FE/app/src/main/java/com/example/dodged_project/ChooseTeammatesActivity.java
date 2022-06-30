@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -56,6 +57,21 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        Log.d("ChooseTeammatesActivity", String.valueOf(requestCode));
+        Log.d("ChooseTeammatesActivity", String.valueOf(grantResults[0]));
+        Log.d("ChooseTeammatesActivity", String.valueOf(grantResults[0]));
+        Log.d("ChooseTeammatesActivity", String.valueOf(grantResults[0]));
+
+        if(grantResults[0] == 0) {
+            Intent uploadImageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            uploadImageIntentLauncher.launch(uploadImageIntent);
+        }
     }
 
     ActivityResultLauncher<Intent> uploadImageIntentLauncher = registerForActivityResult(
