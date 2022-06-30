@@ -1,11 +1,16 @@
 package com.example.dodged_project;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -46,22 +51,27 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
                     }, 100);
                 } else {
                     Intent uploadImageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivity(uploadImageIntent);
+                    uploadImageIntentLauncher.launch(uploadImageIntent);
                 }
             }
         });
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("ChooseTeammatesActivity", String.valueOf(requestCode));
-        if(requestCode == 100) {
-            //for now just log a bitmap
-            // later we need to implement the Photo Upload Activity and show a small preview of the image
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            Log.d("ChooseTeammatesActivity", bitmap.toString());
-        }
-    }
+    ActivityResultLauncher<Intent> uploadImageIntentLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                        Intent uploadedImageActivityIntent = new Intent(ChooseTeammatesActivity.this, UploadedImageActivity.class);
+                        uploadedImageActivityIntent.putExtra("imageBitmap", bitmap);
+                        startActivity(uploadedImageActivityIntent);
+                    }
+                }
+            }
+    );
+
 }
