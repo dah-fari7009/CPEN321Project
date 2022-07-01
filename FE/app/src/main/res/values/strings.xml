@@ -3,7 +3,7 @@
     <string name="welcome_to_dodged">Dodged.</string>
     <string name="continue_as_guest">Continue as Guest</string>
     <string name="choose_teammates_text">Choose Teammates</string>
-    <string name="choose_teammates_description_text">Press the add teammate button to individually add party members or use the upload photo feature to load from a lobby screen grab</string>
+    <string name="choose_teammates_description_text">Press the <b>add teammate</b> button to individually add party members or use the <b>upload photo</b> feature to load from a lobby screen grab</string>
     <string name="add_teammate">Add Teammate</string>
     <string name="upload_photo">Upload Photo</string>
 </resources>
