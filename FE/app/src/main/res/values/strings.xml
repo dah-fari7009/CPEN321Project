@@ -16,4 +16,8 @@
     <string name="cancel_button_text">Cancel</string>
     <string name="process_image_text">Process Image?</string>
     <string name="process_image_description_text">This image will be used to process team usernames</string>
+    <string name="results_dodge">Dodge!</string>
+    <string name="low_odds_of_winning_text">low odds of winning</string>
+    <string name="results_play">Play!</string>
+    <string name="high_odds_of_winning_text">high odds of winning</string>
 </resources>
