@@ -1,6 +1,8 @@
 package com.example.dodged_project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,5 +26,13 @@ public class FinalizeTeammatesActivity extends AppCompatActivity {
                 startActivity(addTeammatesIntent);
             }
         });
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.player_usernames_fragment);
+
+        if (fragment == null) {
+            fragment = new PlayerUsernamesFragment();
+            fm.beginTransaction().add(R.id.player_usernames_fragment, fragment).commit();
+        }
     }
 }
