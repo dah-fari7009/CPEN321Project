@@ -44,8 +44,7 @@
                 android:textSize="16dp"
                 android:maxLines="1"
                 android:singleLine = "true"
-                android:imeOptions="actionDone"
-                android:inputType="text"/>
+                android:imeOptions="actionDone"/>
 
             <ImageView
                 android:id="@+id/usernameEditButton"
