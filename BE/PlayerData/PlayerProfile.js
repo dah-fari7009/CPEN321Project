@@ -1,4 +1,4 @@
-import { getMatchHistory } from "./DataHandler.js";
+const getMatchHistory = require("./DataHandler")
 
 class PlayerProfile {
     // Input is a single username and the region

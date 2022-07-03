@@ -1,12 +1,8 @@
 {
-<<<<<<< HEAD
-  "type": "module",
-  "dependencies": {
-    "axios": "^0.27.2",
-=======
   "dependencies": {
     "@google-cloud/vision": "^2.4.2",
->>>>>>> e4ee75c4bf006e0e96c7853f77b6d83faeb84627
-    "express": "^4.18.1"
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "mongodb": "^4.7.0"
   }
 }

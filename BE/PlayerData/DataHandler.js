@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require("axios");
 
 const API_KEY = "";
 let URL_PREFIX;
