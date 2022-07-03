@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/player_usernames_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FinalizeTeammatesActivity">
 
-    <ListView
-        android:id="@android:id/list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"></ListView>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp"></ListView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/confirm_button"
+            android:layout_width="311dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/button_color"
+            android:enabled="false"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="@string/confirm_button_text"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:cornerRadius="8dp" />
+    </LinearLayout>
 </FrameLayout>

@@ -1,42 +1,44 @@
 package com.example.dodged_project;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 
-import com.example.dodged_project.data.Player;
+import com.example.dodged_project.databinding.ActivityFinalizeTeammatesBinding;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FinalizeTeammatesActivity extends AppCompatActivity implements PlayerUsernamesFragment.Callbacks {
 
-    private Button addTeammatesButton;
+    private ActivityFinalizeTeammatesBinding binding;
     private String[] usernames = {"", "", "", "", ""};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finalize_teammates);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_finalize_teammates);
 
         Bundle finalizeTeammatesActivityBundle = getIntent().getExtras();
         usernames = finalizeTeammatesActivityBundle.getStringArray("user_input_player_names");
 
-        addTeammatesButton = findViewById(R.id.add_teammates_button);
+        String[] regions = new String[] {"BR1", "EUN1", "EUW1", "JP1", "KR", "LA1", "LA2", "NA1", "OC1", "RU", "TR1"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(FinalizeTeammatesActivity.this, R.layout.region_dropdown_item, regions);
+        binding.regionDropdownItem.setAdapter(adapter);
 
-        addTeammatesButton.setOnClickListener(new View.OnClickListener() {
+
+        binding.addTeammatesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addTeammatesIntent = new Intent(FinalizeTeammatesActivity.this, AddTeammatesActivity.class);
                 addTeammatesIntent.putExtra("user_input_player_names", usernames);
+                addTeammatesIntent.putExtra("confirmedTeammatesBefore", true);
                 startActivity(addTeammatesIntent);
             }
         });

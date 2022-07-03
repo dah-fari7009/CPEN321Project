@@ -84,5 +84,4 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
                 }
             }
     );
-
 }
