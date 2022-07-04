@@ -1,21 +1,44 @@
-const getMatchHistory = require("./DataHandler")
+const getMatchHistory = require("./DataHandler");
+const userServiceModule = require("./UserService");
+const getFromDB = userServiceModule.getFromDB;
 
 class PlayerProfile {
     // Input is a single username and the region
     constructor(name, region) {
         this.name = name;
         this.region = region;
-        this.stats = getMatchHistory(name, region);
-
-        // TODO: add in the likes/dislikes/comments
-        // after the user service and DB are up
+        this.stats = null;
     }
 
-    getStats() {
+    getOnlyStats() {
+        this.stats = getMatchHistory(this.name, this.region);
         return this.stats;
+    }
+
+    getProfile() {
+        let stats = !this.stats ? getMatchHistory(this.name, this.region) : this.stats;
+        let reviews = getFromDB(this.name);
+
+        return new Promise(resolve => {
+            resolve({
+            name: this.name,
+            region: this.region,
+            stats: stats,
+            reviews: reviews
+            })
+        })
     }
 
 }
 
-let player = new PlayerProfile("2 4", "NA1");
-console.log(await player.getStats());
+module.exports = PlayerProfile;
+
+// let player = new PlayerProfile("ct819", "NA1");
+// let stats = player.getOnlyStats();
+// stats.then(res => console.log(res));
+// setTimeout(() => {
+//     let stats2 = player.getProfile();
+//     stats2.then(res => console.log(res))
+// }, 2000)
+
+// "2 4", "TheWanderersWay", "palukawhale", "Thick Rooster", "ct819"

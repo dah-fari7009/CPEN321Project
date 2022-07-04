@@ -111,29 +111,61 @@ router.post('/comment', (req, response) => {
 })
 
 // GET PLAYER
-router.get('/getPlayer', (req, response) => {
+router.get('/getPlayer', async (req, response) => {
     let player = req.body.name;
 
     if (!player) {
-        response.status(400).send("Username cannot be null");
+        response.send("Must specify player name").status(400);
     } else {
         MongoClient.MongoClient.connect(url, (err, db) => {
             if (err) throw err;
             var dbo = db.db("playerdb");
             dbo.collection("playerdb").findOne({_id: player}, function(err, res) {
-              if (err) throw err;
-              let cleanedRes = {
-                  _id: res._id,
-                  likes: res.likes ? res.likes : 0,
-                  dislikes: res.dislikes ? res.dislikes : 0,
-                  comments: res.comments ? res.comments : []
-              }
-              console.log(cleanedRes);
-              response.json(cleanedRes).status(200);
-              db.close();
+                if (err) throw err;
+                let cleanedRes = {
+                    _id: res._id,
+                    likes: res.likes ? res.likes : 0,
+                    dislikes: res.dislikes ? res.dislikes : 0,
+                    comments: res.comments ? res.comments : []
+                }
+                console.log(cleanedRes);
+                response.json(cleanedRes).status(200);
+                db.close();
             });
         });
     }
 })
 
-module.exports = router;
+// Separate function that can be called from player profile class
+async function getFromDB(player) {
+
+    return new Promise(resolve => {
+        MongoClient.MongoClient.connect(url, (err, db) => {
+            if (err) throw err;
+            var dbo = db.db("playerdb");
+            dbo.collection("playerdb").findOne({_id: player}, function(err, res) {
+                if (err) throw err;
+                if (!res) {
+                    resolve({
+                        _id: player,
+                        likes: 0,
+                        dislikes: 0,
+                        comments: []
+                    })
+                } else {    
+                    resolve({
+                        _id: res._id,
+                        likes: res.likes ? res.likes : 0,
+                        dislikes: res.dislikes ? res.dislikes : 0,
+                        comments: res.comments ? res.comments : []
+                    });
+                }
+                db.close();
+            });
+        });
+    
+    })
+
+}
+
+module.exports = {router: router, getFromDB: getFromDB};

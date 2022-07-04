@@ -1,37 +1,43 @@
 const axios = require("axios");
 
-const API_KEY = "";
+const API_KEY = "RGAPI-c1ce139d-1bef-4175-9ce8-1158c11ceb65";
 let URL_PREFIX;
-let id;
 
-let killsPerSec = [];
-let deathsPerSec = [];
-let assistsPerSec = [];
-let goldPerSec = [];
-let visionPerSec = [];
 
-async function getRiotData() {
-    let gameIds = await getGameIdList();
-
-    for (let j = 0; j < 2; j++) {
-        let gameData = await getGameStats(gameIds.data[j]);
-        let playerStats;
-
-        for (let i = 0; i < gameData.data.info.participants.length; i++) {
-            if (gameData.data.info.participants[i].puuid == id) {
-                playerStats = gameData.data.info.participants[i];
-            }
+function getRiotData(id, gameData) {
+                
+    for (let i = 0; i < gameData.data.info.participants.length; i++) {
+        if (gameData.data.info.participants[i].puuid == id) {
+            playerStats = gameData.data.info.participants[i];
         }
-
-        killsPerSec.push(playerStats.kills/gameData.data.info.gameDuration);
-        deathsPerSec.push(playerStats.deaths/gameData.data.info.gameDuration);
-        assistsPerSec.push(playerStats.assists/gameData.data.info.gameDuration);
-        visionPerSec.push(playerStats.visionScore/gameData.data.info.gameDuration);
-        goldPerSec.push(playerStats.goldEarned/gameData.data.info.gameDuration);
     }
+
+    let killsPerSec = [];
+    let deathsPerSec = [];
+    let assistsPerSec = [];
+    let goldPerSec = [];
+    let visionPerSec = [];
+    
+    killsPerSec.push(playerStats.kills/gameData.data.info.gameDuration);
+    deathsPerSec.push(playerStats.deaths/gameData.data.info.gameDuration);
+    assistsPerSec.push(playerStats.assists/gameData.data.info.gameDuration);
+    visionPerSec.push(playerStats.visionScore/gameData.data.info.gameDuration);
+    goldPerSec.push(playerStats.goldEarned/gameData.data.info.gameDuration);
+
+    let stats = {
+        kps: getAverage(killsPerSec),
+        aps: getAverage(assistsPerSec),
+        dps: getAverage(deathsPerSec),
+        gps: getAverage(goldPerSec),
+        vps: getAverage(visionPerSec)
+    };
+
+    return new Promise(resolve => {
+        resolve(stats)
+    });
 }
 
-async function getGameIdList() {
+async function getGameIdList(id) {
     return await axios.get(`${URL_PREFIX}/lol/match/v5/matches/by-puuid/${id}/ids?type=ranked&start=0&count=20&api_key=${API_KEY}`);
 }
 
@@ -47,13 +53,13 @@ function getAverage(stat) {
     return sum/stat.length;
 }
 
-async function getPlayerId(name, region) {
+function getPlayerId(name, region) {
     name = name.replace(/\s/g, "%20");
-    return await axios.get(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${API_KEY}`).catch(err => console.log(err));
+    return axios.get(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${API_KEY}`).catch(err => console.log(err));
 }
 
 
-export async function getMatchHistory(name, region) {
+async function getMatchHistory(name, region) {
     let server;
     if (region == "JP1" || region == "KR") {
         server = "asia";
@@ -66,18 +72,23 @@ export async function getMatchHistory(name, region) {
     }
 
     URL_PREFIX = `https://${server}.api.riotgames.com`;
-    let idData = await getPlayerId(name, region);
-    console.log(idData);
-    id = idData.data.puuid;
+    
+    return new Promise((resolve, reject) => {
+                
+        getPlayerId(name, region).then(player => {
+            getGameIdList(player.data.puuid).then(gameIds => {
+                for (let i = 0; i < 1; i++) {
+                    getGameStats(gameIds.data[i]).then(gameStats => {
+                        resolve(getRiotData(player.data.puuid, gameStats));
+                    })
+                }
+            })
+        })
 
-    await getRiotData();
-    return {
-        kps: getAverage(killsPerSec),
-        aps: getAverage(assistsPerSec),
-        dps: getAverage(deathsPerSec),
-        gps: getAverage(goldPerSec),
-        vps: getAverage(visionPerSec)
-    }
+    })
 }
 
-// console.log(await getMatchHistory("2 4", "NA1"));
+module.exports = getMatchHistory;
+
+// getMatchHistory("ct819", "NA1").then(res => console.log(res));
+// "2 4", "TheWanderersWay", "palukawhale", "Thick Rooster", "ct819"
