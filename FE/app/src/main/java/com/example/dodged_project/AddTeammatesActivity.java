@@ -1,26 +1,25 @@
 package com.example.dodged_project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.example.dodged_project.databinding.ActivityAddTeammatesBinding;
 
 public class AddTeammatesActivity extends AppCompatActivity {
 
-    private Button confirmButton;
-    private Button cancelButton;
-    private ImageView xButton;
+    private ActivityAddTeammatesBinding binding;
+    private String[] usernames = new String[5];
 
     private TextView userLoggedInStatusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_teammates);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_teammates);
 
         userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
 
@@ -32,43 +31,63 @@ public class AddTeammatesActivity extends AppCompatActivity {
             userLoggedInStatusText.setText("Logged in as: " + userLoggedInStatus);
         }
 
-        confirmButton = findViewById(R.id.confirm_button);
-        cancelButton = findViewById(R.id.cancel_button);
-        xButton = findViewById(R.id.x_button_close);
+        Bundle addTeammatesActivityExtra = getIntent().getExtras();
 
-        confirmButton.setOnClickListener(new View.OnClickListener() {
+        if (addTeammatesActivityExtra != null) {
+            binding.username01Textinput.setText(addTeammatesActivityExtra.getStringArray("user_input_player_names")[0]);
+            binding.username02Textinput.setText(addTeammatesActivityExtra.getStringArray("user_input_player_names")[1]);
+            binding.username03Textinput.setText(addTeammatesActivityExtra.getStringArray("user_input_player_names")[2]);
+            binding.username04Textinput.setText(addTeammatesActivityExtra.getStringArray("user_input_player_names")[3]);
+            binding.username05Textinput.setText(addTeammatesActivityExtra.getStringArray("user_input_player_names")[4]);
+        }
+
+        binding.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent finalizeTeammatesIntent = new Intent(AddTeammatesActivity.this, FinalizeTeammatesActivity.class);
-                startActivity(finalizeTeammatesIntent);
+                switchToFinalizeTeammates();
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        binding.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cancelFromAddTeammatesActivityIntent = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
-                cancelFromAddTeammatesActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
-                startActivity(cancelFromAddTeammatesActivityIntent);
+                if (addTeammatesActivityExtra != null && addTeammatesActivityExtra.getBoolean("confirmedTeammatesBefore")) {
+                    switchToFinalizeTeammates();
+                }
+                else {
+                    Intent cancelFromAddTeammatesActivityIntent = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
+                    cancelFromAddTeammatesActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
+                    startActivity(cancelFromAddTeammatesActivityIntent);
+                }
             }
         });
 
-        xButton.setOnClickListener(new View.OnClickListener() {
+        binding.xButtonClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cancelFromAddTeammatesActivityIntent = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
-                cancelFromAddTeammatesActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
-                startActivity(cancelFromAddTeammatesActivityIntent);
+                if (addTeammatesActivityExtra != null && addTeammatesActivityExtra.getBoolean("confirmedTeammatesBefore")) {
+                    switchToFinalizeTeammates();
+                }
+                else {
+                    Intent cancelFromAddTeammatesActivityIntent = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
+                    cancelFromAddTeammatesActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
+                    startActivity(cancelFromAddTeammatesActivityIntent);
+                }
             }
         });
-
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    private void switchToFinalizeTeammates() {
+        // there is prolly a better way to do this
+        // i'll clean it later, my brain has stopped working <>_<>
+        usernames[0] = binding.username01Textinput.getText().toString();
+        usernames[1] = binding.username02Textinput.getText().toString();
+        usernames[2] = binding.username03Textinput.getText().toString();
+        usernames[3] = binding.username04Textinput.getText().toString();
+        usernames[4] = binding.username05Textinput.getText().toString();
 
-        Intent backToChooseTeammates = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
-        startActivity(backToChooseTeammates);
+        Intent finalizeTeammatesIntent = new Intent(AddTeammatesActivity.this, FinalizeTeammatesActivity.class);
+        finalizeTeammatesIntent.putExtra("user_input_player_names", usernames);
+        startActivity(finalizeTeammatesIntent);
     }
 }
