@@ -22,19 +22,21 @@
         app:layout_constraintVertical_bias="0.166">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="326dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/resultsText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppins"
+                android:gravity="center"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textFontWeight="700"
                 android:textSize="48sp"
                 android:textStyle="bold" />
@@ -45,8 +47,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:fontFamily="@font/poppins"
+                android:gravity="center"
                 android:text=""
-                android:textColor="#B7B8CA"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>

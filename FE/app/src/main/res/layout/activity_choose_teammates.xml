@@ -9,6 +9,7 @@
     <!--        android:layout_height="300dp"-->
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView2"
         android:layout_width="343dp"
         android:layout_height="351dp"
         android:checkable="true"
@@ -37,9 +38,8 @@
                     android:id="@+id/add_teammates_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/add_teammates_icon"
                     android:layout_marginBottom="5dp"
-                    />
+                    app:srcCompat="@drawable/add_teammates_icon" />
 
                 <TextView
                     android:id="@+id/choose_teammates_text"
@@ -47,10 +47,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/lora"
-                    android:textFontWeight="700"
                     android:text="@string/choose_teammates_text"
-                    android:textSize="20sp"
                     android:textColor="@color/black"
+                    android:textFontWeight="700"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -99,6 +99,18 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/userLoggedInStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView2"
+        app:layout_constraintVertical_bias="0.614" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

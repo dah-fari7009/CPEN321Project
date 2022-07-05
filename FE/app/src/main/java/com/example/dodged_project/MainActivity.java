@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "LOGIN SUCCESSFUL");
             updateUI(account);
             Intent chooseTeammatesIntent = new Intent(MainActivity.this, ChooseTeammatesActivity.class);
+            chooseTeammatesIntent.putExtra("USER_ACCOUNT_INFO", account.getDisplayName());
             startActivity(chooseTeammatesIntent);
 
         } catch (ApiException e) {
@@ -136,11 +137,13 @@ public class MainActivity extends AppCompatActivity {
         if(account == null) {
             Log.d("MainActivity", "There is no user signed in!");
             Toast.makeText(this, "There is no user signed in. To use this feature please sign in", Toast.LENGTH_LONG).show();
-        } else {
-//            loggedInNameText = account.getDisplayName();
-
-            //Send token to the BE (account.getIdToken())
-            //Move to another Activity
         }
+//        else {
+////            String loggedInNameText = account.getDisplayName();
+////            String loggedInNameText = account.getDisplayName();
+//
+//            //Send token to the BE (account.getIdToken())
+//            //Move to another Activity
+//        }
     }
 }

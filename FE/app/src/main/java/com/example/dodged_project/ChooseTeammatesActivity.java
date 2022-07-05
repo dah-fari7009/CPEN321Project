@@ -20,22 +20,35 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class ChooseTeammatesActivity extends AppCompatActivity {
 
     private Button addTeammatesButton;
     private Button uploadPhotoButton;
+    private TextView userLoggedInStatusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_teammates);
 
+        userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
+
+        String userLoggedInStatus = getIntent().getStringExtra("USER_ACCOUNT_INFO");
+
+        if(userLoggedInStatus == null) {
+            userLoggedInStatusText.setText("Not logged in");
+        } else {
+            userLoggedInStatusText.setText("Logged in as: " + userLoggedInStatus);
+        }
+
         addTeammatesButton = findViewById(R.id.add_teammates_button);
         addTeammatesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent addTeammatesIntent = new Intent(ChooseTeammatesActivity.this, AddTeammatesActivity.class);
+                addTeammatesIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
                 startActivity(addTeammatesIntent);
             }
         });
@@ -76,13 +89,25 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
+
+                        Log.d("ChooseTeammatesActivity", String.valueOf(result.getData().getExtras()));
+
                         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                        String userLoggedInStatus = getIntent().getStringExtra("USER_ACCOUNT_INFO");
+
                         Intent uploadedImageActivityIntent = new Intent(ChooseTeammatesActivity.this, UploadedImageActivity.class);
                         uploadedImageActivityIntent.putExtra("imageBitmap", bitmap);
+                        uploadedImageActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
                         startActivity(uploadedImageActivityIntent);
                     }
                 }
             }
     );
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent backToMainIntent = new Intent(ChooseTeammatesActivity.this, MainActivity.class);
+        startActivity(backToMainIntent);
+    }
 }

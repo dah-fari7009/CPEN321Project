@@ -2,6 +2,7 @@ package com.example.dodged_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -29,5 +30,13 @@ public class ResultsActivity extends AppCompatActivity {
             resultsText.setText(R.string.results_dodge);
             resultsDescription.setText(R.string.low_odds_of_winning_text);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent backToChooseTeammates = new Intent(ResultsActivity.this, ChooseTeammatesActivity.class);
+        startActivity(backToChooseTeammates);
     }
 }
