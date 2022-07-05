@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/continue_as_guest_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/continue_as_guest"
@@ -51,16 +51,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.055" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/dark_mode_switch"
+        android:layout_width="125dp"
+        android:layout_height="51dp"
+        android:enabled="false"
         android:text="Dark Mode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.945" />
+        app:layout_constraintTop_toBottomOf="@+id/continue_as_guest_button"
+        app:layout_constraintVertical_bias="0.94" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
