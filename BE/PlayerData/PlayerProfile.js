@@ -11,22 +11,19 @@ class PlayerProfile {
     }
 
     getOnlyStats() {
-        this.stats = getMatchHistory(this.name, this.region);
-        return this.stats;
+        return getMatchHistory(this.name, this.region);
     }
 
-    getProfile() {
-        let stats = !this.stats ? getMatchHistory(this.name, this.region) : this.stats;
-        let reviews = getFromDB(this.name);
+    async getProfile() {
+        let reviews = await getFromDB(this.name);
+        let stats = await getMatchHistory(this.name, this.region);
 
-        return new Promise(resolve => {
-            resolve({
+        return {
             name: this.name,
             region: this.region,
             stats: stats,
             reviews: reviews
-            })
-        })
+        }
     }
 
 }

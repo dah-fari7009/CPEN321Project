@@ -4,6 +4,7 @@ const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
     keyFilename: '<--- GOOGLE VISION API KEY JSON FILE --->'
 });
+const TeamStats = require("../Prediction/TeamStats");
 
 const JOINED_THE_LOBBY = " joined the lobby"
 
@@ -28,9 +29,10 @@ router.post('/usernames', (req, res) => {
 // Upload image for further processing
 router.get('/', async (req, res) => {
     // TODO: get image from frontend
-    parseText('<--- FILE NAME --->').then(() => {
-        // TODO: send riot ids to team stats class
-        res.status(200)
+    parseText('<--- FILE NAME --->').then((names) => {
+        TeamStats(names).then(teamStats => {
+            res.json(teamStats).status(200);
+        })
     })
 })
 

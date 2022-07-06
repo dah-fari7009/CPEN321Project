@@ -24,17 +24,13 @@ function getRiotData(id, gameData) {
     visionPerSec.push(playerStats.visionScore/gameData.data.info.gameDuration);
     goldPerSec.push(playerStats.goldEarned/gameData.data.info.gameDuration);
 
-    let stats = {
+    return {
         kps: getAverage(killsPerSec),
         aps: getAverage(assistsPerSec),
         dps: getAverage(deathsPerSec),
         gps: getAverage(goldPerSec),
         vps: getAverage(visionPerSec)
     };
-
-    return new Promise(resolve => {
-        resolve(stats)
-    });
 }
 
 async function getGameIdList(id) {
@@ -53,7 +49,7 @@ function getAverage(stat) {
     return sum/stat.length;
 }
 
-function getPlayerId(name, region) {
+async function getPlayerId(name, region) {
     name = name.replace(/\s/g, "%20");
     return axios.get(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${API_KEY}`).catch(err => console.log(err));
 }
@@ -72,20 +68,14 @@ async function getMatchHistory(name, region) {
     }
 
     URL_PREFIX = `https://${server}.api.riotgames.com`;
-    
-    return new Promise((resolve, reject) => {
-                
-        getPlayerId(name, region).then(player => {
-            getGameIdList(player.data.puuid).then(gameIds => {
-                for (let i = 0; i < 1; i++) {
-                    getGameStats(gameIds.data[i]).then(gameStats => {
-                        resolve(getRiotData(player.data.puuid, gameStats));
-                    })
-                }
-            })
-        })
 
-    })
+    let player = await getPlayerId(name, region);
+    let gameIds = await getGameIdList(player.data.puuid);
+
+    let gameStats = await getGameStats(gameIds.data[0]);
+
+    let formattedStats = getRiotData(player.data.puuid, gameStats);
+    return formattedStats;
 }
 
 module.exports = getMatchHistory;
