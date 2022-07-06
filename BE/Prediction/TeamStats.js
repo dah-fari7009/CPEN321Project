@@ -19,23 +19,11 @@ function sumStats(player) {
 
 async function TeamStats(names, region) {
 
-    // if (names.length < 5) {
-    //     return;
-    // }
-
     let player1 = new PlayerProfile(names[0], region);
     let player2 = new PlayerProfile(names[1], region);
     let player3 = new PlayerProfile(names[2], region);
     let player4 = new PlayerProfile(names[3], region);
     let player5 = new PlayerProfile(names[4], region);
-
-    // player1.getOnlyStats().then(stats => {
-    //     akps += stats.kps;
-    //     aaps += stats.aps;
-    //     adps += stats.dps;
-    //     agps += stats.gps;
-    //     avps += stats.vps;
-    // })
 
     sumStats(player1);
     sumStats(player2);

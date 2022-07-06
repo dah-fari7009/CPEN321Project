@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const API_KEY = "RGAPI-c1ce139d-1bef-4175-9ce8-1158c11ceb65";
+const API_KEY = "";
 let URL_PREFIX;
 
 
