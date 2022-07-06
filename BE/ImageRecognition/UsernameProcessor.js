@@ -9,6 +9,10 @@ const TeamStats = require('../Prediction/TeamStats')
 
 const JOINED_THE_LOBBY = " joined the lobby"
 
+// curl -X POST -H "Content-Type: application/json" \
+//     -d '{"region": "NA1", "id1": "2 4", "id2": "TheWanderersWay", "id3": "palukawhale", "id4": "Thick Rooster", "id5": "ct819"}' \
+//     http://localhost:8080/image/usernames
+
 // Upload riot ids
 router.post('/usernames', (req, res) => {
     const ids = []
@@ -27,7 +31,8 @@ router.post('/usernames', (req, res) => {
     if (!ids[0] || !ids[1] || !ids[2] || !ids[3] || !ids[4]) {
         res.status(400).json("All riot ids must be specified")
     } else {
-        TeamStats(ids).then(teamStats => {
+        TeamStats(ids, region).then(teamStats => {
+            console.log(teamStats)
             res.json(teamStats).status(200);
         })
     }
@@ -54,7 +59,7 @@ router.get('/', async (req, res) => {
     })
 
     await parseText('usernames.png').then((ids) => {
-        TeamStats(ids).then(teamStats => {
+        TeamStats(ids, region).then(teamStats => {
             res.json(teamStats).status(200);
         })
     })

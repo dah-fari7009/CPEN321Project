@@ -1,7 +1,8 @@
 const MongoClient = require("mongodb");
 const express = require("express");
 const router = express.Router()
-var url = "mongodb://localhost:27017/";
+require('dotenv').config()
+var url = process.env.MONGO_URL;
 
 
 // LIKE player

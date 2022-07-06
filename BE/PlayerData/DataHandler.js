@@ -1,6 +1,7 @@
 const axios = require("axios");
+require('dotenv').config()
 
-const API_KEY = "";
+const API_KEY = process.env.RIOT_API_KEY;
 let URL_PREFIX;
 
 
