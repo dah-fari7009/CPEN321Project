@@ -5,7 +5,7 @@ const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
     keyFilename: 'vision-key.json'
 });
-const stats = require('../Prediction/TeamStats')
+const TeamStats = require('../Prediction/TeamStats')
 
 const JOINED_THE_LOBBY = " joined the lobby"
 
@@ -27,8 +27,9 @@ router.post('/usernames', (req, res) => {
     if (!ids[0] || !ids[1] || !ids[2] || !ids[3] || !ids[4]) {
         res.status(400).json("All riot ids must be specified")
     } else {
-        // TODO: send riot ids to team stats
-        res.status(200).json(ids)
+        TeamStats(ids).then(teamStats => {
+            res.json(teamStats).status(200);
+        })
     }
 })
 
@@ -53,8 +54,9 @@ router.get('/', async (req, res) => {
     })
 
     await parseText('usernames.png').then((ids) => {
-        // TODO: send riot ids to team stats and return response
-        console.log(ids)
+        TeamStats(ids).then(teamStats => {
+            res.json(teamStats).status(200);
+        })
     })
 
     fs.unlink('usernames.png', (err) => {
