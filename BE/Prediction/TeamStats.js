@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const PlayerProfile = require("../PlayerData/PlayerProfile");
 
 // aggregate kills/deaths/etc per second

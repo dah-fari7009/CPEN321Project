@@ -7,7 +7,6 @@ class PlayerProfile {
     constructor(name, region) {
         this.name = name;
         this.region = region;
-        this.stats = null;
     }
 
     getOnlyStats() {
