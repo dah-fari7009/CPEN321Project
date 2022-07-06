@@ -9,10 +9,6 @@ const TeamStats = require('../Prediction/TeamStats')
 
 const JOINED_THE_LOBBY = " joined the lobby"
 
-// curl -X POST -H "Content-Type: application/json" \
-//     -d '{"region": "NA1", "id1": "2 4", "id2": "TheWanderersWay", "id3": "palukawhale", "id4": "Thick Rooster", "id5": "ct819"}' \
-//     http://localhost:8080/image/usernames
-
 // Upload riot ids
 router.post('/usernames', (req, res) => {
     const ids = []
@@ -40,7 +36,7 @@ router.post('/usernames', (req, res) => {
 
 // Upload image to parse riot ids
 router.get('/', async (req, res) => {
-    const base64EncodedImage = req.base64EncodedImage
+    const base64EncodedImage = req.body.base64EncodedImage
     const data = Buffer.from(base64EncodedImage, 'base64')
     const region = req.body.region
 
