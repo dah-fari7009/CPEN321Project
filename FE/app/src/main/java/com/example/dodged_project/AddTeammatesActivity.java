@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.dodged_project.databinding.ActivityAddTeammatesBinding;
 
@@ -21,15 +22,15 @@ public class AddTeammatesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_teammates);
 
-        userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
-
-        String userLoggedInStatus = getIntent().getStringExtra("USER_ACCOUNT_INFO");
-
-        if(userLoggedInStatus == null) {
-            userLoggedInStatusText.setText("Not logged in");
-        } else {
-            userLoggedInStatusText.setText("Logged in as: " + userLoggedInStatus);
-        }
+//        userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
+//
+//        String userLoggedInStatus = getIntent().getStringExtra("USER_ACCOUNT_INFO");
+//
+//        if(userLoggedInStatus == null) {
+//            userLoggedInStatusText.setText("Not logged in");
+//        } else {
+//            userLoggedInStatusText.setText("Logged in as: " + userLoggedInStatus);
+//        }
 
         Bundle addTeammatesActivityExtra = getIntent().getExtras();
 
@@ -56,7 +57,7 @@ public class AddTeammatesActivity extends AppCompatActivity {
                 }
                 else {
                     Intent cancelFromAddTeammatesActivityIntent = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
-                    cancelFromAddTeammatesActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
+//                    cancelFromAddTeammatesActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
                     startActivity(cancelFromAddTeammatesActivityIntent);
                 }
             }
@@ -70,7 +71,7 @@ public class AddTeammatesActivity extends AppCompatActivity {
                 }
                 else {
                     Intent cancelFromAddTeammatesActivityIntent = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
-                    cancelFromAddTeammatesActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
+//                    cancelFromAddTeammatesActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
                     startActivity(cancelFromAddTeammatesActivityIntent);
                 }
             }

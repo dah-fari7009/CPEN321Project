@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ResultsActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="343dp"
@@ -55,6 +65,15 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+        <FrameLayout
+            android:id="@+id/player_usernames_fragment"
+            android:name="com.example.dodged_project.PlayerUsernamesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="496dp" />
+    </LinearLayout>
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

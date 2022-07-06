@@ -22,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -29,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -39,6 +41,8 @@ public class UploadedImageActivity extends AppCompatActivity {
     private Button cancelButton;
 
     private TextView userLoggedInStatusText;
+    private String selectedRegion;
+    private String responseString;
 
     @SuppressLint("WrongThread")
     @Override
@@ -63,21 +67,22 @@ public class UploadedImageActivity extends AppCompatActivity {
         byte[] bArray = byteArrayOutputStream.toByteArray();
         String encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
 
-        Log.d("UploadedImageActivity", encodedImage);
-
         uploadedImage = findViewById(R.id.uploadedImage);
         uploadedImage.setImageBitmap(imageBitmap);
+
+        // TEMP ADD REGION DROPDOWN
+        selectedRegion = "NA1";
 
         confirmButton = findViewById(R.id.confirm_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // make a POST request to the BE then make a GET request? Or wait until data or something idk
-                sendImage(encodedImage);
+                sendImage(encodedImage, selectedRegion, userLoggedInStatus);
                 // then start results intent
-                Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
-                resultsIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
-                startActivity(resultsIntent);
+//                Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
+//                resultsIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
+//                startActivity(resultsIntent);
             }
         });
 
@@ -92,41 +97,51 @@ public class UploadedImageActivity extends AppCompatActivity {
         });
     }
 
-    public void sendImage(String encodedImage) {
-        // send image bitmap to the BE
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String sendImageEndpoint = "ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/image";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, sendImageEndpoint,
-                new Response.Listener<String>() {
+    public void sendImage(String encodedImage, String region, String userLoggedInStatus) {
+        String sendUsernamesEndpoint = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/image/usernames";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("region", region);
+            jsonObject.put("base64EncodedImage ", encodedImage);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, sendUsernamesEndpoint, jsonObject,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(UploadedImageActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("response", response.toString());
+                        bundle.putString("USER_ACCOUNT_INFO", userLoggedInStatus);
+
+                        Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
+                        resultsIntent.putExtras(bundle);
+                        startActivity(resultsIntent);
                     }
-                },
-                new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(UploadedImageActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UploadedImageActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new Hashtable<String, String>();
-
-                params.put("encodedImage", encodedImage);
-                return params;
-            }
-        };
+             }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
         {
             int socketTimeout = 30000;
             RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-            stringRequest.setRetryPolicy(policy);
+            jsonObjectRequest.setRetryPolicy(policy);
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(stringRequest);
+            requestQueue.add(jsonObjectRequest);
         }
     }
 
