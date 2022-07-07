@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -68,8 +69,14 @@ public class UploadedImageActivity extends AppCompatActivity {
         byte[] bArray = byteArrayOutputStream.toByteArray();
         String encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
 
+        // FOR M5, USE A DEFAULT IMAGE SINCE WE ARE USING AN EMULATOR
+        String defaultImagePath = "assets/defaultUploadImage.jpg";
+        File file = new File(defaultImagePath);
+
+        Bitmap defaultImageBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+
         uploadedImage = findViewById(R.id.uploadedImage);
-        uploadedImage.setImageBitmap(imageBitmap);
+        uploadedImage.setImageBitmap(defaultImageBitmap);
 
         // TEMP ADD REGION DROPDOWN
         selectedRegion = "NA1";
