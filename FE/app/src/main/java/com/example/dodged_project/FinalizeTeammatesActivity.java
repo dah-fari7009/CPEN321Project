@@ -1,5 +1,6 @@
 package com.example.dodged_project;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -118,6 +119,14 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(FinalizeTeammatesActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+                        Intent resultsActivityIntent = new Intent(FinalizeTeammatesActivity.this, ResultsActivity.class);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("response", response.toString());
+                        bundle.putString("USER_ACCOUNT_INFO", "TEMP USER LOGGED IN STATUS");
+
+                        resultsActivityIntent.putExtras(bundle);
+                        startActivity(resultsActivityIntent);
                     }
                 }, new Response.ErrorListener() {
             @Override

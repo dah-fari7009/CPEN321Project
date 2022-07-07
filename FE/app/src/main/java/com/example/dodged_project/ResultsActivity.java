@@ -1,12 +1,17 @@
 package com.example.dodged_project;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -14,7 +19,6 @@ public class ResultsActivity extends AppCompatActivity {
 
     private TextView resultsText;
     private TextView resultsDescription;
-
 //    private String[] usernames = {"", "", "", "", ""};
 
     @Override
@@ -24,25 +28,57 @@ public class ResultsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        if(bundle != null) {
-            String userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO");
-            String predictionData = bundle.getString("response");
+
+        String userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO");
+        String predictionData = bundle.getString("response");
+
+        JSONObject data = new JSONObject();
+        double prediction = 0;
+
+        String[] playerList = {"player1", "player2", "player3", "player4", "player5"};
+
+        String[] player1Data = new String[4];
+        String[] player2Data = new String[4];
+        String[] player3Data = new String[4];
+        String[] player4Data = new String[4];
+        String[] player5Data = new String[4];
+
+
+        try {
+            data = new JSONObject(predictionData);
+//            prediction = data.getJSONObject("prediction").getDouble("prediction");
+            prediction = data.getDouble("prediction");
+
+            Log.d("ResultsActivity", data.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+
 
         // get some boolean or win rate from the BE
         // temp results text checker
-        boolean tempRemoveLater = true;
+//        boolean tempRemoveLater = true;
 
         resultsText = findViewById(R.id.resultsText);
         resultsDescription = findViewById(R.id.resultsDescription);
 
-        if(tempRemoveLater) {
+        if(prediction > 0.75) {
             resultsText.setText(R.string.results_play);
             resultsDescription.setText(R.string.high_odds_of_winning_text);
         } else {
             resultsText.setText(R.string.results_dodge);
             resultsDescription.setText(R.string.low_odds_of_winning_text);
         }
+
+//        if(tempRemoveLater) {
+//            resultsText.setText(R.string.results_play);
+//            resultsDescription.setText(R.string.high_odds_of_winning_text);
+//        } else {
+//            resultsText.setText(R.string.results_dodge);
+//            resultsDescription.setText(R.string.low_odds_of_winning_text);
+//        }
 
 //        FragmentManager fm = getSupportFragmentManager();
 //        Fragment fragment = fm.findFragmentById(R.id.player_usernames_fragment);
