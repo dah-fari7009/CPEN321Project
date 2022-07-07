@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router()
 require('dotenv').config()
 var url = process.env.MONGO_URL;
+const DataHandlerModule = require('./DataHandler');
+const getPlayerMasteries = DataHandlerModule.getPlayerMasteries;
 
 
 // LIKE player
@@ -135,6 +137,18 @@ router.get('/getPlayer', async (req, response) => {
             });
         });
     }
+})
+
+// POST Player Mastery
+router.post('/getMastery', async (req, res) => {
+    let player = req.body.name;
+    let region = req.body.region;
+    let champ = req.body.champ;
+
+    getPlayerMasteries(player, region, champ).then(masteries => {
+        res.json(masteries).status(200);
+    })
+
 })
 
 // Separate function that can be called from player profile class
