@@ -74,7 +74,9 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
         usernameDeleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                players.remove(player);
+                textView.setText("");
+                player.setUsername("");
+                player.setAvatar("no_user_added_icon");
                 callback.getPlayersFromPlayerArrayAdapter(players);
                 notifyDataSetChanged();
             }

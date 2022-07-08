@@ -25,7 +25,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/button_color"
-            android:enabled="false"
+            android:enabled="true"
             android:fontFamily="@font/poppins"
             android:gravity="center"
             android:text="@string/confirm_button_text"
