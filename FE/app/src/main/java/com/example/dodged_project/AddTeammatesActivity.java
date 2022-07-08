@@ -17,6 +17,7 @@ public class AddTeammatesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_teammates);
 
         Bundle addTeammatesActivityExtra = getIntent().getExtras();

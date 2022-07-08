@@ -19,6 +19,8 @@ public class UploadedImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_uploaded_image);
 
         Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");

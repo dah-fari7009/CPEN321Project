@@ -16,4 +16,21 @@
     <string name="cancel_button_text">Cancel</string>
     <string name="process_image_text">Process Image?</string>
     <string name="process_image_description_text">This image will be used to process team usernames</string>
+    <string name="player_profile_title">Player Profile</string>
+    <string name="player_profile_username">username_01_*</string>
+    <string name="stats_kills">0.162</string>
+    <string name="stats_deaths">0.152</string>
+    <string name="stats_assists">0.02</string>
+    <string name="stats_gold">154</string>
+    <string name="stats_vision">08</string>
+    <string name="stats_kills_title">kills / min</string>
+    <string name="stats_deaths_title">deaths / min</string>
+    <string name="stats_assists_title">assists / min</string>
+    <string name="stats_gold_title">gold / min</string>
+    <string name="stats_vision_title">vision</string>
+    <string name="comment_box_placeholder_text">Leave a comment..</string>
+    <string name="add_comment_button">Add Comment</string>
+    <string name="comment_row_username">username</string>
+    <string name="comment_row_date">date</string>
+    <string name="comment_row_comment">comment comment comment</string>
 </resources>
