@@ -54,11 +54,11 @@ public class PlayerProfileActivity extends AppCompatActivity {
 
         commentsArrayList = new ArrayList<>();
 
-        Bundle playerProfileExtra = getIntent().getExtras();
-        if (playerProfileExtra != null) {
-            String playerUsername = playerProfileExtra.getString("player_username");
-            playerProfileURL = playerProfileURL + "?name=" + playerUsername;
-        }
+//        Bundle playerProfileExtra = getIntent().getExtras();
+//        if (playerProfileExtra != null) {
+//            String playerUsername = playerProfileExtra.getString("player_username");
+//            playerProfileURL = playerProfileURL + "?name=" + playerUsername;
+//        }
 
         String playerUsername = "APAP";
         playerProfileURL = playerProfileURL + playerUsername;
