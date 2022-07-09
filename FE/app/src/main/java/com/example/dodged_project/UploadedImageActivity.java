@@ -62,21 +62,27 @@ public class UploadedImageActivity extends AppCompatActivity {
             userLoggedInStatusText.setText("Logged in as: " + userLoggedInStatus);
         }
 
-        Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] bArray = byteArrayOutputStream.toByteArray();
-        String encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
+//        Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");
+//
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//        byte[] bArray = byteArrayOutputStream.toByteArray();
+//        String encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
 
         // FOR M5, USE A DEFAULT IMAGE SINCE WE ARE USING AN EMULATOR
-        String defaultImagePath = "assets/defaultUploadImage.jpg";
-        File file = new File(defaultImagePath);
+//        String defaultImagePath = "../assets/defaultUploadImage.jpg";
+//        Bitmap defaultImageBitmap = BitmapFactory.decodeFile(defaultImagePath);
 
-        Bitmap defaultImageBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        Bitmap defaultImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_upload_image);
+        Bitmap scaled = Bitmap.createScaledBitmap(defaultImageBitmap, 150, 100, true);
 
         uploadedImage = findViewById(R.id.uploadedImage);
-        uploadedImage.setImageBitmap(defaultImageBitmap);
+        uploadedImage.setImageBitmap(scaled);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        defaultImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] bArray = byteArrayOutputStream.toByteArray();
+        String encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
 
         // TEMP ADD REGION DROPDOWN
         selectedRegion = "NA1";
@@ -85,7 +91,7 @@ public class UploadedImageActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // make a POST request to the BE then make a GET request? Or wait until data or something idk
+                // make a POST request to the BE
                 sendImage(encodedImage, selectedRegion, userLoggedInStatus);
                 // then start results intent
 //                Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
@@ -125,7 +131,9 @@ public class UploadedImageActivity extends AppCompatActivity {
 
                         Bundle bundle = new Bundle();
                         bundle.putString("response", response.toString());
-                        bundle.putString("USER_ACCOUNT_INFO", userLoggedInStatus);
+                        bundle.putString("USER_ACCOUNT_INFO_FROM_IMAGE_ACTIVITY", userLoggedInStatus);
+
+                        Log.d("UploadedImageActivity", response.toString());
 
                         Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
                         resultsIntent.putExtras(bundle);

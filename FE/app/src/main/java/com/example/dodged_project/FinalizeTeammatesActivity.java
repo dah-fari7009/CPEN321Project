@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -42,6 +43,7 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
     private String selectedRegion;
 
     private Button confirmButton;
+    private TextView userLoggedInStatusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,16 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
             }
         });
 
+//        userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
+////
+//        String userLoggedInStatus = getIntent().getStringExtra("USER_ACCOUNT_INFO");
+//
+//        if(userLoggedInStatus == null) {
+//            userLoggedInStatusText.setText("Not logged in");
+//        } else {
+//            userLoggedInStatusText.setText("Logged in as: " + userLoggedInStatus);
+//        }
+
 
         binding.addTeammatesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,17 +82,27 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
                 Intent addTeammatesIntent = new Intent(FinalizeTeammatesActivity.this, AddTeammatesActivity.class);
                 addTeammatesIntent.putExtra("user_input_player_names", usernames);
                 addTeammatesIntent.putExtra("confirmedTeammatesBefore", true);
+//                addTeammatesIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
                 startActivity(addTeammatesIntent);
             }
         });
 
-        confirmButton = findViewById(R.id.confirm_button);
+        Button confirmButton = findViewById(R.id.confirm_button);
+
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendUsernames(usernames, selectedRegion);
             }
         });
+
+//        confirmButton = findViewById(R.id.confirm_button);
+//        confirmButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendUsernames(usernames, selectedRegion);
+//            }
+//        });
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.player_usernames_fragment);
@@ -131,7 +153,8 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(FinalizeTeammatesActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(FinalizeTeammatesActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(FinalizeTeammatesActivity.this, "Error: Make sure ALL Usernames are correct and a Region is selected", Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

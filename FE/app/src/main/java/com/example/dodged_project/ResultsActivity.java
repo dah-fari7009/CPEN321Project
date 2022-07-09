@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.dodged_project.data.Player;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +23,12 @@ public class ResultsActivity extends AppCompatActivity {
     private TextView resultsDescription;
 //    private String[] usernames = {"", "", "", "", ""};
 
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player player4;
+    private Player player5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,31 +37,45 @@ public class ResultsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
 
-        String userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO");
+
+        String userLoggedInStatus;
+
+        if(bundle != null && bundle.getString("USER_ACCOUNT_INFO_FROM_IMAGE_ACTIVITY") != null) {
+            userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO_FROM_IMAGE_ACTIVITY");
+        } else if(bundle != null & bundle.getString("USER_ACCOUNT_INFO_FROM_FINALIZE_ACTIVITY") != null) {
+            userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO_FROM_FINALIZE_ACTIVITY");
+        }
+
         String predictionData = bundle.getString("response");
 
         JSONObject data = new JSONObject();
         double prediction = 0;
-
-        String[] playerList = {"player1", "player2", "player3", "player4", "player5"};
-
-        String[] player1Data = new String[4];
-        String[] player2Data = new String[4];
-        String[] player3Data = new String[4];
-        String[] player4Data = new String[4];
-        String[] player5Data = new String[4];
-
 
         try {
             data = new JSONObject(predictionData);
 //            prediction = data.getJSONObject("prediction").getDouble("prediction");
             prediction = data.getDouble("prediction");
 
+            setPlayerData(data);
+
             Log.d("ResultsActivity", data.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+//        {
+//            prediction: double,
+//            player1: {
+//                likes: int,
+//                dislikes: int,
+//                comments: String[]
+//                _id: String (just the name),
+//            }
+//            player2: {
+//                ...
+//            }
+//        }
 
 
 
@@ -102,6 +124,38 @@ public class ResultsActivity extends AppCompatActivity {
 //            fm.beginTransaction().add(R.id.player_usernames_fragment, fragment).commit();
 //        }
 
+    }
+
+    private void setPlayerData(JSONObject data) throws JSONException {
+        player1 = new Player(
+                data.getJSONObject("player1").getString("_id"),
+                data.getJSONObject("player1").getInt("likes"),
+                data.getJSONObject("player1").getInt("dislikes")
+        );
+
+        player2 = new Player(
+                data.getJSONObject("player1").getString("_id"),
+                data.getJSONObject("player1").getInt("likes"),
+                data.getJSONObject("player1").getInt("dislikes")
+        );
+
+        player3 = new Player(
+                data.getJSONObject("player1").getString("_id"),
+                data.getJSONObject("player1").getInt("likes"),
+                data.getJSONObject("player1").getInt("dislikes")
+        );
+
+        player4 = new Player(
+                data.getJSONObject("player1").getString("_id"),
+                data.getJSONObject("player1").getInt("likes"),
+                data.getJSONObject("player1").getInt("dislikes")
+        );
+
+        player5 = new Player(
+                data.getJSONObject("player1").getString("_id"),
+                data.getJSONObject("player1").getInt("likes"),
+                data.getJSONObject("player1").getInt("dislikes")
+        );
     }
 
     @Override

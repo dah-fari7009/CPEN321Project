@@ -55,6 +55,7 @@
                 android:layout_toRightOf="@id/playerUsername"
                 android:clickable="true"
                 android:focusable="true"
+                android:visibility="visible"
                 app:srcCompat="@drawable/username_edit_icon" />
 
             <ImageView

@@ -167,13 +167,22 @@
                     android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/button_color"
-                    android:enabled="false"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
                     android:text="@string/confirm_button_text"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     app:cornerRadius="8dp" />
+
+                <TextView
+                    android:id="@+id/userLoggedInStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

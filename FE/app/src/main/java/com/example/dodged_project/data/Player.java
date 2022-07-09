@@ -8,13 +8,22 @@ public class Player {
     private String username;
     private String avatar;
 
+    private int likes;
+    private int dislikes;
+
     public Player(String id, String username, String avatar) {
         this.id = id;
         this.username = username;
         this.avatar = avatar;
     }
 
-        public int getAvatarResourceId(Context context) {
+    public Player(String username, int likes, int dislikes) {
+        this.username = username;
+        this.likes = likes;
+        this.dislikes = dislikes;
+    }
+
+    public int getAvatarResourceId(Context context) {
         return context.getResources().getIdentifier(this.avatar,"drawable", context.getPackageName());
     }
 
@@ -37,5 +46,25 @@ public class Player {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
     }
 }

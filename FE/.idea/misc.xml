@@ -13,10 +13,12 @@
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1935" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_add_teammates.xml" value="0.335" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_choose_teammates.xml" value="0.335" />
-        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_finalize_teammates.xml" value="0.165" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_finalize_teammates.xml" value="0.125" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_main.xml" value="0.335" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_results.xml" value="0.1983695652173913" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_uploaded_image.xml" value="0.335" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/player_username_item.xml" value="0.45" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/player_usernames_fragment.xml" value="0.21105072463768115" />
       </map>
     </option>
   </component>
