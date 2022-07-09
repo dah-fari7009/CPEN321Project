@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +33,6 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
         }
         PlayerArrayAdapter adapter = new PlayerArrayAdapter(getActivity(), R.layout.player_username_item, players, this);
         setListAdapter(adapter);
-
     }
 
     private void createPlayerArrayList(String[] playerUsernames) {
@@ -46,13 +46,18 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.player_usernames_fragment, container, false);
+        Button button = (Button) view.findViewById(R.id.confirm_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("fragment button", "CLICKED ");
+            }
+        });
         return view;
     }
 
-
     @Override
     public void getPlayersFromPlayerArrayAdapter(ArrayList<Player> players) {
-        Log.d("check", "PUF" + players.size());
         this.players = players;
         String[] usernames = {"", "", "", "", ""};
         if (!players.isEmpty()) {

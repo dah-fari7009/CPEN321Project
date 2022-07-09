@@ -48,6 +48,7 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_finalize_teammates);
 

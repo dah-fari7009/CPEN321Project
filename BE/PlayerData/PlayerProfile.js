@@ -1,4 +1,5 @@
-const getMatchHistory = require("./DataHandler");
+const DataHandlerModule = require("./DataHandler");
+const getMatchHistory = DataHandlerModule.getMatchHistory;
 const userServiceModule = require("./UserService");
 const getFromDB = userServiceModule.getFromDB;
 

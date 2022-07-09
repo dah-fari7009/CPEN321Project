@@ -1,4 +1,5 @@
 const axios = require("axios");
+const request = require('request');
 require('dotenv').config()
 
 const API_KEY = process.env.RIOT_API_KEY;
@@ -42,6 +43,30 @@ async function getGameStats(matchId) {
     return await axios.get(`${URL_PREFIX}/lol/match/v5/matches/${matchId}?api_key=${API_KEY}`).catch(err => console.log(err));
 }
 
+async function getChamps(id, region) {
+    return await axios.get(`https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=${API_KEY}`).catch(err => console.log(err));
+}
+
+
+function getChampToNameMap() {
+    return axios.get('http://ddragon.leagueoflegends.com/cdn/12.12.1/data/en_US/champion.json');
+}
+
+async function getChampName(id) {
+    let map = await getChampToNameMap();
+
+    for (let i in map.data.data) {
+        if (id == map.data.data[i].key) {
+            return map.data.data[i].id;
+        }
+    }
+}
+
+async function getChampId(name) {
+    let map = await getChampToNameMap();
+    return map.data.data[name].key;
+}
+
 function getAverage(stat) {
     let sum = 0;
     for (let val of stat) {
@@ -55,8 +80,7 @@ async function getPlayerId(name, region) {
     return axios.get(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${API_KEY}`).catch(err => console.log(err));
 }
 
-
-async function getMatchHistory(name, region) {
+function setServer(region) {
     let server;
     if (region == "JP1" || region == "KR") {
         server = "asia";
@@ -69,6 +93,11 @@ async function getMatchHistory(name, region) {
     }
 
     URL_PREFIX = `https://${server}.api.riotgames.com`;
+}
+
+
+async function getMatchHistory(name, region) {
+    setServer(region);
 
     let player = await getPlayerId(name, region);
     let gameIds = await getGameIdList(player.data.puuid);
@@ -79,7 +108,50 @@ async function getMatchHistory(name, region) {
     return formattedStats;
 }
 
-module.exports = getMatchHistory;
+async function getPlayerMasteries(name, region, champ) {
+    setServer(region);
+    let id = await getPlayerId(name, region);
+    let list = await getChamps(id.data.id, region);
+    
+    let top1 = await getChampName(list.data[0].championId);
+    let top2 = await getChampName(list.data[1].championId);
+    let top3 = await getChampName(list.data[2].championId);
+
+    let currChampId = await getChampId(champ);
+    let playTime;
+    let mastery;
+
+    for (let i in list.data) {
+        if(currChampId == list.data[i].championId) {
+            if (i == 0) {
+                playTime = "main";
+            } else if (i <= 10) {
+                playTime = "high";
+            } else if (i <= 20) {
+                playTime = "moderate";
+            } else {
+                playTime = "low";
+            }
+            mastery = list.data[i].championPoints;
+        }
+    }
+
+    return {
+        top1: top1,
+        top2: top2,
+        top3: top3,
+        playTime: playTime,
+        mastery: mastery
+    }
+}
+
+module.exports = {getMatchHistory: getMatchHistory, getPlayerMasteries: getPlayerMasteries};
 
 // getMatchHistory("ct819", "NA1").then(res => console.log(res));
 // "2 4", "TheWanderersWay", "palukawhale", "Thick Rooster", "ct819"
+
+// async function dothing()
+// {let id = await getPlayerMasteries("2 4", "NA1", "Irelia");
+// console.log(id)}
+
+// dothing()

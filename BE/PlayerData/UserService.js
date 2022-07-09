@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router()
 require('dotenv').config()
 var url = process.env.MONGO_URL;
+const DataHandlerModule = require('./DataHandler');
+const getPlayerMasteries = DataHandlerModule.getPlayerMasteries;
 
 
 // LIKE player
@@ -92,6 +94,15 @@ router.post('/undislike', (req, response) => {
 // COMMENT on player
 router.post('/comment', (req, response) => {
     let player = req.body.name;
+    let poster = req.body.poster;
+
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
+
     let comment = req.body.comment;
 
     if (!player || !comment) {
@@ -101,7 +112,7 @@ router.post('/comment', (req, response) => {
             if (err) throw err;
             var dbo = db.db("playerdb");
     
-            dbo.collection("playerdb").updateOne({ _id: player },{ $push: { comments: comment }}, {upsert: true}, function(err, res) {
+            dbo.collection("playerdb").updateOne({ _id: player },{ $push: { comments: {poster: poster, date: today, comment: comment} }}, {upsert: true}, function(err, res) {
                 if (err) throw err;
                 console.log("Added comment");
                 response.json(res).status(200);
@@ -112,8 +123,9 @@ router.post('/comment', (req, response) => {
 })
 
 // GET PLAYER
-router.get('/getPlayer', async (req, response) => {
-    let player = req.body.name;
+router.get('/getPlayer/:name', async (req, response) => {
+    let player = req.params.name;
+    player = player.replace("%20", /\s/g);
 
     if (!player) {
         response.send("Must specify player name").status(400);
@@ -135,6 +147,18 @@ router.get('/getPlayer', async (req, response) => {
             });
         });
     }
+})
+
+// POST Player Mastery
+router.post('/getMastery', async (req, res) => {
+    let player = req.body.name;
+    let region = req.body.region;
+    let champ = req.body.champ;
+
+    getPlayerMasteries(player, region, champ).then(masteries => {
+        res.json(masteries).status(200);
+    })
+
 })
 
 // Separate function that can be called from player profile class

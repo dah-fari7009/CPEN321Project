@@ -32,6 +32,7 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_choose_teammates);
 
         userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
