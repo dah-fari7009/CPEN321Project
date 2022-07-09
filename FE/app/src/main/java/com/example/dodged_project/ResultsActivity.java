@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class ResultsActivity extends AppCompatActivity {
+public class ResultsActivity extends AppCompatActivity implements PlayerUsernamesFragment.Callbacks{
 
     private TextView resultsText;
     private TextView resultsDescription;
@@ -32,37 +32,38 @@ public class ResultsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_results);
 
         Bundle bundle = getIntent().getExtras();
-
-
-
-        String userLoggedInStatus;
-
-        if(bundle != null && bundle.getString("USER_ACCOUNT_INFO_FROM_IMAGE_ACTIVITY") != null) {
-            userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO_FROM_IMAGE_ACTIVITY");
-        } else if(bundle != null & bundle.getString("USER_ACCOUNT_INFO_FROM_FINALIZE_ACTIVITY") != null) {
-            userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO_FROM_FINALIZE_ACTIVITY");
-        }
-
-        String predictionData = bundle.getString("response");
-
-        JSONObject data = new JSONObject();
-        double prediction = 0;
-
-        try {
-            data = new JSONObject(predictionData);
-//            prediction = data.getJSONObject("prediction").getDouble("prediction");
-            prediction = data.getDouble("prediction");
-
-            setPlayerData(data);
-
-            Log.d("ResultsActivity", data.toString());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//
+//
+//
+//        String userLoggedInStatus;
+//
+//        if(bundle != null && bundle.getString("USER_ACCOUNT_INFO_FROM_IMAGE_ACTIVITY") != null) {
+//            userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO_FROM_IMAGE_ACTIVITY");
+//        } else if(bundle != null & bundle.getString("USER_ACCOUNT_INFO_FROM_FINALIZE_ACTIVITY") != null) {
+//            userLoggedInStatus = bundle.getString("USER_ACCOUNT_INFO_FROM_FINALIZE_ACTIVITY");
+//        }
+//
+//        String predictionData = bundle.getString("response");
+//
+//        JSONObject data = new JSONObject();
+//        double prediction = 0;
+////
+//        try {
+//            data = new JSONObject(predictionData);
+//            prediction = data.getDouble("prediction");
+//
+//            setPlayerData(data);
+//
+//            Log.d("ResultsActivity", data.toString());
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
 //        {
 //            prediction: double,
@@ -83,18 +84,10 @@ public class ResultsActivity extends AppCompatActivity {
         // temp results text checker
 //        boolean tempRemoveLater = true;
 
-        resultsText = findViewById(R.id.resultsText);
-        resultsDescription = findViewById(R.id.resultsDescription);
-
-        if(prediction > 0.75) {
-            resultsText.setText(R.string.results_play);
-            resultsDescription.setText(R.string.high_odds_of_winning_text);
-        } else {
-            resultsText.setText(R.string.results_dodge);
-            resultsDescription.setText(R.string.low_odds_of_winning_text);
-        }
-
-//        if(tempRemoveLater) {
+//        resultsText = findViewById(R.id.resultsText);
+//        resultsDescription = findViewById(R.id.resultsDescription);
+//
+//        if(prediction > 0.75) {
 //            resultsText.setText(R.string.results_play);
 //            resultsDescription.setText(R.string.high_odds_of_winning_text);
 //        } else {
@@ -102,27 +95,14 @@ public class ResultsActivity extends AppCompatActivity {
 //            resultsDescription.setText(R.string.low_odds_of_winning_text);
 //        }
 
-//        FragmentManager fm = getSupportFragmentManager();
-//        Fragment fragment = fm.findFragmentById(R.id.player_usernames_fragment);
-//
-//
-//        String[] tempList = new String[5];
-//        tempList[0] = "a";
-//        tempList[1] = "a";
-//        tempList[2] = "a";
-//        tempList[3] = "a";
-//        tempList[4] = "a";
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putStringArray("list", tempList);
-//
-//        usernames = bundle.getStringArray("list");
-//
-//        if (fragment == null) {
-//            fragment = new PlayerUsernamesFragment(ResultsActivity.this);
-//            fragment.setArguments(bundle);
-//            fm.beginTransaction().add(R.id.player_usernames_fragment, fragment).commit();
-//        }
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.player_usernames_fragment);
+
+        if (fragment == null) {
+            fragment = new PlayerUsernamesFragment(ResultsActivity.this);
+            fragment.setArguments(bundle);
+            fm.beginTransaction().add(R.id.player_usernames_fragment, fragment).commit();
+        }
 
     }
 
@@ -166,8 +146,8 @@ public class ResultsActivity extends AppCompatActivity {
         startActivity(backToChooseTeammates);
     }
 
-//    @Override
-//    public void getPlayersFromPlayerUsernamesFragment(String[] playerUsernames) {
-//        this.usernames = Arrays.copyOf(playerUsernames,playerUsernames.length);
-//    }
+    @Override
+    public void getPlayersFromPlayerUsernamesFragment(String[] playerUserNames) {
+
+    }
 }

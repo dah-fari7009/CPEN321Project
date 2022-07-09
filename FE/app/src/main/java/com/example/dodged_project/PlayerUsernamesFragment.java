@@ -42,19 +42,19 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
         }
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.player_usernames_fragment, container, false);
-        Button button = (Button) view.findViewById(R.id.confirm_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("fragment button", "CLICKED ");
-            }
-        });
-        return view;
-    }
+//    @Nullable
+//    @Override
+//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.player_usernames_fragment, container, false);
+//        Button button = (Button) view.findViewById(R.id.confirm_button);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("fragment button", "CLICKED ");
+//            }
+//        });
+//        return view;
+//    }
 
     @Override
     public void getPlayersFromPlayerArrayAdapter(ArrayList<Player> players) {

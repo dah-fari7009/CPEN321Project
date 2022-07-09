@@ -36,13 +36,11 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_teammates);
 
         userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
-//
-        String userLoggedInStatus = getIntent().getStringExtra("USER_ACCOUNT_INFO");
-//
-        if(userLoggedInStatus == null) {
+
+        if(MainActivity.googleAccountName == null) {
             userLoggedInStatusText.setText("Not logged in");
         } else {
-            userLoggedInStatusText.setText("Logged in as: " + userLoggedInStatus);
+            userLoggedInStatusText.setText("Logged in as: " + MainActivity.googleAccountName);
         }
 
         addTeammatesButton = findViewById(R.id.add_teammates_button);
@@ -50,7 +48,6 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addTeammatesIntent = new Intent(ChooseTeammatesActivity.this, AddTeammatesActivity.class);
-//                addTeammatesIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
                 startActivity(addTeammatesIntent);
             }
         });
@@ -92,14 +89,9 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
                     if(result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
 
-                        Log.d("ChooseTeammatesActivity", String.valueOf(result.getData().getExtras()));
-
                         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                        String userLoggedInStatus = getIntent().getStringExtra("USER_ACCOUNT_INFO");
-
                         Intent uploadedImageActivityIntent = new Intent(ChooseTeammatesActivity.this, UploadedImageActivity.class);
                         uploadedImageActivityIntent.putExtra("imageBitmap", bitmap);
-                        uploadedImageActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
                         startActivity(uploadedImageActivityIntent);
                     }
                 }

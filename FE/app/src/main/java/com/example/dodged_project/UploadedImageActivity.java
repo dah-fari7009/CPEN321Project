@@ -56,12 +56,10 @@ public class UploadedImageActivity extends AppCompatActivity {
 
         userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
 
-        String userLoggedInStatus = getIntent().getStringExtra("USER_ACCOUNT_INFO");
-
-        if(userLoggedInStatus == null) {
+        if(MainActivity.googleAccountName == null) {
             userLoggedInStatusText.setText("Not logged in");
         } else {
-            userLoggedInStatusText.setText("Logged in as: " + userLoggedInStatus);
+            userLoggedInStatusText.setText("Logged in as: " + MainActivity.googleAccountName);
         }
 
 //        Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");
@@ -69,7 +67,7 @@ public class UploadedImageActivity extends AppCompatActivity {
 //        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 //        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
 //        byte[] bArray = byteArrayOutputStream.toByteArray();
-//        String encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
+//        String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
 
         // FOR M5, USE A DEFAULT IMAGE SINCE WE ARE USING AN EMULATOR
 //        String defaultImagePath = "../assets/defaultUploadImage.jpg";
@@ -94,11 +92,10 @@ public class UploadedImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // make a POST request to the BE
-                sendImage(encodedImage, selectedRegion, userLoggedInStatus);
+//                sendImage(encodedImage, selectedRegion, userLoggedInStatus);
                 // then start results intent
-//                Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
-//                resultsIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
-//                startActivity(resultsIntent);
+                Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
+                startActivity(resultsIntent);
             }
         });
 
@@ -107,7 +104,6 @@ public class UploadedImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent cancelFromUploadedImageActivityIntent = new Intent(UploadedImageActivity.this, ChooseTeammatesActivity.class);
-                cancelFromUploadedImageActivityIntent.putExtra("USER_ACCOUNT_INFO", userLoggedInStatus);
                 startActivity(cancelFromUploadedImageActivityIntent);
             }
         });
@@ -131,14 +127,8 @@ public class UploadedImageActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Toast.makeText(UploadedImageActivity.this, response.toString(), Toast.LENGTH_LONG).show();
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString("response", response.toString());
-                        bundle.putString("USER_ACCOUNT_INFO_FROM_IMAGE_ACTIVITY", userLoggedInStatus);
-
-                        Log.d("UploadedImageActivity", response.toString());
-
                         Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
-                        resultsIntent.putExtras(bundle);
+                        resultsIntent.putExtra("response", response.toString());
                         startActivity(resultsIntent);
                     }
                 }, new Response.ErrorListener() {

@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private UiModeManager uiModeManager;
     private SwitchMaterial switchMaterial;
 
+    public static String googleAccountName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,13 +112,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "LOGIN SUCCESSFUL");
             updateUI(account);
             Intent chooseTeammatesIntent = new Intent(MainActivity.this, ChooseTeammatesActivity.class);
-            chooseTeammatesIntent.putExtra("USER_ACCOUNT_INFO", account.getDisplayName());
+            googleAccountName = account.getDisplayName();
             startActivity(chooseTeammatesIntent);
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-//            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
             updateUI(null);
         }
     }
@@ -140,12 +142,5 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "There is no user signed in!");
             Toast.makeText(this, "There is no user signed in. To use this feature please sign in", Toast.LENGTH_LONG).show();
         }
-//        else {
-////            String loggedInNameText = account.getDisplayName();
-////            String loggedInNameText = account.getDisplayName();
-//
-//            //Send token to the BE (account.getIdToken())
-//            //Move to another Activity
-//        }
     }
 }
