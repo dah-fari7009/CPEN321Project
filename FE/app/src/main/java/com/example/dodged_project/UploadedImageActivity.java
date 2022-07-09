@@ -126,9 +126,12 @@ public class UploadedImageActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(UploadedImageActivity.this, response.toString(), Toast.LENGTH_LONG).show();
-
                         Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
-                        resultsIntent.putExtra("response", response.toString());
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("response", response.toString());
+
+                        resultsIntent.putExtras(bundle);
                         startActivity(resultsIntent);
                     }
                 }, new Response.ErrorListener() {

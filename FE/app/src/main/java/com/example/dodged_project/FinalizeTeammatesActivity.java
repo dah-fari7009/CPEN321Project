@@ -144,7 +144,6 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
 
                         Bundle bundle = new Bundle();
                         bundle.putString("response", response.toString());
-                        bundle.putString("USER_ACCOUNT_INFO", "TEMP USER LOGGED IN STATUS");
 
                         resultsActivityIntent.putExtras(bundle);
                         startActivity(resultsActivityIntent);
