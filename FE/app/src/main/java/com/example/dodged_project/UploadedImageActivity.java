@@ -92,10 +92,10 @@ public class UploadedImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // make a POST request to the BE
-//                sendImage(encodedImage, selectedRegion, userLoggedInStatus);
+                sendImage(encodedImage, selectedRegion);
                 // then start results intent
-                Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
-                startActivity(resultsIntent);
+//                Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
+//                startActivity(resultsIntent);
             }
         });
 
@@ -109,7 +109,7 @@ public class UploadedImageActivity extends AppCompatActivity {
         });
     }
 
-    public void sendImage(String encodedImage, String region, String userLoggedInStatus) {
+    public void sendImage(String encodedImage, String region) {
         String sendUsernamesEndpoint = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/image/usernames";
         JSONObject jsonObject = new JSONObject();
         try {
