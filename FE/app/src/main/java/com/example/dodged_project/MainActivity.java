@@ -29,7 +29,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 public class MainActivity extends AppCompatActivity {
 
     private SignInButton signInButton;
-    private int RC_SIGN_IN = 1;
+    private final int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
 
     private Button continueAsGuestButton;

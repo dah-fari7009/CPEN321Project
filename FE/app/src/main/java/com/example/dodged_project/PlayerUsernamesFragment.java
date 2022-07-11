@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class PlayerUsernamesFragment extends ListFragment implements PlayerArrayAdapter.Callbacks {
     private ArrayList<Player> players = new ArrayList<>();
-    private Callbacks callback;
+    private final Callbacks callback;
     public PlayerUsernamesFragment(Callbacks callback) {
         this.callback = callback;
     }
@@ -40,6 +40,7 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
 //                JSONObject[] statsObjectArray = new JSONObject[5];
                 createPlayerArrayListForResults(
                         getArguments().getStringArray("user_input_player_names"),
+                        getArguments().getStringArray("user_input_player_regions"),
                         getArguments().getIntArray("user_input_player_likes"),
                         getArguments().getIntArray("user_input_player_dislikes"),
                         getArguments().getDoubleArray("user_input_player_kps"),
@@ -66,6 +67,7 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
 
     private void createPlayerArrayListForResults(
             String[] playerUsernames,
+            String[] playerRegion,
             int[] playerLikes,
             int[] playerDislikes,
             double[] playerKPS,
@@ -77,6 +79,7 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
         for (int i = 0; i < playerUsernames.length; i++) {
             Player player = new Player(
                     playerUsernames[i],
+                    playerRegion[i],
                     playerLikes[i],
                     playerDislikes[i],
                     playerKPS[i],

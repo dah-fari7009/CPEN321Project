@@ -8,7 +8,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -23,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.dodged_project.data.Comment;
 import com.example.dodged_project.data.CommentRecyclerViewAdapter;
 import com.example.dodged_project.databinding.ActivityPlayerProfileBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,14 +40,20 @@ import java.util.HashMap;
 
 public class PlayerProfileActivity extends AppCompatActivity {
 
-    private ActivityPlayerProfileBinding binding;
+    public ActivityPlayerProfileBinding binding;
     RequestQueue queue;
     private CommentRecyclerViewAdapter commentRecyclerViewAdapter;
     private ArrayList<Comment> commentsArrayList;
     private JSONArray commentsArray;
 
+    private View champExpPopupView;
+    private MaterialAlertDialogBuilder builder;
+    private String region = "NA1";
+    private String selectedChamp = "Aatrox";
+
     private String playerProfileURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/getPlayer/";
-    private String postCommentURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/comment";
+    private final String postCommentURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/comment";
+    private final String champMasteryURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/getMastery";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +75,12 @@ public class PlayerProfileActivity extends AppCompatActivity {
         Bundle playerProfileExtra = getIntent().getExtras();
         if (playerProfileExtra != null) {
             playerUsername = playerProfileExtra.getString("player_username");
+            region = playerProfileExtra.getString("region");
             kps = playerProfileExtra.getDouble("kps");
             aps = playerProfileExtra.getDouble("aps");
             dps = playerProfileExtra.getDouble("dps");
             gps = playerProfileExtra.getDouble("gps");
             vps = playerProfileExtra.getDouble("vps");
-            playerProfileURL = playerProfileURL + "?name=" + playerUsername;
         }
 
         binding.playerProfileUsername.setText(playerUsername);
@@ -79,7 +90,6 @@ public class PlayerProfileActivity extends AppCompatActivity {
         binding.statsGoldTextview.setText(String.format("%.2f", gps * 60.0));
         binding.statsVisionTextview.setText(String.format("%.2f", vps * 60.0));
 
-//        String playerUsername = "APAP";
         playerProfileURL = playerProfileURL + playerUsername;
 
         String finalPlayerUsername = playerUsername;
@@ -89,7 +99,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     try {
                         commentsArray = response.getJSONArray("comments");
                         //Log.d("JSON", response.getJSONArray("comments").toString());
-                        for (int i = 5; i < commentsArray.length(); i++) {
+                        for (int i = 0; i < commentsArray.length(); i++) {
                             if (commentsArray.getJSONObject(i) != null) {
 //                                Log.d("JSON", "" + commentsArray.getJSONObject(i).length());
 //                                Log.d("JSON", "" + commentsArray.getJSONObject(i).get("poster"));
@@ -114,6 +124,30 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     Log.d("JSON", error.toString());
                 });
 
+        String[] champions = new String[] {"Aatrox", "Ahri", "Akali", "Akshan", "Alistar", "Amumu", "Anivia", "Annie", "Aphelios", "Ashe", "AurelionSol", "Azir", "Bard", "Belveth", "Blitzcrank", "Brand", "Braum", "Caitlyn", "Camille", "Cassiopeia", "Chogath", "Corki", "Darius", "Diana", "Draven", "DrMundo", "Ekko", "Elise", "Evelynn", "Ezreal", "Fiddlesticks", "Fiora", "Fizz", "Galio", "Gangplank", "Garen", "Gnar", "Gragas", "Graves", "Gwen", "Hecarim", "Heimerdinger", "Illaoi", "Irelia", "Ivern", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Kaisa", "Kalista", "Karma", "Karthus", "Kassadin", "Katarina", "Kayle", "Kayn", "Kennen", "Khazix", "Kindred", "Kled", "KogMaw", "Leblanc", "LeeSin", "Leona", "Lillia", "Lissandra", "Lucian", "Lulu", "Lux", "Malphite", "Malzahar", "Maokai", "MasterYi", "MissFortune", "MonkeyKing", "Mordekaiser", "Morgana", "Nami", "Nasus", "Nautilus", "Neeko", "Nidalee", "Nocturne", "Nunu", "Olaf", "Orianna", "Ornn", "Pantheon", "Poppy", "Pyke", "Qiyana", "Quinn", "Rakan", "Rammus", "RekSai", "Rell", "Renata", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Samira", "Sejuani", "Senna", "Seraphine", "Sett", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Sivir", "Skarner", "Sona", "Soraka", "Swain", "Sylas", "Syndra", "TahmKench", "Taliyah", "Talon", "Taric", "Teemo", "Thresh", "Tristana", "Trundle", "Tryndamere", "TwistedFate", "Twitch", "Udyr", "Urgot", "Varus", "Vayne", "Veigar", "Velkoz", "Vex", "Vi", "Viego", "Viktor", "Vladimir", "Volibear", "Warwick", "Xayah", "Xerath", "XinZhao", "Yasuo", "Yone", "Yorick", "Yuumi", "Zac", "Zed", "Zeri", "Ziggs", "Zilean", "Zoe", "Zyra"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(PlayerProfileActivity.this, R.layout.champion_dropdown_item, champions);
+        binding.championDropdownItem.setAdapter(adapter);
+
+        binding.championDropdownItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedChamp = (String) parent.getItemAtPosition(position);
+            }
+        });
+
+        binding.championExpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    getMastery(finalPlayerUsername, region, selectedChamp, PlayerProfileActivity.this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                builder = new MaterialAlertDialogBuilder(PlayerProfileActivity.this);
+                champExpPopupView = LayoutInflater.from(PlayerProfileActivity.this).inflate(R.layout.champ_exp_popup, null, false);
+            }
+        });
+
         queue.add(jsonObjectRequest);
 
         binding.commentsRecyclerView.setHasFixedSize(true);
@@ -123,12 +157,11 @@ public class PlayerProfileActivity extends AppCompatActivity {
         binding.commentsRecyclerView.setAdapter(commentRecyclerViewAdapter);
         commentRecyclerViewAdapter.notifyDataSetChanged();
 
-        String finalPlayerUsername1 = playerUsername;
         binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername1, PlayerProfileActivity.this);
+                    postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -154,5 +187,44 @@ public class PlayerProfileActivity extends AppCompatActivity {
                 });
         queue = Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
+    }
+
+    private void getMastery(String playerUsername, String region, String champ, Context context) throws JSONException {
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("name", playerUsername);
+        jsonBody.put("region", region);
+        jsonBody.put("champ", champ);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, champMasteryURL, jsonBody,
+                response ->
+                {
+                    TextView champPopupTitle = champExpPopupView.findViewById(R.id.champ_popup_title_textview);
+                    champPopupTitle.setText(playerUsername + "'s Exp Level on " + selectedChamp);
+                    TextView champExpLvl = champExpPopupView.findViewById(R.id.champ_exp_level_textview);
+                    TextView masteryPoints = champExpPopupView.findViewById(R.id.mastery_points_textview);
+                    TextView topChamp1 = champExpPopupView.findViewById(R.id.top_champ_1_textview);
+                    TextView topChamp2 = champExpPopupView.findViewById(R.id.top_champ_2_textview);
+                    TextView topChamp3 = champExpPopupView.findViewById(R.id.top_champ_3_textview);
+                    try {
+                        champExpLvl.setText(response.getString("playTime"));
+                        masteryPoints.setText(response.getString("mastery"));
+                        topChamp1.setText(response.getString("top1"));
+                        topChamp2.setText(response.getString("top2"));
+                        topChamp3.setText(response.getString("top3"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    showChampExpPopUp();
+                },
+                error -> {
+                    Log.d("JSON", error.toString());
+                });
+        queue = Volley.newRequestQueue(context);
+        queue.add(jsonObjectRequest);
+    }
+
+    private void showChampExpPopUp() {
+        builder.setView(champExpPopupView);
+        builder.show();
     }
 }

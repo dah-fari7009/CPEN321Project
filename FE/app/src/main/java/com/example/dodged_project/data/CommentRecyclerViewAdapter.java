@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<Comment> commentsArrayList;
+    private final ArrayList<Comment> commentsArrayList;
 
     public CommentRecyclerViewAdapter(ArrayList<Comment> commentsArrayList) {
         this.commentsArrayList = commentsArrayList;
@@ -43,9 +43,9 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView commentPoster;
-        private TextView commentDate;
-        private TextView commentActualComment;
+        private final TextView commentPoster;
+        private final TextView commentDate;
+        private final TextView commentActualComment;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

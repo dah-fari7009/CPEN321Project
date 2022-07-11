@@ -36,13 +36,14 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
     private TextView resultsText;
     private TextView resultsDescription;
     private String[] usernames = {"", "", "", "", ""};
-    private int[] likes = {0, 0, 0, 0, 0};
-    private int[] dislikes = {0, 0, 0, 0, 0};
-    private double[] kps = {0, 0, 0, 0, 0};
-    private double[] aps = {0, 0, 0, 0, 0};
-    private double[] dps = {0, 0, 0, 0, 0};
-    private double[] gps = {0, 0, 0, 0, 0};
-    private double[] vps = {0, 0, 0, 0, 0};
+    private final String[] regions = {"", "", "", "", ""};
+    private final int[] likes = {0, 0, 0, 0, 0};
+    private final int[] dislikes = {0, 0, 0, 0, 0};
+    private final double[] kps = {0, 0, 0, 0, 0};
+    private final double[] aps = {0, 0, 0, 0, 0};
+    private final double[] dps = {0, 0, 0, 0, 0};
+    private final double[] gps = {0, 0, 0, 0, 0};
+    private final double[] vps = {0, 0, 0, 0, 0};
 
     private JSONObject[] stats;
 
@@ -75,12 +76,14 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
             prediction = data.getDouble("prediction");
 
             setPlayerData(data);
+            setRegions();
             setUsernames();
             setLikes();
             setDislikes();
             setStats();
 
             fragmentBundle.putStringArray("user_input_player_names", usernames);
+            fragmentBundle.putStringArray("user_input_player_regions", regions);
             fragmentBundle.putString("activity", "ResultsActivity");
             fragmentBundle.putIntArray("user_input_player_likes", likes);
             fragmentBundle.putIntArray("user_input_player_dislikes", dislikes);
@@ -127,6 +130,7 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
     private void setPlayerData(JSONObject data) throws JSONException {
         player1 = new Player(
                 data.getJSONObject("player1").getString("name"),
+                data.getJSONObject("player1").getString("region"),
                 data.getJSONObject("player1").getJSONObject("reviews").getInt("likes"),
                 data.getJSONObject("player1").getJSONObject("reviews").getInt("dislikes"),
                 data.getJSONObject("player1").getJSONObject("stats").getDouble("kps"),
@@ -139,6 +143,7 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
 
         player2 = new Player(
                 data.getJSONObject("player2").getString("name"),
+                data.getJSONObject("player1").getString("region"),
                 data.getJSONObject("player2").getJSONObject("reviews").getInt("likes"),
                 data.getJSONObject("player2").getJSONObject("reviews").getInt("dislikes"),
                 data.getJSONObject("player2").getJSONObject("stats").getDouble("kps"),
@@ -151,6 +156,7 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
 
         player3 = new Player(
                 data.getJSONObject("player3").getString("name"),
+                data.getJSONObject("player1").getString("region"),
                 data.getJSONObject("player3").getJSONObject("reviews").getInt("likes"),
                 data.getJSONObject("player3").getJSONObject("reviews").getInt("dislikes"),
                 data.getJSONObject("player3").getJSONObject("stats").getDouble("kps"),
@@ -163,6 +169,7 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
 
         player4 = new Player(
                 data.getJSONObject("player4").getString("name"),
+                data.getJSONObject("player1").getString("region"),
                 data.getJSONObject("player4").getJSONObject("reviews").getInt("likes"),
                 data.getJSONObject("player4").getJSONObject("reviews").getInt("dislikes"),
                 data.getJSONObject("player4").getJSONObject("stats").getDouble("kps"),
@@ -175,6 +182,7 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
 
         player5 = new Player(
                 data.getJSONObject("player5").getString("name"),
+                data.getJSONObject("player1").getString("region"),
                 data.getJSONObject("player5").getJSONObject("reviews").getInt("likes"),
                 data.getJSONObject("player5").getJSONObject("reviews").getInt("dislikes"),
                 data.getJSONObject("player5").getJSONObject("stats").getDouble("kps"),
@@ -205,6 +213,14 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         usernames[2] = player3.getUsername();
         usernames[3] = player4.getUsername();
         usernames[4] = player5.getUsername();
+    }
+
+    public void setRegions() {
+        regions[0] = player1.getRegion();
+        regions[1] = player2.getRegion();
+        regions[2] = player3.getRegion();
+        regions[3] = player4.getRegion();
+        regions[4] = player5.getRegion();
     }
 
     public void setLikes() {

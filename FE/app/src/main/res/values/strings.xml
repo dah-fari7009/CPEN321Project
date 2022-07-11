@@ -37,4 +37,10 @@
     <string name="comment_row_username">username</string>
     <string name="comment_row_date">date</string>
     <string name="comment_row_comment">comment comment comment</string>
+    <string name="comment_leave_a_comment">Leave a comment..</string>
+    <string name="champ_dropdown_string">Select Champion</string>
+    <string name="champ_exp_button_string">CHECK EXP</string>
+    <string name="exp_level">EXP LEVEL</string>
+    <string name="mastery_points">MASTERY POINTS</string>
+    <string name="top_played_champs">Top Played Champions</string>
 </resources>

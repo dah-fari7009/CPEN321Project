@@ -9,6 +9,7 @@ public class Player {
     private String id;
     private String username;
     private String avatar;
+    private String region;
 
     private int likes;
     private int dislikes;
@@ -31,8 +32,9 @@ public class Player {
         this.dislikes = dislikes;
     }
 
-    public Player(String username, int likes, int dislikes, double kps, double aps, double dps, double gps, double vps) {
+    public Player(String username, String region, int likes, int dislikes, double kps, double aps, double dps, double gps, double vps) {
         this.username = username;
+        this.region = region;
         this.likes = likes;
         this.dislikes = dislikes;
         this.kps = kps;
@@ -125,6 +127,14 @@ public class Player {
 
     public void setVps(double vps) {
         this.vps = vps;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     //    public JSONObject getStats() {
