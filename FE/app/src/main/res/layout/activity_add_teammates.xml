@@ -102,6 +102,8 @@
                                 android:layout_width="308dp"
                                 android:layout_height="40dp"
                                 android:paddingVertical="2dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -123,7 +125,10 @@
                                 android:id="@+id/username_02_textinput"
                                 android:layout_width="308dp"
                                 android:layout_height="40dp"
-                                android:paddingVertical="2dp" />
+                                android:paddingVertical="2dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,7 +149,10 @@
                                 android:id="@+id/username_03_textinput"
                                 android:layout_width="308dp"
                                 android:layout_height="40dp"
-                                android:paddingVertical="2dp" />
+                                android:paddingVertical="2dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,7 +173,10 @@
                                 android:id="@+id/username_04_textinput"
                                 android:layout_width="308dp"
                                 android:layout_height="40dp"
-                                android:paddingVertical="2dp"/>
+                                android:paddingVertical="2dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -186,7 +197,10 @@
                                 android:id="@+id/username_05_textinput"
                                 android:layout_width="308dp"
                                 android:layout_height="40dp"
-                                android:paddingVertical="2dp" />
+                                android:paddingVertical="2dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                />
 
                         </com.google.android.material.textfield.TextInputLayout>
 

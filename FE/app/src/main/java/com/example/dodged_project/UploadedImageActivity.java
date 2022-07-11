@@ -62,27 +62,27 @@ public class UploadedImageActivity extends AppCompatActivity {
             userLoggedInStatusText.setText("Logged in as: " + MainActivity.googleAccountName);
         }
 
-//        Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");
-//
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//        byte[] bArray = byteArrayOutputStream.toByteArray();
-//        String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
+        Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] bArray = byteArrayOutputStream.toByteArray();
+        String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
 
         // FOR M5, USE A DEFAULT IMAGE SINCE WE ARE USING AN EMULATOR
 //        String defaultImagePath = "../assets/defaultUploadImage.jpg";
 //        Bitmap defaultImageBitmap = BitmapFactory.decodeFile(defaultImagePath);
 
-        Bitmap defaultImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_upload_image);
-        Bitmap scaled = Bitmap.createScaledBitmap(defaultImageBitmap, 150, 100, true);
-
+//        Bitmap defaultImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_upload_image);
+//        Bitmap scaled = Bitmap.createScaledBitmap(defaultImageBitmap, 150, 100, true);
+//
         uploadedImage = findViewById(R.id.uploadedImage);
-        uploadedImage.setImageBitmap(scaled);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        defaultImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] bArray = byteArrayOutputStream.toByteArray();
-        String encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
+        uploadedImage.setImageBitmap(imageBitmap);
+//
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        defaultImageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+//        byte[] bArray = byteArrayOutputStream.toByteArray();
+//        String encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
 
         // TEMP ADD REGION DROPDOWN
         selectedRegion = "NA1";
@@ -92,7 +92,7 @@ public class UploadedImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // make a POST request to the BE
-                sendImage(encodedImage, selectedRegion);
+                sendImage(encodedImageFromCamera, selectedRegion);
                 // then start results intent
 //                Intent resultsIntent = new Intent(UploadedImageActivity.this, ResultsActivity.class);
 //                startActivity(resultsIntent);
@@ -137,7 +137,7 @@ public class UploadedImageActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(UploadedImageActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(UploadedImageActivity.this, "Sorry, your image may not be clear enough", Toast.LENGTH_LONG).show();
                     }
              }) {
                 @Override

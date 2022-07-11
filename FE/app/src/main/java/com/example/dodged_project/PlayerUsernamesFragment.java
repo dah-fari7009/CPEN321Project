@@ -9,10 +9,13 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.ListFragment;
 
 import com.example.dodged_project.data.Player;
 import com.example.dodged_project.data.PlayerArrayAdapter;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -28,10 +31,24 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        String screen = null;
+
         if (getArguments() != null) {
-            createPlayerArrayList(getArguments().getStringArray("user_input_player_names"));
+            screen = getArguments().getString("activity");
+            if(screen == "ResultsActivity") {
+//                String stats = getArguments().getString("user_input_player_stats");
+//                JSONObject[] statsObjectArray = new JSONObject[5];
+                createPlayerArrayListForResults(
+                        getArguments().getStringArray("user_input_player_names"),
+                        getArguments().getIntArray("user_input_player_likes"),
+                        getArguments().getIntArray("user_input_player_dislikes")
+                );
+            } else {
+                createPlayerArrayList(getArguments().getStringArray("user_input_player_names"));
+            }
         }
-        PlayerArrayAdapter adapter = new PlayerArrayAdapter(getActivity(), R.layout.player_username_item, players, this);
+
+        PlayerArrayAdapter adapter = new PlayerArrayAdapter(getActivity(), R.layout.player_username_item, players, this, screen);
         setListAdapter(adapter);
     }
 
@@ -41,6 +58,20 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
             players.add(player);
         }
     }
+
+    private void createPlayerArrayListForResults(String[] playerUsernames, int[] playerLikes, int[] playerDislikes) {
+        for (int i = 0; i < playerUsernames.length; i++) {
+            Player player = new Player(
+                    playerUsernames[i],
+                    playerLikes[i],
+                    playerDislikes[i]
+            );
+            Log.d("Fragment", player.getUsername());
+            players.add(player);
+        }
+    }
+
+
 
 //    @Nullable
 //    @Override

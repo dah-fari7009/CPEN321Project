@@ -103,6 +103,9 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
             }
         });
 
+        //check if on FinalizeTeammates screen
+        finalizeTeammatesActivityBundle.putString("activity", "FinalizeTeammatesActivity");
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.player_usernames_fragment);
 

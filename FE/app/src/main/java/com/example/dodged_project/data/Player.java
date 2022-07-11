@@ -2,6 +2,8 @@ package com.example.dodged_project.data;
 
 import android.content.Context;
 
+import org.json.JSONObject;
+
 public class Player {
 
     private String id;
@@ -10,6 +12,7 @@ public class Player {
 
     private int likes;
     private int dislikes;
+//    private JSONObject stats;
 
     public Player(String id, String username, String avatar) {
         this.id = id;
@@ -67,4 +70,12 @@ public class Player {
     public void setDislikes(int dislikes) {
         this.dislikes = dislikes;
     }
+
+//    public JSONObject getStats() {
+//        return stats;
+//    }
+//
+//    public void setStats(JSONObject stats) {
+//        this.stats = stats;
+//    }
 }

@@ -54,15 +54,18 @@ public class PlayerProfileActivity extends AppCompatActivity {
 
         commentsArrayList = new ArrayList<>();
 
-//        Bundle playerProfileExtra = getIntent().getExtras();
-//        if (playerProfileExtra != null) {
-//            String playerUsername = playerProfileExtra.getString("player_username");
-//            playerProfileURL = playerProfileURL + "?name=" + playerUsername;
-//        }
+        String playerUsername = "";
 
-        String playerUsername = "APAP";
+        Bundle playerProfileExtra = getIntent().getExtras();
+        if (playerProfileExtra != null) {
+            playerUsername = playerProfileExtra.getString("player_username");
+            playerProfileURL = playerProfileURL + "?name=" + playerUsername;
+        }
+
+//        String playerUsername = "APAP";
         playerProfileURL = playerProfileURL + playerUsername;
 
+        String finalPlayerUsername = playerUsername;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, playerProfileURL, null,
                 response ->
                 {
@@ -78,7 +81,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                                 String date = commentsArray.getJSONObject(i).getString("date");
                                 String comment = commentsArray.getJSONObject(i).getString("comment");
 
-                                Comment commentItem = new Comment(poster, date, comment, playerUsername);
+                                Comment commentItem = new Comment(poster, date, comment, finalPlayerUsername);
                                 commentsArrayList.add(commentItem);
                             }
                         }
@@ -103,11 +106,12 @@ public class PlayerProfileActivity extends AppCompatActivity {
         binding.commentsRecyclerView.setAdapter(commentRecyclerViewAdapter);
         commentRecyclerViewAdapter.notifyDataSetChanged();
 
+        String finalPlayerUsername1 = playerUsername;
         binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    postComment(binding.addCommentTextinput.getText().toString(), playerUsername, PlayerProfileActivity.this);
+                    postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername1, PlayerProfileActivity.this);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
