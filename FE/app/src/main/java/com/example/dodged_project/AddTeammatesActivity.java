@@ -16,7 +16,7 @@ import com.example.dodged_project.databinding.ActivityAddTeammatesBinding;
 public class AddTeammatesActivity extends AppCompatActivity {
 
     private ActivityAddTeammatesBinding binding;
-    private final String[] usernames = new String[5];
+    private String[] usernames = new String[5];
 
     private TextView userLoggedInStatusText;
 

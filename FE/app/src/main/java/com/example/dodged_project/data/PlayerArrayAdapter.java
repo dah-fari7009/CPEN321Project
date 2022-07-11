@@ -46,10 +46,10 @@ import java.util.Map;
 
 public class PlayerArrayAdapter extends ArrayAdapter<Player>{
 
-    private final Context context;
-    private final ArrayList<Player> players;
-    private final Callbacks callback;
-    private final String screen;
+    private Context context;
+    private ArrayList<Player> players;
+    private Callbacks callback;
+    private String screen;
 
     private boolean likeClicked = false;
     private boolean dislikeClicked = false;
@@ -76,10 +76,10 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
             CardView cardView = view.findViewById(R.id.alt_card_view);
             cardView.setVisibility(View.GONE);
 
-            ImageView playerAvatarImageView = view.findViewById(R.id.playerAvatar);
+            ImageView playerAvatarImageView = (ImageView) view.findViewById(R.id.playerAvatar);
             playerAvatarImageView.setImageResource(player.getAvatarResourceId(context));
 
-            TextView textView = view.findViewById(R.id.playerUsername);
+            TextView textView = (TextView) view.findViewById(R.id.playerUsername);
             textView.setText(player.getUsername());
 
             textView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -95,7 +95,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
                 }
             });
 
-            ImageView usernameEditImageView = view.findViewById(R.id.usernameEditButton);
+            ImageView usernameEditImageView = (ImageView) view.findViewById(R.id.usernameEditButton);
             usernameEditImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -103,7 +103,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
                 }
             });
 
-            ImageView usernameDeleteImageView = view.findViewById(R.id.usernameDeleteButton);
+            ImageView usernameDeleteImageView = (ImageView) view.findViewById(R.id.usernameDeleteButton);
             usernameDeleteImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -118,18 +118,18 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
             CardView cardView = view.findViewById(R.id.card_view);
             cardView.setVisibility(View.GONE);
 
-            ImageView playerAvatarImageView = view.findViewById(R.id.alt_playerAvatar);
+            ImageView playerAvatarImageView = (ImageView) view.findViewById(R.id.alt_playerAvatar);
 //            playerAvatarImageView.setImageResource(player.getAvatarResourceId(context));
 
-            TextView textView = view.findViewById(R.id.alt_playerUsername);
+            TextView textView = (TextView) view.findViewById(R.id.alt_playerUsername);
             textView.setText(player.getUsername());
 
 
-            ImageView playerLikeImageView = view.findViewById(R.id.player_like_button);
-            ImageView playerDislikeImageView = view.findViewById(R.id.player_dislike_button);
+            ImageView playerLikeImageView = (ImageView) view.findViewById(R.id.player_like_button);
+            ImageView playerDislikeImageView = (ImageView) view.findViewById(R.id.player_dislike_button);
 
-            TextView playerNumberLikes = view.findViewById(R.id.player_number_likes);
-            TextView playerNumberDislikes = view.findViewById(R.id.player_number_dislikes);
+            TextView playerNumberLikes = (TextView) view.findViewById(R.id.player_number_likes);
+            TextView playerNumberDislikes = (TextView) view.findViewById(R.id.player_number_dislikes);
 
             playerNumberLikes.setText(String.valueOf(player.getLikes()));
             playerNumberDislikes.setText(String.valueOf(player.getDislikes()));

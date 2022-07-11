@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class PlayerUsernamesFragment extends ListFragment implements PlayerArrayAdapter.Callbacks {
     private ArrayList<Player> players = new ArrayList<>();
-    private final Callbacks callback;
+    private Callbacks callback;
     public PlayerUsernamesFragment(Callbacks callback) {
         this.callback = callback;
     }

@@ -36,14 +36,14 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
     private TextView resultsText;
     private TextView resultsDescription;
     private String[] usernames = {"", "", "", "", ""};
-    private final String[] regions = {"", "", "", "", ""};
-    private final int[] likes = {0, 0, 0, 0, 0};
-    private final int[] dislikes = {0, 0, 0, 0, 0};
-    private final double[] kps = {0, 0, 0, 0, 0};
-    private final double[] aps = {0, 0, 0, 0, 0};
-    private final double[] dps = {0, 0, 0, 0, 0};
-    private final double[] gps = {0, 0, 0, 0, 0};
-    private final double[] vps = {0, 0, 0, 0, 0};
+    private String[] regions = {"", "", "", "", ""};
+    private int[] likes = {0, 0, 0, 0, 0};
+    private int[] dislikes = {0, 0, 0, 0, 0};
+    private double[] kps = {0, 0, 0, 0, 0};
+    private double[] aps = {0, 0, 0, 0, 0};
+    private double[] dps = {0, 0, 0, 0, 0};
+    private double[] gps = {0, 0, 0, 0, 0};
+    private double[] vps = {0, 0, 0, 0, 0};
 
     private JSONObject[] stats;
 

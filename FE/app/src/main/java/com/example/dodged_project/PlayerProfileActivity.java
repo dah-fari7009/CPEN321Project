@@ -52,8 +52,8 @@ public class PlayerProfileActivity extends AppCompatActivity {
     private String selectedChamp = "Aatrox";
 
     private String playerProfileURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/getPlayer/";
-    private final String postCommentURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/comment";
-    private final String champMasteryURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/getMastery";
+    private String postCommentURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/comment";
+    private String champMasteryURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/getMastery";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,13 +198,13 @@ public class PlayerProfileActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, champMasteryURL, jsonBody,
                 response ->
                 {
-                    TextView champPopupTitle = champExpPopupView.findViewById(R.id.champ_popup_title_textview);
+                    TextView champPopupTitle = (TextView) champExpPopupView.findViewById(R.id.champ_popup_title_textview);
                     champPopupTitle.setText(playerUsername + "'s Exp Level on " + selectedChamp);
-                    TextView champExpLvl = champExpPopupView.findViewById(R.id.champ_exp_level_textview);
-                    TextView masteryPoints = champExpPopupView.findViewById(R.id.mastery_points_textview);
-                    TextView topChamp1 = champExpPopupView.findViewById(R.id.top_champ_1_textview);
-                    TextView topChamp2 = champExpPopupView.findViewById(R.id.top_champ_2_textview);
-                    TextView topChamp3 = champExpPopupView.findViewById(R.id.top_champ_3_textview);
+                    TextView champExpLvl = (TextView) champExpPopupView.findViewById(R.id.champ_exp_level_textview);
+                    TextView masteryPoints = (TextView) champExpPopupView.findViewById(R.id.mastery_points_textview);
+                    TextView topChamp1 = (TextView) champExpPopupView.findViewById(R.id.top_champ_1_textview);
+                    TextView topChamp2 = (TextView) champExpPopupView.findViewById(R.id.top_champ_2_textview);
+                    TextView topChamp3 = (TextView) champExpPopupView.findViewById(R.id.top_champ_3_textview);
                     try {
                         champExpLvl.setText(response.getString("playTime"));
                         masteryPoints.setText(response.getString("mastery"));
