@@ -142,7 +142,7 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(FinalizeTeammatesActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(FinalizeTeammatesActivity.this, response.toString(), Toast.LENGTH_LONG).show();
                         Intent resultsActivityIntent = new Intent(FinalizeTeammatesActivity.this, ResultsActivity.class);
 
                         Bundle bundle = new Bundle();

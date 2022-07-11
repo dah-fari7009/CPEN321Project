@@ -191,10 +191,15 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
                     Log.d("ArrayAdapter", "CLICKED");
                     Intent playerProfileIntent = new Intent(getContext(), PlayerProfileActivity.class);
 
-                    Bundle testBundle = new Bundle();
-                    testBundle.putString("player_username", player.getUsername());
+                    Bundle playerProfileBundle = new Bundle();
+                    playerProfileBundle.putString("player_username", player.getUsername());
+                    playerProfileBundle.putDouble("kps", player.getKps());
+                    playerProfileBundle.putDouble("aps", player.getAps());
+                    playerProfileBundle.putDouble("dps", player.getDps());
+                    playerProfileBundle.putDouble("gps", player.getGps());
+                    playerProfileBundle.putDouble("vps", player.getVps());
 
-                    playerProfileIntent.putExtras(testBundle);
+                    playerProfileIntent.putExtras(playerProfileBundle);
                     context.startActivity(playerProfileIntent);
                 }
             });

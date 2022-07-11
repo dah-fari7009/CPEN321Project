@@ -41,7 +41,12 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
                 createPlayerArrayListForResults(
                         getArguments().getStringArray("user_input_player_names"),
                         getArguments().getIntArray("user_input_player_likes"),
-                        getArguments().getIntArray("user_input_player_dislikes")
+                        getArguments().getIntArray("user_input_player_dislikes"),
+                        getArguments().getDoubleArray("user_input_player_kps"),
+                        getArguments().getDoubleArray("user_input_player_aps"),
+                        getArguments().getDoubleArray("user_input_player_dps"),
+                        getArguments().getDoubleArray("user_input_player_gps"),
+                        getArguments().getDoubleArray("user_input_player_vps")
                 );
             } else {
                 createPlayerArrayList(getArguments().getStringArray("user_input_player_names"));
@@ -59,12 +64,26 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
         }
     }
 
-    private void createPlayerArrayListForResults(String[] playerUsernames, int[] playerLikes, int[] playerDislikes) {
+    private void createPlayerArrayListForResults(
+            String[] playerUsernames,
+            int[] playerLikes,
+            int[] playerDislikes,
+            double[] playerKPS,
+            double[] playerAPS,
+            double[] playerDPS,
+            double[] playerGPS,
+            double[] playerVPS
+    ) {
         for (int i = 0; i < playerUsernames.length; i++) {
             Player player = new Player(
                     playerUsernames[i],
                     playerLikes[i],
-                    playerDislikes[i]
+                    playerDislikes[i],
+                    playerKPS[i],
+                    playerAPS[i],
+                    playerDPS[i],
+                    playerGPS[i],
+                    playerVPS[i]
             );
             Log.d("Fragment", player.getUsername());
             players.add(player);

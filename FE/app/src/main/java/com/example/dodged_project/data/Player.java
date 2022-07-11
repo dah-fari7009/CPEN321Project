@@ -12,6 +12,11 @@ public class Player {
 
     private int likes;
     private int dislikes;
+    private double kps;
+    private double aps;
+    private double dps;
+    private double gps;
+    private double vps;
 //    private JSONObject stats;
 
     public Player(String id, String username, String avatar) {
@@ -24,6 +29,17 @@ public class Player {
         this.username = username;
         this.likes = likes;
         this.dislikes = dislikes;
+    }
+
+    public Player(String username, int likes, int dislikes, double kps, double aps, double dps, double gps, double vps) {
+        this.username = username;
+        this.likes = likes;
+        this.dislikes = dislikes;
+        this.kps = kps;
+        this.aps = aps;
+        this.dps = dps;
+        this.gps = gps;
+        this.vps = vps;
     }
 
     public int getAvatarResourceId(Context context) {
@@ -71,7 +87,47 @@ public class Player {
         this.dislikes = dislikes;
     }
 
-//    public JSONObject getStats() {
+    public double getKps() {
+        return kps;
+    }
+
+    public void setKps(double kps) {
+        this.kps = kps;
+    }
+
+    public double getAps() {
+        return aps;
+    }
+
+    public void setAps(double aps) {
+        this.aps = aps;
+    }
+
+    public double getDps() {
+        return dps;
+    }
+
+    public void setDps(double dps) {
+        this.dps = dps;
+    }
+
+    public double getGps() {
+        return gps;
+    }
+
+    public void setGps(double gps) {
+        this.gps = gps;
+    }
+
+    public double getVps() {
+        return vps;
+    }
+
+    public void setVps(double vps) {
+        this.vps = vps;
+    }
+
+    //    public JSONObject getStats() {
 //        return stats;
 //    }
 //

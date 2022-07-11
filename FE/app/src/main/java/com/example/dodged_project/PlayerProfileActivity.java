@@ -55,12 +55,29 @@ public class PlayerProfileActivity extends AppCompatActivity {
         commentsArrayList = new ArrayList<>();
 
         String playerUsername = "";
+        Double kps = 0.0;
+        Double aps = 0.0;
+        Double dps = 0.0;
+        Double gps = 0.0;
+        Double vps = 0.0;
 
         Bundle playerProfileExtra = getIntent().getExtras();
         if (playerProfileExtra != null) {
             playerUsername = playerProfileExtra.getString("player_username");
+            kps = playerProfileExtra.getDouble("kps");
+            aps = playerProfileExtra.getDouble("aps");
+            dps = playerProfileExtra.getDouble("dps");
+            gps = playerProfileExtra.getDouble("gps");
+            vps = playerProfileExtra.getDouble("vps");
             playerProfileURL = playerProfileURL + "?name=" + playerUsername;
         }
+
+        binding.playerProfileUsername.setText(playerUsername);
+        binding.statsKillsTextview.setText(String.format("%.2f", kps * 60.0));
+        binding.statsDeathsTextview.setText(String.format("%.2f", dps * 60.0));
+        binding.statsAssistsTextview.setText(String.format("%.2f", aps * 60.0));
+        binding.statsGoldTextview.setText(String.format("%.2f", gps * 60.0));
+        binding.statsVisionTextview.setText(String.format("%.2f", vps * 60.0));
 
 //        String playerUsername = "APAP";
         playerProfileURL = playerProfileURL + playerUsername;

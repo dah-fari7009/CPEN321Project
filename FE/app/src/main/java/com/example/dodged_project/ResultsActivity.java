@@ -38,6 +38,12 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
     private String[] usernames = {"", "", "", "", ""};
     private int[] likes = {0, 0, 0, 0, 0};
     private int[] dislikes = {0, 0, 0, 0, 0};
+    private double[] kps = {0, 0, 0, 0, 0};
+    private double[] aps = {0, 0, 0, 0, 0};
+    private double[] dps = {0, 0, 0, 0, 0};
+    private double[] gps = {0, 0, 0, 0, 0};
+    private double[] vps = {0, 0, 0, 0, 0};
+
     private JSONObject[] stats;
 
     private Player player1;
@@ -72,12 +78,17 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
             setUsernames();
             setLikes();
             setDislikes();
-//            setStats();
+            setStats();
 
             fragmentBundle.putStringArray("user_input_player_names", usernames);
             fragmentBundle.putString("activity", "ResultsActivity");
             fragmentBundle.putIntArray("user_input_player_likes", likes);
             fragmentBundle.putIntArray("user_input_player_dislikes", dislikes);
+            fragmentBundle.putDoubleArray("user_input_player_kps", kps);
+            fragmentBundle.putDoubleArray("user_input_player_aps", aps);
+            fragmentBundle.putDoubleArray("user_input_player_dps", dps);
+            fragmentBundle.putDoubleArray("user_input_player_gps", gps);
+            fragmentBundle.putDoubleArray("user_input_player_vps", vps);
 //            fragmentBundle.putString("user_input_player_stats", stats.toString());
 
             Log.d("ResultsActivity", data.toString());
@@ -117,35 +128,60 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         player1 = new Player(
                 data.getJSONObject("player1").getString("name"),
                 data.getJSONObject("player1").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player1").getJSONObject("reviews").getInt("dislikes")
+                data.getJSONObject("player1").getJSONObject("reviews").getInt("dislikes"),
+                data.getJSONObject("player1").getJSONObject("stats").getDouble("kps"),
+                data.getJSONObject("player1").getJSONObject("stats").getDouble("aps"),
+                data.getJSONObject("player1").getJSONObject("stats").getDouble("dps"),
+                data.getJSONObject("player1").getJSONObject("stats").getDouble("gps"),
+                data.getJSONObject("player1").getJSONObject("stats").getDouble("vps")
 //                data.getJSONObject("player1").getJSONObject("stats")
         );
 
         player2 = new Player(
                 data.getJSONObject("player2").getString("name"),
                 data.getJSONObject("player2").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player2").getJSONObject("reviews").getInt("dislikes")
+                data.getJSONObject("player2").getJSONObject("reviews").getInt("dislikes"),
+                data.getJSONObject("player2").getJSONObject("stats").getDouble("kps"),
+                data.getJSONObject("player2").getJSONObject("stats").getDouble("aps"),
+                data.getJSONObject("player2").getJSONObject("stats").getDouble("dps"),
+                data.getJSONObject("player2").getJSONObject("stats").getDouble("gps"),
+                data.getJSONObject("player2").getJSONObject("stats").getDouble("vps")
 //                data.getJSONObject("player2").getJSONObject("stats")
         );
 
         player3 = new Player(
                 data.getJSONObject("player3").getString("name"),
                 data.getJSONObject("player3").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player3").getJSONObject("reviews").getInt("dislikes")
+                data.getJSONObject("player3").getJSONObject("reviews").getInt("dislikes"),
+                data.getJSONObject("player3").getJSONObject("stats").getDouble("kps"),
+                data.getJSONObject("player3").getJSONObject("stats").getDouble("aps"),
+                data.getJSONObject("player3").getJSONObject("stats").getDouble("dps"),
+                data.getJSONObject("player3").getJSONObject("stats").getDouble("gps"),
+                data.getJSONObject("player3").getJSONObject("stats").getDouble("vps")
 //                data.getJSONObject("player3").getJSONObject("stats")
         );
 
         player4 = new Player(
                 data.getJSONObject("player4").getString("name"),
                 data.getJSONObject("player4").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player4").getJSONObject("reviews").getInt("dislikes")
+                data.getJSONObject("player4").getJSONObject("reviews").getInt("dislikes"),
+                data.getJSONObject("player4").getJSONObject("stats").getDouble("kps"),
+                data.getJSONObject("player4").getJSONObject("stats").getDouble("aps"),
+                data.getJSONObject("player4").getJSONObject("stats").getDouble("dps"),
+                data.getJSONObject("player4").getJSONObject("stats").getDouble("gps"),
+                data.getJSONObject("player4").getJSONObject("stats").getDouble("vps")
 //                data.getJSONObject("player4").getJSONObject("stats")
         );
 
         player5 = new Player(
                 data.getJSONObject("player5").getString("name"),
                 data.getJSONObject("player5").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player5").getJSONObject("reviews").getInt("dislikes")
+                data.getJSONObject("player5").getJSONObject("reviews").getInt("dislikes"),
+                data.getJSONObject("player5").getJSONObject("stats").getDouble("kps"),
+                data.getJSONObject("player5").getJSONObject("stats").getDouble("aps"),
+                data.getJSONObject("player5").getJSONObject("stats").getDouble("dps"),
+                data.getJSONObject("player5").getJSONObject("stats").getDouble("gps"),
+                data.getJSONObject("player5").getJSONObject("stats").getDouble("vps")
 //                data.getJSONObject("player5").getJSONObject("stats")
         );
     }
@@ -187,13 +223,39 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         dislikes[4] = player5.getDislikes();
     }
 
-//    public void setStats() {
-//        stats[0] = player1.getStats();
-//        stats[1] = player2.getStats();
-//        stats[2] = player3.getStats();
-//        stats[3] = player4.getStats();
-//        stats[4] = player5.getStats();
-//    }
+    public void setStats() {
+
+        kps[0] = player1.getKps();
+        kps[1] = player2.getKps();
+        kps[2] = player3.getKps();
+        kps[3] = player4.getKps();
+        kps[4] = player5.getKps();
+
+        aps[0] = player1.getAps();
+        aps[1] = player2.getAps();
+        aps[2] = player3.getAps();
+        aps[3] = player4.getAps();
+        aps[4] = player5.getAps();
+
+        dps[0] = player1.getDps();
+        dps[1] = player2.getDps();
+        dps[2] = player3.getDps();
+        dps[3] = player4.getDps();
+        dps[4] = player5.getDps();
+
+        gps[0] = player1.getGps();
+        gps[1] = player2.getGps();
+        gps[2] = player3.getGps();
+        gps[3] = player4.getGps();
+        gps[4] = player5.getGps();
+
+        vps[0] = player1.getVps();
+        vps[1] = player2.getVps();
+        vps[2] = player3.getVps();
+        vps[3] = player4.getVps();
+        vps[4] = player5.getVps();
+
+    }
 
     public void setUserLikes(String userName) {
         String sendUsernamesEndpoint = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/like";
