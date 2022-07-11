@@ -40,7 +40,7 @@ import java.util.HashMap;
 
 public class PlayerProfileActivity extends AppCompatActivity {
 
-    public ActivityPlayerProfileBinding binding;
+    private ActivityPlayerProfileBinding binding;
     RequestQueue queue;
     private CommentRecyclerViewAdapter commentRecyclerViewAdapter;
     private ArrayList<Comment> commentsArrayList;
