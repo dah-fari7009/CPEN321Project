@@ -64,7 +64,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         commentsArrayList = new ArrayList<>();
-
+        
         String playerUsername = "";
         Double kps = 0.0;
         Double aps = 0.0;
@@ -93,6 +93,58 @@ public class PlayerProfileActivity extends AppCompatActivity {
         playerProfileURL = playerProfileURL + playerUsername;
 
         String finalPlayerUsername = playerUsername;
+
+        getComments(finalPlayerUsername,PlayerProfileActivity.this);
+
+        String[] champions = new String[] {"Aatrox", "Ahri", "Akali", "Akshan", "Alistar", "Amumu", "Anivia", "Annie", "Aphelios", "Ashe", "AurelionSol", "Azir", "Bard", "Belveth", "Blitzcrank", "Brand", "Braum", "Caitlyn", "Camille", "Cassiopeia", "Chogath", "Corki", "Darius", "Diana", "Draven", "DrMundo", "Ekko", "Elise", "Evelynn", "Ezreal", "Fiddlesticks", "Fiora", "Fizz", "Galio", "Gangplank", "Garen", "Gnar", "Gragas", "Graves", "Gwen", "Hecarim", "Heimerdinger", "Illaoi", "Irelia", "Ivern", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Kaisa", "Kalista", "Karma", "Karthus", "Kassadin", "Katarina", "Kayle", "Kayn", "Kennen", "Khazix", "Kindred", "Kled", "KogMaw", "Leblanc", "LeeSin", "Leona", "Lillia", "Lissandra", "Lucian", "Lulu", "Lux", "Malphite", "Malzahar", "Maokai", "MasterYi", "MissFortune", "MonkeyKing", "Mordekaiser", "Morgana", "Nami", "Nasus", "Nautilus", "Neeko", "Nidalee", "Nocturne", "Nunu", "Olaf", "Orianna", "Ornn", "Pantheon", "Poppy", "Pyke", "Qiyana", "Quinn", "Rakan", "Rammus", "RekSai", "Rell", "Renata", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Samira", "Sejuani", "Senna", "Seraphine", "Sett", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Sivir", "Skarner", "Sona", "Soraka", "Swain", "Sylas", "Syndra", "TahmKench", "Taliyah", "Talon", "Taric", "Teemo", "Thresh", "Tristana", "Trundle", "Tryndamere", "TwistedFate", "Twitch", "Udyr", "Urgot", "Varus", "Vayne", "Veigar", "Velkoz", "Vex", "Vi", "Viego", "Viktor", "Vladimir", "Volibear", "Warwick", "Xayah", "Xerath", "XinZhao", "Yasuo", "Yone", "Yorick", "Yuumi", "Zac", "Zed", "Zeri", "Ziggs", "Zilean", "Zoe", "Zyra"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(PlayerProfileActivity.this, R.layout.champion_dropdown_item, champions);
+        binding.championDropdownItem.setAdapter(adapter);
+
+        binding.championDropdownItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedChamp = (String) parent.getItemAtPosition(position);
+            }
+        });
+
+        binding.championExpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    getMastery(finalPlayerUsername, region, selectedChamp, PlayerProfileActivity.this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                builder = new MaterialAlertDialogBuilder(PlayerProfileActivity.this);
+                champExpPopupView = LayoutInflater.from(PlayerProfileActivity.this).inflate(R.layout.champ_exp_popup, null, false);
+            }
+        });
+
+        binding.commentsRecyclerView.setHasFixedSize(true);
+        binding.commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        populateRecyclerView();
+        binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                binding.addCommentTextinput.setText("");
+                populateRecyclerView();
+            }
+        });
+    }
+
+    private void populateRecyclerView() {
+        commentRecyclerViewAdapter = new CommentRecyclerViewAdapter(commentsArrayList);
+        binding.commentsRecyclerView.setAdapter(commentRecyclerViewAdapter);
+        commentRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    private void getComments(String finalPlayerUsername, Context context){
+        commentsArrayList.clear();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, playerProfileURL, null,
                 response ->
                 {
@@ -123,51 +175,8 @@ public class PlayerProfileActivity extends AppCompatActivity {
                 error -> {
                     Log.d("JSON", error.toString());
                 });
-
-        String[] champions = new String[] {"Aatrox", "Ahri", "Akali", "Akshan", "Alistar", "Amumu", "Anivia", "Annie", "Aphelios", "Ashe", "AurelionSol", "Azir", "Bard", "Belveth", "Blitzcrank", "Brand", "Braum", "Caitlyn", "Camille", "Cassiopeia", "Chogath", "Corki", "Darius", "Diana", "Draven", "DrMundo", "Ekko", "Elise", "Evelynn", "Ezreal", "Fiddlesticks", "Fiora", "Fizz", "Galio", "Gangplank", "Garen", "Gnar", "Gragas", "Graves", "Gwen", "Hecarim", "Heimerdinger", "Illaoi", "Irelia", "Ivern", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Kaisa", "Kalista", "Karma", "Karthus", "Kassadin", "Katarina", "Kayle", "Kayn", "Kennen", "Khazix", "Kindred", "Kled", "KogMaw", "Leblanc", "LeeSin", "Leona", "Lillia", "Lissandra", "Lucian", "Lulu", "Lux", "Malphite", "Malzahar", "Maokai", "MasterYi", "MissFortune", "MonkeyKing", "Mordekaiser", "Morgana", "Nami", "Nasus", "Nautilus", "Neeko", "Nidalee", "Nocturne", "Nunu", "Olaf", "Orianna", "Ornn", "Pantheon", "Poppy", "Pyke", "Qiyana", "Quinn", "Rakan", "Rammus", "RekSai", "Rell", "Renata", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Samira", "Sejuani", "Senna", "Seraphine", "Sett", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Sivir", "Skarner", "Sona", "Soraka", "Swain", "Sylas", "Syndra", "TahmKench", "Taliyah", "Talon", "Taric", "Teemo", "Thresh", "Tristana", "Trundle", "Tryndamere", "TwistedFate", "Twitch", "Udyr", "Urgot", "Varus", "Vayne", "Veigar", "Velkoz", "Vex", "Vi", "Viego", "Viktor", "Vladimir", "Volibear", "Warwick", "Xayah", "Xerath", "XinZhao", "Yasuo", "Yone", "Yorick", "Yuumi", "Zac", "Zed", "Zeri", "Ziggs", "Zilean", "Zoe", "Zyra"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(PlayerProfileActivity.this, R.layout.champion_dropdown_item, champions);
-        binding.championDropdownItem.setAdapter(adapter);
-
-        binding.championDropdownItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedChamp = (String) parent.getItemAtPosition(position);
-            }
-        });
-
-        binding.championExpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    getMastery(finalPlayerUsername, region, selectedChamp, PlayerProfileActivity.this);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                builder = new MaterialAlertDialogBuilder(PlayerProfileActivity.this);
-                champExpPopupView = LayoutInflater.from(PlayerProfileActivity.this).inflate(R.layout.champ_exp_popup, null, false);
-            }
-        });
-
+        queue = Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
-
-        binding.commentsRecyclerView.setHasFixedSize(true);
-        binding.commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        commentRecyclerViewAdapter = new CommentRecyclerViewAdapter(commentsArrayList);
-        binding.commentsRecyclerView.setAdapter(commentRecyclerViewAdapter);
-        commentRecyclerViewAdapter.notifyDataSetChanged();
-
-        binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                binding.addCommentTextinput.setText("");
-            }
-        });
     }
 
     private void postComment(String comment, String playerUsername, Context context) throws JSONException {
@@ -187,6 +196,8 @@ public class PlayerProfileActivity extends AppCompatActivity {
                 });
         queue = Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
+        Comment commentItem = new Comment(playerUsername, new SimpleDateFormat("dd-MM-yyyy").format(new Date()), comment, playerUsername);
+        commentsArrayList.add(commentItem);
     }
 
     private void getMastery(String playerUsername, String region, String champ, Context context) throws JSONException {

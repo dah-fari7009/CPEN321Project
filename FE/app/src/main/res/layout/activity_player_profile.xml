@@ -365,7 +365,6 @@
                     app:boxStrokeColor="#D0D5DD"
                     app:hintEnabled="false"
                     app:hintTextColor="#D0D5DD"
-                    app:placeholderText="@string/comment_box_placeholder_text"
                     app:placeholderTextColor="#D0D5DD">
 
                     <com.google.android.material.textfield.TextInputEditText
