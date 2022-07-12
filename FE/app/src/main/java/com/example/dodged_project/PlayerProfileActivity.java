@@ -182,7 +182,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
     private void postComment(String comment, String playerUsername, Context context) throws JSONException {
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("name", playerUsername);
-        jsonBody.put("poster", playerUsername);
+        jsonBody.put("poster", MainActivity.googleAccountName);
         jsonBody.put("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         jsonBody.put("comment", comment);
 
@@ -196,7 +196,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                 });
         queue = Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
-        Comment commentItem = new Comment(playerUsername, new SimpleDateFormat("dd-MM-yyyy").format(new Date()), comment, playerUsername);
+        Comment commentItem = new Comment(MainActivity.googleAccountName, new SimpleDateFormat("dd-MM-yyyy").format(new Date()), comment, playerUsername);
         commentsArrayList.add(commentItem);
     }
 
