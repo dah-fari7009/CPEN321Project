@@ -123,18 +123,20 @@ public class PlayerProfileActivity extends AppCompatActivity {
         binding.commentsRecyclerView.setHasFixedSize(true);
         binding.commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         populateRecyclerView();
-        binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        if(MainActivity.googleAccountName != null) {
+            binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    binding.addCommentTextinput.setText("");
+                    populateRecyclerView();
                 }
-                binding.addCommentTextinput.setText("");
-                populateRecyclerView();
-            }
-        });
+            });
+        }
     }
 
     private void populateRecyclerView() {
