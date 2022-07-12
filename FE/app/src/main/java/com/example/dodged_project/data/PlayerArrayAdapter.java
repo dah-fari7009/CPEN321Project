@@ -193,6 +193,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
 
                     Bundle playerProfileBundle = new Bundle();
                     playerProfileBundle.putString("player_username", player.getUsername());
+                    playerProfileBundle.putString("region", player.getRegion());
                     playerProfileBundle.putDouble("kps", player.getKps());
                     playerProfileBundle.putDouble("aps", player.getAps());
                     playerProfileBundle.putDouble("dps", player.getDps());
