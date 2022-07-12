@@ -64,7 +64,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         commentsArrayList = new ArrayList<>();
-        
+
         String playerUsername = "";
         Double kps = 0.0;
         Double aps = 0.0;
@@ -217,11 +217,40 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     TextView topChamp2 = (TextView) champExpPopupView.findViewById(R.id.top_champ_2_textview);
                     TextView topChamp3 = (TextView) champExpPopupView.findViewById(R.id.top_champ_3_textview);
                     try {
-                        champExpLvl.setText(response.getString("playTime"));
-                        masteryPoints.setText(response.getString("mastery"));
-                        topChamp1.setText(response.getString("top1"));
-                        topChamp2.setText(response.getString("top2"));
-                        topChamp3.setText(response.getString("top3"));
+                        if (response.has("playTime")) {
+                            champExpLvl.setText(response.getString("playTime"));
+                        }
+                        else {
+                            champExpLvl.setText("No Experience");
+                        }
+
+                        if (response.has("mastery")) {
+                            masteryPoints.setText(response.getString("mastery"));
+                        }
+                        else {
+                            masteryPoints.setText("0");
+                        }
+
+                        if (response.has("top1")) {
+                            topChamp1.setText(response.getString("top1"));
+                        }
+                        else {
+                            topChamp1.setText("--");
+                        }
+
+                        if (response.has("top2")) {
+                            topChamp2.setText(response.getString("top2"));
+                        }
+                        else {
+                            topChamp2.setText("--");
+                        }
+
+                        if (response.has("top3")) {
+                            topChamp3.setText(response.getString("top3"));
+                        }
+                        else {
+                            topChamp3.setText("--");
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
