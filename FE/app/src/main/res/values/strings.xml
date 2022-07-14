@@ -43,4 +43,5 @@
     <string name="exp_level">EXP LEVEL</string>
     <string name="mastery_points">MASTERY POINTS</string>
     <string name="top_played_champs">Top Played Champions</string>
+    <string name="login_to_comment">Please login to comment on the player\'s profile</string>
 </resources>

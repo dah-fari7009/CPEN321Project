@@ -32,6 +32,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.dodged_project.MainActivity;
 import com.example.dodged_project.PlayerProfileActivity;
 import com.example.dodged_project.R;
 import com.example.dodged_project.ResultsActivity;
@@ -135,54 +136,59 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
             playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
 
 
-            playerLikeImageView.setOnClickListener(new View.OnClickListener() {
+            if (MainActivity.googleAccountName != null) {
+                playerDislikeImageView.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-
-                    if (!likeClicked || dislikeClicked) {
-                        setUserLikes(player.getUsername());
-                        playerLikeImageView.setColorFilter(Color.rgb(0, 255, 0));
-                        player.setLikes(player.getLikes() + 1);
-                        playerDislikeImageView.setColorFilter(Color.rgb(16, 24, 40));
-                        player.setDislikes(player.getDislikes() > 0 ? player.getDislikes() - 1 : 0);
-                        likeClicked = true;
-                        playerNumberLikes.setText(String.valueOf(player.getLikes()));
-                        playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
-                    } else {
-                        setUserDislikes(player.getUsername());
-                        playerLikeImageView.setColorFilter(Color.rgb(16, 24, 40));
-                        player.setLikes(player.getLikes() > 0 ? player.getLikes() - 1 : 0);
-                        likeClicked = false;
-                        playerNumberLikes.setText(String.valueOf(player.getLikes()));
+                    @Override
+                    public void onClick(View v) {
+                        if (!dislikeClicked || likeClicked) {
+                            setUserDislikes(player.getUsername());
+                            playerDislikeImageView.setColorFilter(Color.rgb(255, 0, 0));
+                            player.setDislikes(player.getDislikes() + 1);
+                            playerLikeImageView.setColorFilter(Color.rgb(16, 24, 40));
+                            player.setLikes(player.getLikes() > 0 ? player.getLikes() - 1 : 0);
+                            dislikeClicked = true;
+                            playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
+                            playerNumberLikes.setText(String.valueOf(player.getLikes()));
+                        } else {
+                            setUserLikes(player.getUsername());
+                            playerDislikeImageView.setColorFilter(Color.rgb(16, 24, 40));
+                            player.setDislikes(player.getDislikes() > 0 ? player.getDislikes() - 1 : 0);
+                            dislikeClicked = false;
+                            playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
+                        }
                     }
+                });
 
-                    Log.d("ArrayAdapter", String.valueOf(playerLikeImageView.getColorFilter()));
-                }
-            });
-
-            playerDislikeImageView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    if (!dislikeClicked || likeClicked) {
-                        setUserDislikes(player.getUsername());
-                        playerDislikeImageView.setColorFilter(Color.rgb(255, 0, 0));
-                        player.setDislikes(player.getDislikes() + 1);
-                        playerLikeImageView.setColorFilter(Color.rgb(16, 24, 40));
-                        player.setLikes(player.getLikes() > 0 ? player.getLikes() - 1 : 0);
-                        dislikeClicked = true;
-                        playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
-                        playerNumberLikes.setText(String.valueOf(player.getLikes()));
-                    } else {
-                        setUserLikes(player.getUsername());
-                        playerDislikeImageView.setColorFilter(Color.rgb(16, 24, 40));
-                        player.setDislikes(player.getDislikes() > 0 ? player.getDislikes() - 1 : 0);
-                        dislikeClicked = false;
-                        playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
+                playerLikeImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!likeClicked || dislikeClicked) {
+                            setUserLikes(player.getUsername());
+                            playerLikeImageView.setColorFilter(Color.rgb(0, 255, 0));
+                            player.setLikes(player.getLikes() + 1);
+                            playerDislikeImageView.setColorFilter(Color.rgb(16, 24, 40));
+                            player.setDislikes(player.getDislikes() > 0 ? player.getDislikes() - 1 : 0);
+                            likeClicked = true;
+                            playerNumberLikes.setText(String.valueOf(player.getLikes()));
+                            playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
+                        } else {
+                            setUserDislikes(player.getUsername());
+                            playerLikeImageView.setColorFilter(Color.rgb(16, 24, 40));
+                            player.setLikes(player.getLikes() > 0 ? player.getLikes() - 1 : 0);
+                            likeClicked = false;
+                            playerNumberLikes.setText(String.valueOf(player.getLikes()));
+                        }
+                        Log.d("ArrayAdapter", String.valueOf(playerLikeImageView.getColorFilter()));
                     }
-                }
-            });
+                });
+            }
+            else {
+                playerLikeImageView.setEnabled(false);
+                playerDislikeImageView.setEnabled(false);
+            }
+
+
 
             CardView userProfileCard = view.findViewById(R.id.alt_card_view);
             userProfileCard.setOnClickListener(new View.OnClickListener() {

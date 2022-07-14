@@ -123,7 +123,13 @@ public class PlayerProfileActivity extends AppCompatActivity {
         binding.commentsRecyclerView.setHasFixedSize(true);
         binding.commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         populateRecyclerView();
-        if(MainActivity.googleAccountName != null) {
+        if(MainActivity.googleAccountName == null) {
+            binding.logInToCommentHint.setVisibility(View.VISIBLE);
+            binding.commentTextviewAndAddButton.setVisibility(View.GONE);
+        }
+        else {
+            binding.logInToCommentHint.setVisibility(View.GONE);
+            binding.commentTextviewAndAddButton.setVisibility(View.VISIBLE);
             binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
