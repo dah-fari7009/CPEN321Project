@@ -1,4 +1,4 @@
-name: cpen 321 project actions
+name: cpen321 github actions
 on: [push]
 jobs:
   Explore-GitHub-Actions:
