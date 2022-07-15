@@ -9,4 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="button_color">#613CEA</color>
     <color name="poppins_color">#101828</color>
+
+    <!-- colors for light mode -->
+    <color name="backgroundColor">#FCFCFC</color>
+    <color name="textColor">#000000</color>
+    <color name="cardColor">#F8F8FA</color>
+    <color name="buttonTextColor">#FFFFFF</color>
+
 </resources>
