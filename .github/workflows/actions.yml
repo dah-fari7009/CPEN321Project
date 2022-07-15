@@ -1,4 +1,4 @@
-name: cpen 321 project actionsgit
+name: cpen 321 project actions
 on: [push]
 jobs:
   Explore-GitHub-Actions:
@@ -15,3 +15,5 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: npm install
+      - run: npm test
