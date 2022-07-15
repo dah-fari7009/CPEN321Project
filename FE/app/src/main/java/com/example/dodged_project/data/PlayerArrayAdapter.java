@@ -136,7 +136,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
             playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
 
 
-//            if (MainActivity.googleAccountName != null) {
+            if (MainActivity.googleAccountName != null) {
                 playerDislikeImageView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -182,11 +182,11 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
                         Log.d("ArrayAdapter", String.valueOf(playerLikeImageView.getColorFilter()));
                     }
                 });
-//            }
-//            else {
-//                playerLikeImageView.setEnabled(false);
-//                playerDislikeImageView.setEnabled(false);
-//            }
+            }
+            else {
+                playerLikeImageView.setEnabled(false);
+                playerDislikeImageView.setEnabled(false);
+            }
 
 
 
