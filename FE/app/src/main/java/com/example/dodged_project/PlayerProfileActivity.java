@@ -123,18 +123,20 @@ public class PlayerProfileActivity extends AppCompatActivity {
         binding.commentsRecyclerView.setHasFixedSize(true);
         binding.commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         populateRecyclerView();
-        binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        if(MainActivity.googleAccountName != null) {
+            binding.addCommentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        postComment(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    binding.addCommentTextinput.setText("");
+                    populateRecyclerView();
                 }
-                binding.addCommentTextinput.setText("");
-                populateRecyclerView();
-            }
-        });
+            });
+        }
     }
 
     private void populateRecyclerView() {
@@ -182,7 +184,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
     private void postComment(String comment, String playerUsername, Context context) throws JSONException {
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("name", playerUsername);
-        jsonBody.put("poster", playerUsername);
+        jsonBody.put("poster", MainActivity.googleAccountName);
         jsonBody.put("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         jsonBody.put("comment", comment);
 
@@ -196,7 +198,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                 });
         queue = Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
-        Comment commentItem = new Comment(playerUsername, new SimpleDateFormat("dd-MM-yyyy").format(new Date()), comment, playerUsername);
+        Comment commentItem = new Comment(MainActivity.googleAccountName, new SimpleDateFormat("dd-MM-yyyy").format(new Date()), comment, playerUsername);
         commentsArrayList.add(commentItem);
     }
 
