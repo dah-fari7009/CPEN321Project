@@ -345,11 +345,12 @@
             android:visibility="visible" />
 
         <LinearLayout
+            android:id="@+id/comment_textview_and_add_button"
             android:layout_width="346dp"
             android:layout_height="236dp"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -396,6 +397,48 @@
             </LinearLayout>
 
         </LinearLayout>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/log_in_to_comment_hint"
+            android:layout_width="346dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:cardBackgroundColor="#F2F4F7"
+            app:cardCornerRadius="12dp">
+
+            <LinearLayout
+                android:layout_width="318dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="5dp"
+                    app:srcCompat="@drawable/ic_info_caution_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:paddingBottom="10dp"
+                    android:text="@string/login_to_comment"
+                    android:textColor="#613CEA"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </layout>
