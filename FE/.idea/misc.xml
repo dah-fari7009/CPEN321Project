@@ -25,8 +25,12 @@
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_player_profile.xml" value="0.20652173913043478" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_results.xml" value="0.1983695652173913" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/activity_uploaded_image.xml" value="0.335" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/champ_exp_popup.xml" value="0.23867753623188406" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/champion_dropdown_item.xml" value="0.23867753623188406" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/comment_row.xml" value="0.23867753623188406" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/player_username_item.xml" value="0.375" />
         <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/player_usernames_fragment.xml" value="0.21105072463768115" />
+        <entry key="..\:/Dodged/CPEN321Project/FE/app/src/main/res/layout/region_dropdown_item.xml" value="0.23867753623188406" />
       </map>
     </option>
   </component>

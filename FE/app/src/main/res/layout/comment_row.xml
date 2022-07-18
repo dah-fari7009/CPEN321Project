@@ -29,7 +29,7 @@
                 android:fontFamily="@font/poppins"
                 android:gravity="left"
                 android:text="@string/comment_row_username"
-                android:textColor="#344054" />
+                android:textColor="@color/textColor" />
 
             <TextView
                 android:id="@+id/comment_date_textview"
@@ -39,7 +39,7 @@
                 android:fontFamily="@font/poppins"
                 android:gravity="right"
                 android:text="@string/comment_row_date"
-                android:textColor="#667085"
+                android:textColor="@color/textColor"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -49,7 +49,7 @@
             android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            app:cardBackgroundColor="#F2F4F7"
+            app:cardBackgroundColor="@color/cardColor"
             app:cardCornerRadius="8dp">
 
             <TextView
@@ -60,7 +60,7 @@
                 android:fontFamily="@font/poppins"
                 android:padding="10dp"
                 android:text="TextView"
-                android:textColor="#101828"
+                android:textColor="@color/textColor"
                 android:textSize="16sp" />
         </androidx.cardview.widget.CardView>
 

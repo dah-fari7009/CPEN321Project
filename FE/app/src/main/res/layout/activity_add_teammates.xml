@@ -25,7 +25,7 @@
                 android:checkable="true"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="#F8F8FA"
+                app:cardBackgroundColor="@color/cardColor"
                 app:cardCornerRadius="12dp"
                 android:layout_gravity="center"
                 >
@@ -70,7 +70,7 @@
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/lora"
                             android:text="@string/add_teammates_text"
-                            android:textColor="@color/black"
+                            android:textColor="@color/textColor"
                             android:textFontWeight="700"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -88,7 +88,7 @@
                             android:layout_height="20dp"
                             android:fontFamily="@font/poppins"
                             android:text="@string/teammate_1"
-                            android:textColor="@color/poppins_color" />
+                            android:textColor="@color/textColor" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -113,7 +113,7 @@
                             android:layout_height="20dp"
                             android:fontFamily="@font/poppins"
                             android:text="@string/teammate_2"
-                            android:textColor="@color/poppins_color" />
+                            android:textColor="@color/textColor" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -137,7 +137,7 @@
                             android:layout_height="20dp"
                             android:fontFamily="@font/poppins"
                             android:text="@string/teammate_3"
-                            android:textColor="@color/poppins_color" />
+                            android:textColor="@color/textColor" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -161,7 +161,7 @@
                             android:layout_height="20dp"
                             android:fontFamily="@font/poppins"
                             android:text="@string/teammate_4"
-                            android:textColor="@color/poppins_color" />
+                            android:textColor="@color/textColor" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -185,7 +185,7 @@
                             android:layout_height="20dp"
                             android:fontFamily="@font/poppins"
                             android:text="@string/teammate_5"
-                            android:textColor="@color/poppins_color" />
+                            android:textColor="@color/textColor" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -220,7 +220,7 @@
                             android:backgroundTint="@color/button_color"
                             android:fontFamily="@font/poppins"
                             android:text="@string/confirm_button_text"
-                            android:textColor="@color/white"
+                            android:textColor="@color/buttonTextColor"
                             android:textSize="12sp"
                             app:cornerRadius="8dp" />
 
@@ -246,6 +246,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
+            android:textColor="@color/textColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

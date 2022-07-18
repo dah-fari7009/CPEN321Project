@@ -279,7 +279,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#F2F4F7"
+                app:cardBackgroundColor="@color/cardColor"
                 app:cardCornerRadius="12dp">
 
                 <LinearLayout
@@ -303,7 +303,7 @@
                         app:boxStrokeColor="#613CEA"
                         app:boxStrokeWidthFocused="1dp"
                         app:endIconMode="dropdown_menu"
-                        app:hintTextColor="#00012F">
+                        app:hintTextColor="@color/textColor">
 
                         <AutoCompleteTextView
                             android:id="@+id/champion_dropdown_item"
@@ -326,7 +326,7 @@
                         android:backgroundTint="#613CEA"
                         android:fontFamily="@font/poppins"
                         android:text="@string/champ_exp_button_string"
-                        android:textColor="#FFF"
+                        android:textColor="@color/buttonTextColor"
                         android:textSize="12sp"
                         app:cornerRadius="8dp" />
 
@@ -363,10 +363,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/label"
-                    app:boxStrokeColor="#D0D5DD"
+                    app:boxStrokeColor="@color/textColor"
                     app:hintEnabled="false"
-                    app:hintTextColor="#D0D5DD"
-                    app:placeholderTextColor="#D0D5DD">
+                    app:hintTextColor="@color/textColor"
+                    app:placeholderTextColor="@color/textColor">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/add_comment_textinput"
@@ -377,7 +377,7 @@
                         android:hint="@string/comment_leave_a_comment"
                         android:maxLines="1"
                         android:textAlignment="viewStart"
-                        android:textColor="#101828"
+                        android:textColor="@color/textColor"
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -391,7 +391,7 @@
                     android:backgroundTint="#613CEA"
                     android:fontFamily="@font/poppins"
                     android:text="@string/add_comment_button"
-                    android:textColor="#FFF"
+                    android:textColor="@color/buttonTextColor"
                     android:textSize="12sp"
                     app:cornerRadius="8dp" />
             </LinearLayout>
@@ -405,7 +405,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="visible"
-            app:cardBackgroundColor="#F2F4F7"
+            app:cardBackgroundColor="@color/cardColor"
             app:cardCornerRadius="12dp">
 
             <LinearLayout

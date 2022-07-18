@@ -13,7 +13,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="#F8F8FA"
+        app:cardBackgroundColor="@color/cardColor"
         app:cardCornerRadius="12dp">
 
 
@@ -80,7 +80,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="#F8F8FA"
+        app:cardBackgroundColor="@color/cardColor"
         app:cardCornerRadius="12dp">
 
         <LinearLayout
@@ -113,6 +113,7 @@
                 android:background="@null"
                 android:text="UserName #"
                 android:textSize="16dp"
+                android:textColor="@color/textColor"
                 android:maxLines="1"
                 android:singleLine = "true"
                 android:imeOptions="actionDone"/>

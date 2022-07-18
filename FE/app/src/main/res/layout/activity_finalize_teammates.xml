@@ -28,7 +28,7 @@
                     android:checkable="true"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardBackgroundColor="#F8F8FA"
+                    app:cardBackgroundColor="@color/cardColor"
                     app:cardCornerRadius="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +62,7 @@
                                 android:layout_marginBottom="10dp"
                                 android:fontFamily="@font/lora"
                                 android:text="@string/choose_teammates_text"
-                                android:textColor="#00012F"
+                                android:textColor="@color/textColor"
                                 android:textFontWeight="700"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
@@ -74,7 +74,7 @@
                                 android:layout_marginBottom="30dp"
                                 android:fontFamily="@font/poppins"
                                 android:text="@string/choose_teammates_description_text"
-                                android:textColor="#B7B8CA"
+                                android:textColor="@color/textColor"
                                 android:textSize="14sp"
                                 tools:ignore="TextContrastCheck" />
                         </LinearLayout>
@@ -99,7 +99,7 @@
                         android:backgroundTint="@color/button_color"
                         android:fontFamily="@font/poppins"
                         android:text="@string/add_teammate"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buttonTextColor"
                         android:textSize="12sp"
                         app:cornerRadius="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -114,7 +114,7 @@
                         android:backgroundTint="@color/button_color"
                         android:fontFamily="@font/poppins"
                         android:text="@string/upload_photo"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buttonTextColor"
                         android:textSize="12sp"
                         app:cornerRadius="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -134,9 +134,9 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="32dp"
                     android:hint="Select Region"
-                    app:boxStrokeColor="#613CEA"
+                    app:boxStrokeColor="@color/cardColor"
                     app:endIconMode="dropdown_menu"
-                    app:hintTextColor="#00012F"
+                    app:hintTextColor="@color/textColor"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/upload_photo_button">
@@ -172,7 +172,7 @@
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
                     android:text="@string/confirm_button_text"
-                    android:textColor="@color/white"
+                    android:textColor="@color/buttonTextColor"
                     android:textSize="12sp"
                     app:cornerRadius="8dp" />
 
@@ -182,6 +182,7 @@
                     android:layout_height="18dp"
                     android:gravity="center"
                     android:text=""
+                    android:textColor="@color/textColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
