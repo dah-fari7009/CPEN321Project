@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -12,16 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -35,14 +31,12 @@ import com.android.volley.toolbox.Volley;
 import com.example.dodged_project.MainActivity;
 import com.example.dodged_project.PlayerProfileActivity;
 import com.example.dodged_project.R;
-import com.example.dodged_project.ResultsActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PlayerArrayAdapter extends ArrayAdapter<Player>{
