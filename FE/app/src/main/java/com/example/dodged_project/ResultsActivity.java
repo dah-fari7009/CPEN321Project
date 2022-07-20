@@ -263,48 +263,4 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         vps[4] = player5.getVps();
 
     }
-
-    public void setUserLikes(String userName) {
-        String sendUsernamesEndpoint = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/like";
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("name", userName);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST, sendUsernamesEndpoint, jsonObject,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-//                        Toast.makeText(ResultsActivity.this, response.toString(), Toast.LENGTH_LONG).show();
-                        // on Response add 1 to the like counter
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ResultsActivity.this, "Error: Hmm something went wrong while trying to like this user profile", Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-        };
-        {
-            int socketTimeout = 30000;
-            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-            jsonObjectRequest.setRetryPolicy(policy);
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(jsonObjectRequest);
-        }
-    }
-
-    public void setUserDislikes(String userName) {
-
-    }
 }
