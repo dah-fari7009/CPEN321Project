@@ -19,8 +19,8 @@ import java.util.Arrays;
 
 public class ResultsActivity extends AppCompatActivity implements PlayerUsernamesFragment.Callbacks{
 
-    private TextView resultsText;
-    private TextView resultsDescription;
+//    private TextView resultsText;
+//    private TextView resultsDescription;
     private String[] usernames = {"", "", "", "", ""};
     private String[] regions = {"", "", "", "", ""};
     private int[] likes = {0, 0, 0, 0, 0};
@@ -43,6 +43,9 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         getSupportActionBar().hide();
 
         setContentView(R.layout.activity_results);
+
+        TextView resultsText;
+        TextView resultsDescription;
 
         Bundle bundle = getIntent().getExtras();
 

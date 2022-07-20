@@ -22,15 +22,19 @@ import android.widget.TextView;
 
 public class ChooseTeammatesActivity extends AppCompatActivity {
 
-    private Button addTeammatesButton;
-    private Button uploadPhotoButton;
-    private TextView userLoggedInStatusText;
+//    private Button addTeammatesButton;
+//    private Button uploadPhotoButton;
+//    private TextView userLoggedInStatusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_choose_teammates);
+
+        Button addTeammatesButton;
+        Button uploadPhotoButton;
+        TextView userLoggedInStatusText;
 
         userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
 

@@ -34,18 +34,24 @@ import java.util.Map;
 
 public class FinalizeTeammatesActivity extends AppCompatActivity implements PlayerUsernamesFragment.Callbacks {
 
-    private ActivityFinalizeTeammatesBinding binding;
+//    private ActivityFinalizeTeammatesBinding binding;
     private String[] usernames = {"", "", "", "", ""};
     private String selectedRegion;
 
-    private Button confirmButton;
-    private Button uploadPhotoButton;
-    private TextView userLoggedInStatusText;
+//    private Button confirmButton;
+//    private Button uploadPhotoButton;
+//    private TextView userLoggedInStatusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+
+        ActivityFinalizeTeammatesBinding binding;
+
+        Button confirmButton;
+        Button uploadPhotoButton;
+        TextView userLoggedInStatusText;
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_finalize_teammates);
 

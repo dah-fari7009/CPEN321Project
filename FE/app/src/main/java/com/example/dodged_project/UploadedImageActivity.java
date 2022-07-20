@@ -32,12 +32,12 @@ import java.util.Map;
 
 public class UploadedImageActivity extends AppCompatActivity {
 
-    private ImageView uploadedImage;
-    private Button confirmButton;
-    private Button cancelButton;
-
-    private TextView userLoggedInStatusText;
-    private String selectedRegion;
+//    private ImageView uploadedImage;
+//    private Button confirmButton;
+//    private Button cancelButton;
+//
+//    private TextView userLoggedInStatusText;
+//    private String selectedRegion;
 
     @SuppressLint("WrongThread")
     @Override
@@ -46,6 +46,13 @@ public class UploadedImageActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         setContentView(R.layout.activity_uploaded_image);
+
+        ImageView uploadedImage;
+        Button confirmButton;
+        Button cancelButton;
+
+        TextView userLoggedInStatusText;
+        String selectedRegion;
 
         userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
 

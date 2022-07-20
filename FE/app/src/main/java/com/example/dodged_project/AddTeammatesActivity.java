@@ -15,14 +15,16 @@ public class AddTeammatesActivity extends AppCompatActivity {
 
     private ActivityAddTeammatesBinding binding;
     private String[] usernames = new String[5];
-
-    private TextView userLoggedInStatusText;
+//
+//    private TextView userLoggedInStatusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_teammates);
+
+        TextView userLoggedInStatusText;
 
         userLoggedInStatusText = findViewById(R.id.userLoggedInStatus);
 
