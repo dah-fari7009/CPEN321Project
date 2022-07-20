@@ -1,7 +1,5 @@
 package com.example.dodged_project.data;
 
-import java.util.Date;
-
 public class Comment {
     private String poster;
     private String date;

@@ -2,8 +2,6 @@ package com.example.dodged_project.data;
 
 import android.content.Context;
 
-import org.json.JSONObject;
-
 public class Player {
 
     private String id;
