@@ -38,7 +38,6 @@ public class UploadedImageActivity extends AppCompatActivity {
 
     private TextView userLoggedInStatusText;
     private String selectedRegion;
-    private String responseString;
 
     @SuppressLint("WrongThread")
     @Override

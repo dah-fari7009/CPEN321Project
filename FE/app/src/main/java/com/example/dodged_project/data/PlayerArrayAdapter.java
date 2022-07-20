@@ -113,9 +113,6 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
             CardView cardView = view.findViewById(R.id.card_view);
             cardView.setVisibility(View.GONE);
 
-            ImageView playerAvatarImageView = (ImageView) view.findViewById(R.id.alt_playerAvatar);
-//            playerAvatarImageView.setImageResource(player.getAvatarResourceId(context));
-
             TextView textView = (TextView) view.findViewById(R.id.alt_playerUsername);
             textView.setText(player.getUsername());
 

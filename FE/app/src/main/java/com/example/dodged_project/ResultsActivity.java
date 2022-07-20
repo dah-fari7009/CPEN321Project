@@ -43,15 +43,11 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
     private double[] gps = {0, 0, 0, 0, 0};
     private double[] vps = {0, 0, 0, 0, 0};
 
-    private JSONObject[] stats;
-
     private Player player1;
     private Player player2;
     private Player player3;
     private Player player4;
     private Player player5;
-
-    private ActivityFinalizeTeammatesBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +55,6 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         getSupportActionBar().hide();
 
         setContentView(R.layout.activity_results);
-//        binding = DataBindingUtil.setContentView(this, R.layout.activity_results);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -90,7 +85,6 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
             fragmentBundle.putDoubleArray("user_input_player_dps", dps);
             fragmentBundle.putDoubleArray("user_input_player_gps", gps);
             fragmentBundle.putDoubleArray("user_input_player_vps", vps);
-//            fragmentBundle.putString("user_input_player_stats", stats.toString());
 
             Log.d("ResultsActivity", data.toString());
             Log.d("ResultsActivity", String.valueOf(player3.getLikes()));
