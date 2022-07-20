@@ -14,7 +14,7 @@ import com.example.dodged_project.databinding.ActivityAddTeammatesBinding;
 public class AddTeammatesActivity extends AppCompatActivity {
 
     private ActivityAddTeammatesBinding binding;
-    private String[] usernames = new String[5];
+//    private String[] usernames = new String[5];
 //
 //    private TextView userLoggedInStatusText;
 
@@ -23,6 +23,8 @@ public class AddTeammatesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_teammates);
+
+        String[] usernames = new String[5];
 
         TextView userLoggedInStatusText;
 
@@ -48,7 +50,7 @@ public class AddTeammatesActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchToFinalizeTeammates();
+                switchToFinalizeTeammates(usernames);
             }
         });
 
@@ -56,7 +58,7 @@ public class AddTeammatesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (addTeammatesActivityExtra != null && addTeammatesActivityExtra.getBoolean("confirmedTeammatesBefore")) {
-                    switchToFinalizeTeammates();
+                    switchToFinalizeTeammates(usernames);
                 }
                 else {
                     Intent cancelFromAddTeammatesActivityIntent = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
@@ -69,7 +71,7 @@ public class AddTeammatesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (addTeammatesActivityExtra != null && addTeammatesActivityExtra.getBoolean("confirmedTeammatesBefore")) {
-                    switchToFinalizeTeammates();
+                    switchToFinalizeTeammates(usernames);
                 }
                 else {
                     Intent cancelFromAddTeammatesActivityIntent = new Intent(AddTeammatesActivity.this, ChooseTeammatesActivity.class);
@@ -79,7 +81,7 @@ public class AddTeammatesActivity extends AppCompatActivity {
         });
     }
 
-    private void switchToFinalizeTeammates() {
+    private void switchToFinalizeTeammates(String[] usernames) {
         // there is prolly a better way to do this
         // i'll clean it later, my brain has stopped working <>_<>
         usernames[0] = binding.username01Textinput.getText().toString();

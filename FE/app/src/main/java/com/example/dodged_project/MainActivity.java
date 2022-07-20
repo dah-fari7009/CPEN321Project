@@ -23,12 +23,12 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SignInButton signInButton;
+//    private SignInButton signInButton;
     private int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
 
-    private Button continueAsGuestButton;
-    private SwitchMaterial switchMaterial;
+//    private Button continueAsGuestButton;
+//    private SwitchMaterial switchMaterial;
 
     public static String googleAccountName;
 
@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+
+        SignInButton signInButton;
+
+        Button continueAsGuestButton;
+        SwitchMaterial switchMaterial;
 
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
