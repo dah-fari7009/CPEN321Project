@@ -67,7 +67,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
 
         View view = inflater.inflate(R.layout.player_username_item, null);
 
-        if(screen != null && screen == "FinalizeTeammatesActivity") {
+        if(screen != null && screen.equals("FinalizeTeammatesActivity")) {
             CardView cardView = view.findViewById(R.id.alt_card_view);
             cardView.setVisibility(View.GONE);
 
@@ -109,7 +109,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
                     notifyDataSetChanged();
                 }
             });
-        } else if(screen != null && screen == "ResultsActivity") {
+        } else if(screen != null && screen.equals("ResultsActivity")) {
             CardView cardView = view.findViewById(R.id.card_view);
             cardView.setVisibility(View.GONE);
 

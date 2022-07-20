@@ -28,7 +28,7 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
 
         if (getArguments() != null) {
             screen = getArguments().getString("activity");
-            if(screen == "ResultsActivity") {
+            if(screen.equals("ResultsActivity")) {
 //                String stats = getArguments().getString("user_input_player_stats");
 //                JSONObject[] statsObjectArray = new JSONObject[5];
                 createPlayerArrayListForResults(
