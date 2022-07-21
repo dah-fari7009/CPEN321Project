@@ -1,5 +1,4 @@
 const axios = require("axios");
-const request = require('request');
 require('dotenv').config()
 
 const API_KEY = process.env.RIOT_API_KEY;
@@ -123,7 +122,7 @@ async function getPlayerMasteries(name, region, champ) {
 
     for (let i in list.data) {
         if(currChampId == list.data[i].championId) {
-            if (i == 0) {
+            if (i === 0) {
                 playTime = "main";
             } else if (i <= 10) {
                 playTime = "high";
@@ -137,15 +136,15 @@ async function getPlayerMasteries(name, region, champ) {
     }
 
     return {
-        top1: top1,
-        top2: top2,
-        top3: top3,
-        playTime: playTime,
-        mastery: mastery
+        top1,
+        top2,
+        top3,
+        playTime,
+        mastery
     }
 }
 
-module.exports = {getMatchHistory: getMatchHistory, getPlayerMasteries: getPlayerMasteries};
+module.exports = {getMatchHistory, getPlayerMasteries};
 
 // getMatchHistory("ct819", "NA1").then(res => console.log(res));
 // "2 4", "TheWanderersWay", "palukawhale", "Thick Rooster", "ct819"

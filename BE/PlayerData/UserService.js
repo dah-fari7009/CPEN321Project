@@ -193,4 +193,4 @@ async function getFromDB(player) {
 
 }
 
-module.exports = {router: router, getFromDB: getFromDB};
+module.exports = { router, getFromDB};
