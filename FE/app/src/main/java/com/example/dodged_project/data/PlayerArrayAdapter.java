@@ -132,21 +132,23 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
 
                     @Override
                     public void onClick(View v) {
-                        if (!dislikeClicked || likeClicked) {
+                        if (!dislikeClicked && !likeClicked) {
                             setUserDislikes(player.getUsername());
                             playerDislikeImageView.setColorFilter(Color.rgb(255, 0, 0));
                             player.setDislikes(player.getDislikes() + 1);
                             playerLikeImageView.setColorFilter(Color.rgb(16, 24, 40));
-                            player.setLikes(player.getLikes() > 0 ? player.getLikes() - 1 : 0);
+//                            player.setLikes(player.getLikes() > 0 ? player.getLikes() - 1 : 0);
                             dislikeClicked = true;
                             playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
                             playerNumberLikes.setText(String.valueOf(player.getLikes()));
+                            playerLikeImageView.setClickable(false);
                         } else {
                             undislikeUser(player.getUsername());
                             playerDislikeImageView.setColorFilter(Color.rgb(16, 24, 40));
                             player.setDislikes(player.getDislikes() > 0 ? player.getDislikes() - 1 : 0);
                             dislikeClicked = false;
                             playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
+                            playerLikeImageView.setClickable(true);
                         }
                     }
                 });
@@ -154,21 +156,23 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
                 playerLikeImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!likeClicked || dislikeClicked) {
+                        if (!likeClicked && !dislikeClicked) {
                             setUserLikes(player.getUsername());
                             playerLikeImageView.setColorFilter(Color.rgb(0, 255, 0));
                             player.setLikes(player.getLikes() + 1);
                             playerDislikeImageView.setColorFilter(Color.rgb(16, 24, 40));
-                            player.setDislikes(player.getDislikes() > 0 ? player.getDislikes() - 1 : 0);
+//                            player.setDislikes(player.getDislikes() > 0 ? player.getDislikes() - 1 : 0);
                             likeClicked = true;
                             playerNumberLikes.setText(String.valueOf(player.getLikes()));
                             playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
+                            playerDislikeImageView.setClickable(false);
                         } else {
                             unlikeUser(player.getUsername());
                             playerLikeImageView.setColorFilter(Color.rgb(16, 24, 40));
                             player.setLikes(player.getLikes() > 0 ? player.getLikes() - 1 : 0);
                             likeClicked = false;
                             playerNumberLikes.setText(String.valueOf(player.getLikes()));
+                            playerDislikeImageView.setClickable(true);
                         }
                         Log.d("ArrayAdapter", String.valueOf(playerLikeImageView.getColorFilter()));
                     }
