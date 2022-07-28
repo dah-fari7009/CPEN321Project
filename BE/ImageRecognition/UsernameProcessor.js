@@ -35,7 +35,7 @@ router.post('/usernames', (req, res) => {
 })
 
 // Upload image to parse riot ids
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
     const base64EncodedImage = req.body.base64EncodedImage
     const data = Buffer.from(base64EncodedImage, 'base64')
     const region = req.body.region
