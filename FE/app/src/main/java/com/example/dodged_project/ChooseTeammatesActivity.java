@@ -21,11 +21,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -134,9 +136,15 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
 
         if(requestCode == 1 && resultCode == RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] bArray = byteArrayOutputStream.toByteArray();
+            String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
+
             Log.d("ChooseActivity", String.valueOf(bitmap));
             Intent uploadedImageActivityIntent = new Intent(ChooseTeammatesActivity.this, UploadedImageActivity.class);
-            uploadedImageActivityIntent.putExtra("imageBitmap", bitmap);
+            uploadedImageActivityIntent.putExtra("encodedImage", encodedImageFromCamera);
             startActivity(uploadedImageActivityIntent);
         }
     }
