@@ -7,7 +7,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AddTeammatesActivity">
+        tools:context=".AddTeammatesActivity"
+        android:id="@+id/add_teammates_activity_id"
+        >
 
         <ScrollView
             android:layout_width="match_parent"
@@ -104,6 +106,7 @@
                                 android:paddingVertical="2dp"
                                 android:maxLines="1"
                                 android:singleLine="true"
+                                android:importantForAutofill="no"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -128,6 +131,7 @@
                                 android:paddingVertical="2dp"
                                 android:maxLines="1"
                                 android:singleLine="true"
+                                android:importantForAutofill="no"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -152,6 +156,7 @@
                                 android:paddingVertical="2dp"
                                 android:maxLines="1"
                                 android:singleLine="true"
+                                android:importantForAutofill="no"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -176,6 +181,7 @@
                                 android:paddingVertical="2dp"
                                 android:maxLines="1"
                                 android:singleLine="true"
+                                android:importantForAutofill="no"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -200,6 +206,7 @@
                                 android:paddingVertical="2dp"
                                 android:maxLines="1"
                                 android:singleLine="true"
+                                android:importantForAutofill="no"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>

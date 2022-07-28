@@ -18,7 +18,7 @@ public class MainActivityTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule =
-            new ActivityScenarioRule<MainActivity>(MainActivity.class);
+            new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
     public void clickContinueAsGuestButton() {
