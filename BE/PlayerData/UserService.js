@@ -2,8 +2,7 @@ const MongoClient = require("mongodb");
 const express = require("express");
 const router = express.Router()
 require('dotenv').config()
-// var url = process.env.MONGO_URL;
-var url = "mongodb://localhost:27017/";
+var url = process.env.MONGO_URL;
 const DataHandlerModule = require('./DataHandler');
 const getPlayerMasteries = DataHandlerModule.getPlayerMasteries;
 
