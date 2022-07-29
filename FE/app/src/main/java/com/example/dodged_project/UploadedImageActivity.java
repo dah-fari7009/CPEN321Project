@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -62,12 +63,15 @@ public class UploadedImageActivity extends AppCompatActivity {
             userLoggedInStatusText.setText("Logged in as: " + MainActivity.googleAccountName);
         }
 
-        Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");
+//        Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");
+        String encodedImageFromCamera = getIntent().getExtras().getString("encodedImage");
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] bArray = byteArrayOutputStream.toByteArray();
-        String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
+//        Log.d("UploadedImageActivity", String.valueOf(imageBitmap));
+
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//        byte[] bArray = byteArrayOutputStream.toByteArray();
+//        String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
 
         // FOR M5, USE A DEFAULT IMAGE SINCE WE ARE USING AN EMULATOR
 //        String defaultImagePath = "../assets/defaultUploadImage.jpg";
@@ -76,8 +80,8 @@ public class UploadedImageActivity extends AppCompatActivity {
 //        Bitmap defaultImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_upload_image);
 //        Bitmap scaled = Bitmap.createScaledBitmap(defaultImageBitmap, 150, 100, true);
 //
-        uploadedImage = findViewById(R.id.uploadedImage);
-        uploadedImage.setImageBitmap(imageBitmap);
+//        uploadedImage = findViewById(R.id.uploadedImage);
+//        uploadedImage.setImageBitmap(imageBitmap);
 //
 //        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 //        defaultImageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
@@ -110,11 +114,11 @@ public class UploadedImageActivity extends AppCompatActivity {
     }
 
     public void sendImage(String encodedImage, String region) {
-        String sendUsernamesEndpoint = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/image/usernames";
+        String sendUsernamesEndpoint = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/image";
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("region", region);
-            jsonObject.put("base64EncodedImage ", encodedImage);
+            jsonObject.put("base64EncodedImage", encodedImage);
 
         } catch (JSONException e) {
             e.printStackTrace();
