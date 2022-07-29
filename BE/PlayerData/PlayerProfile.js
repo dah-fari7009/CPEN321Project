@@ -9,4 +9,4 @@ async function getProfile(name, region) {
 
     return { name, region, stats, reviews }
 }
-module.exports = getProfile;
+module.exports = { getProfile };
