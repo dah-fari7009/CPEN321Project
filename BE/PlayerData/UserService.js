@@ -2,7 +2,8 @@ const MongoClient = require("mongodb");
 const express = require("express");
 const router = express.Router()
 require('dotenv').config()
-var url = process.env.MONGO_URL;
+// var url = process.env.MONGO_URL;
+var url = "mongodb://localhost:27017/";
 const DataHandlerModule = require('./DataHandler');
 const getPlayerMasteries = DataHandlerModule.getPlayerMasteries;
 
@@ -10,6 +11,13 @@ const getPlayerMasteries = DataHandlerModule.getPlayerMasteries;
 // LIKE player
 router.post('/like', (req, response) => {
     let player = req.body.name;
+    let googleId = req.body.googleid;
+
+    let registered = checkIfRegisteredUser(googleId);
+    if (!registered) {
+        throw "Cannot post like from unregistered user"
+        response.status(403)
+    }
 
     if (!player) {
         response.status(400).json("Username not received");
@@ -18,7 +26,7 @@ router.post('/like', (req, response) => {
             if (err) throw err;
             var dbo = db.db("playerdb");
     
-            dbo.collection("playerdb").updateOne({ _id: player },{ $inc: {likes: 1} }, {upsert: true}, function(err, res) {
+            dbo.collection("playerdb").updateOne({ _id: player },{ $push: {likes: googleId} }, {upsert: true}, function(err, res) {
                 if (err) throw err;
                 console.log("Liked player");
                 response.json(res).status(200);
@@ -31,6 +39,13 @@ router.post('/like', (req, response) => {
 // UNLIKE player
 router.post('/unlike', (req, response) => {
     let player = req.body.name;
+    let googleId = req.body.googleid;
+
+    let registered = checkIfRegisteredUser(googleId);
+    if (!registered) {
+        throw "Cannot post unlike from unregistered user"
+        response.status(403)
+    }
 
     if (!player) {
         response.status(400).json("Username not received");
@@ -39,7 +54,7 @@ router.post('/unlike', (req, response) => {
             if (err) throw err;
             var dbo = db.db("playerdb");
     
-            dbo.collection("playerdb").updateOne({ _id: player },{ $inc: {likes: -1} }, {upsert: true}, function(err, res) {
+            dbo.collection("playerdb").updateOne({ _id: player },{ $pull: {likes: googleId} }, function(err, res) {
                 if (err) throw err;
                 console.log("Unliked player");
                 response.json(res).status(200);
@@ -52,6 +67,13 @@ router.post('/unlike', (req, response) => {
 // DISLIKE player
 router.post('/dislike', (req, response) => {
     let player = req.body.name;
+    let googleId = req.body.googleid;
+
+    let registered = checkIfRegisteredUser(googleId);
+    if (!registered) {
+        throw "Cannot post dislike from unregistered user"
+        response.status(403)
+    }
 
     if (!player) {
         response.status(400).json("Username not received");
@@ -60,7 +82,7 @@ router.post('/dislike', (req, response) => {
             if (err) throw err;
             var dbo = db.db("playerdb");
     
-            dbo.collection("playerdb").updateOne({ _id: player },{ $inc: {dislikes: 1} }, {upsert: true}, function(err, res) {
+            dbo.collection("playerdb").updateOne({ _id: player },{ $push: {dislikes: googleId} }, {upsert: true}, function(err, res) {
                 if (err) throw err;
                 console.log("Disliked player");
                 response.json(res).status(200);
@@ -73,6 +95,13 @@ router.post('/dislike', (req, response) => {
 // UNDISLIKE player
 router.post('/undislike', (req, response) => {
     let player = req.body.name;
+    let googleId = req.body.googleid;
+
+    let registered = checkIfRegisteredUser(googleId);
+    if (!registered) {
+        throw "Cannot post undislike from unregistered user"
+        response.status(403)
+    }
 
     if (!player) {
         response.status(400).json("Username not received");
@@ -81,7 +110,7 @@ router.post('/undislike', (req, response) => {
             if (err) throw err;
             var dbo = db.db("playerdb");
     
-            dbo.collection("playerdb").updateOne({ _id: player },{ $inc: {dislikes: -1} }, {upsert: true}, function(err, res) {
+            dbo.collection("playerdb").updateOne({ _id: player },{ $pull: {dislikes: googleId} }, function(err, res) {
                 if (err) throw err;
                 console.log("undisliked player");
                 response.json(res).status(200);
@@ -135,15 +164,19 @@ router.get('/getPlayer/:name', async (req, response) => {
             var dbo = db.db("playerdb");
             dbo.collection("playerdb").findOne({_id: player}, function(err, res) {
                 if (err) throw err;
-                let cleanedRes = {
-                    _id: res._id,
-                    likes: res.likes ? res.likes : 0,
-                    dislikes: res.dislikes ? res.dislikes : 0,
-                    comments: res.comments ? res.comments : []
+                if (res) {
+                    let cleanedRes = {
+                        _id: res._id,
+                        likes: res.likes ? res.likes : [],
+                        dislikes: res.dislikes ? res.dislikes : [],
+                        comments: res.comments ? res.comments : []
+                    }
+                    console.log(cleanedRes);
+                    response.json(cleanedRes).status(200);
+                    db.close();
+                } else {
+                    response.status(404);
                 }
-                console.log(cleanedRes);
-                response.json(cleanedRes).status(200);
-                db.close();
             });
         });
     }
@@ -173,15 +206,15 @@ async function getFromDB(player) {
                 if (!res) {
                     resolve({
                         _id: player,
-                        likes: 0,
-                        dislikes: 0,
+                        likes: [],
+                        dislikes: [],
                         comments: []
                     })
                 } else {    
                     resolve({
                         _id: res._id,
-                        likes: res.likes ? res.likes : 0,
-                        dislikes: res.dislikes ? res.dislikes : 0,
+                        likes: res.likes ? res.likes : [],
+                        dislikes: res.dislikes ? res.dislikes : [],
                         comments: res.comments ? res.comments : []
                     });
                 }
@@ -192,5 +225,51 @@ async function getFromDB(player) {
     })
 
 }
+
+// Returns null if user doesn't exist
+async function checkIfRegisteredUser(googleId) {
+    MongoClient.MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("playerdb");
+
+        dbo.collection("userdb").findOne({ _id: googleId }, function(err, res) {
+            if (err) throw err;
+            console.log(res);
+            db.close();
+        });
+    });
+}
+
+async function addRegisteredUser(googleId, riotName, token) {
+    MongoClient.MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("playerdb");
+
+        dbo.collection("userdb").updateOne({ _id: googleId },{$set: { username: riotName, firebaseToken: token}}, {upsert: true}, function(err, res) {
+            if (err) throw err;
+            console.log("Added new registered user");
+            db.close();
+        });
+    });
+}
+
+async function removeRegisteredUser(googleId) {
+    MongoClient.MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("playerdb");
+
+        dbo.collection("userdb").deleteOne({ _id: googleId }, function(err, res) {
+            if (err) throw err;
+            console.log("Removed registered user");
+            db.close();
+        });
+    });
+}
+
+// addRegisteredUser("Bamal", "abc12", "yomama")
+// checkIfRegisteredUser("Jamal")
+// removeRegisteredUser("Jamal")
+// curl http://localhost:8080/playerdb/getPlayer/Jim
+// curl -d '{"name":"josha", "googleid":"abdd"}' -H "Content-Type: application/json" -X POST http://localhost:8080/playerdb/like
 
 module.exports = { router, getFromDB};

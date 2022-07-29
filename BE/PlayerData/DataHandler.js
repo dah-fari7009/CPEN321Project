@@ -1,7 +1,8 @@
 const axios = require("axios");
 require('dotenv').config()
 
-const API_KEY = process.env.RIOT_API_KEY;
+// const API_KEY = process.env.RIOT_API_KEY;
+const API_KEY = "RGAPI-12830961-02f0-448e-844d-c13489c0d4e3";
 let URL_PREFIX;
 
 
@@ -18,12 +19,14 @@ function getRiotData(id, gameData) {
     let assistsPerSec = [];
     let goldPerSec = [];
     let visionPerSec = [];
+
+    let duration = gameData.data.info.gameDuration > 0 ? gameData.data.info.gameDuration : 1;
     
-    killsPerSec.push(playerStats.kills/gameData.data.info.gameDuration);
-    deathsPerSec.push(playerStats.deaths/gameData.data.info.gameDuration);
-    assistsPerSec.push(playerStats.assists/gameData.data.info.gameDuration);
-    visionPerSec.push(playerStats.visionScore/gameData.data.info.gameDuration);
-    goldPerSec.push(playerStats.goldEarned/gameData.data.info.gameDuration);
+    killsPerSec.push(playerStats.kills/duration);
+    deathsPerSec.push(playerStats.deaths/duration);
+    assistsPerSec.push(playerStats.assists/duration);
+    visionPerSec.push(playerStats.visionScore/duration);
+    goldPerSec.push(playerStats.goldEarned/duration);
 
     return {
         kps: getAverage(killsPerSec),
@@ -87,8 +90,10 @@ function setServer(region) {
         server = "americas";
     } else if (region == "EUN1" || region == "EUW1" || region == "RU1" || region == "TR1") {
         server = "europe";
-    } else {
+    } else if (region == "OC1") {
         server = "sea";
+    } else {
+        throw "Region name doesn't exist";
     }
 
     URL_PREFIX = `https://${server}.api.riotgames.com`;
@@ -96,9 +101,17 @@ function setServer(region) {
 
 
 async function getMatchHistory(name, region) {
+    if (!name || !region) {
+        throw "Must include all fields";
+    }
+
     setServer(region);
 
     let player = await getPlayerId(name, region);
+    if (!player) {
+        throw "Username cannot be found";
+    }
+
     let gameIds = await getGameIdList(player.data.puuid);
 
     let gameStats = await getGameStats(gameIds.data[0]);
@@ -108,8 +121,16 @@ async function getMatchHistory(name, region) {
 }
 
 async function getPlayerMasteries(name, region, champ) {
+    if (!name || !region || !champ) {
+        throw "Must include all fields";
+    }
+
     setServer(region);
     let id = await getPlayerId(name, region);
+    if (!id) {
+        throw "Username cannot be found";
+    }
+
     let list = await getChamps(id.data.id, region);
     
     let top1 = await getChampName(list.data[0].championId);
