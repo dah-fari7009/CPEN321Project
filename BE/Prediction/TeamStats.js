@@ -43,4 +43,4 @@ async function TeamStats(names, region) {
     
 }
 
-module.exports = TeamStats;
+module.exports = { TeamStats };
