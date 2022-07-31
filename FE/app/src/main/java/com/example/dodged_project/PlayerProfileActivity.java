@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class PlayerProfileActivity extends AppCompatActivity {
@@ -168,6 +169,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    Collections.reverse(commentsArrayList);
                     //Log.d("JSON","" + commentsArrayList.size());
                     commentRecyclerViewAdapter = new CommentRecyclerViewAdapter(commentsArrayList);
                     binding.commentsRecyclerView.setAdapter(commentRecyclerViewAdapter);
@@ -184,7 +186,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("name", playerUsername);
         jsonBody.put("poster", MainActivity.googleAccountName);
-        jsonBody.put("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        jsonBody.put("date", new SimpleDateFormat("MM/dd/yyyy").format(new Date()));
         jsonBody.put("comment", comment);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postCommentURL, jsonBody,
@@ -197,8 +199,8 @@ public class PlayerProfileActivity extends AppCompatActivity {
                 });
         queue = Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
-        Comment commentItem = new Comment(MainActivity.googleAccountName, new SimpleDateFormat("dd-MM-yyyy").format(new Date()), comment, playerUsername);
-        commentsArrayList.add(commentItem);
+        Comment commentItem = new Comment(MainActivity.googleAccountName, new SimpleDateFormat("MM/dd/yyyy").format(new Date()), comment, playerUsername);
+        commentsArrayList.add(0, commentItem);
     }
 
     private void getMastery(String playerUsername, String region, String champ, Context context) throws JSONException {

@@ -58,7 +58,7 @@ public class FinalizeTeammatesActivity extends AppCompatActivity implements Play
         Bundle finalizeTeammatesActivityBundle = getIntent().getExtras();
         usernames = finalizeTeammatesActivityBundle.getStringArray("user_input_player_names");
 
-        String[] regions = new String[] {"BR1", "EUN1", "EUW1", "JP1", "KR", "LA1", "LA2", "NA1", "OC1", "RU", "TR1"};
+        String[] regions = new String[] {"NA1", "BR1", "EUN1", "EUW1", "JP1", "KR", "LA1", "LA2", "OC1", "RU", "TR1"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(FinalizeTeammatesActivity.this, R.layout.region_dropdown_item, regions);
         binding.regionDropdownItem.setAdapter(adapter);
 
