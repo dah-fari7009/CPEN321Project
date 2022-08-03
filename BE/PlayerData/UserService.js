@@ -14,9 +14,9 @@ router.post('/like', async (req, response) => {
     let success = await sendLikeToDb(player, googleId)
 
     if (success) {
-        response.status(200);
+        response.status(200).end();
     } else {
-        response.status(403);
+        response.status(403).end();
     }
 })
 
@@ -58,9 +58,9 @@ router.post('/unlike', async (req, response) => {
 
     let success = await sendUnlikeToDb(player, googleId);
     if (success) {
-        response.status(200);
+        response.status(200).end();
     } else {
-        response.status(403);
+        response.status(403).end();
     }
 })
 
@@ -101,9 +101,9 @@ router.post('/dislike', async (req, response) => {
 
     let success = await sendDislikeToDb(player, googleId);
     if (success) {
-        response.status(200);
+        response.status(200).end();
     } else {
-        response.status(403);
+        response.status(403).end();
     }
 })
 
@@ -144,9 +144,9 @@ router.post('/undislike', async (req, response) => {
 
     let success = await sendUndislikeToDb(player, googleId);
     if (success) {
-        response.status(200);
+        response.status(200).end();
     } else {
-        response.status(403);
+        response.status(403).end();
     }
 })
 
@@ -189,9 +189,9 @@ router.post('/comment', async (req, response) => {
 
     let success = await sendCommentToDb(player, poster, googleId, comment);
     if (success) {
-        response.status(200);
+        response.status(200).end();
     } else {
-        response.status(403);
+        response.status(403).end();
     }
 })
 
@@ -256,7 +256,7 @@ router.get('/getPlayer/:name', async (req, response) => {
                     response.json(cleanedRes).status(200);
                     db.close();
                 } else {
-                    response.status(404);
+                    response.status(404).end();
                 }
             });
         });
