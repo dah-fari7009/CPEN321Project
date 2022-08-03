@@ -1,5 +1,6 @@
 const PlayerProfile = require('../PlayerData/PlayerProfile');
 const getPlayer = PlayerProfile.getProfile;
+const tf = require('@tensorflow/tfjs-node');
 
 // aggregate kills/deaths/etc per second
 let akps = 0;
@@ -30,12 +31,10 @@ async function TeamStats(names, region) {
     sumStats(player4.stats);
     sumStats(player5.stats);
     
-    let teamData = {akps,aaps,adps,agps,avps,}
-
-    // TODO: (AFTER MVP) include ML model that will take in the teamData
-    // and return a prediction (value from 0-1). For now, as a placeholder
-    // just use random number generator from 0 to 1
-    let prediction = Math.random();
+    let input = tf.tensor([[akps, aaps, adps, agps, avps]]);
+    let model = await tf.loadLayersModel('file://Model/model.json');
+    let prediction = await model.predict(input);
+    prediction.print();
 
     return new Promise(resolve => {
         resolve({prediction, player1, player2, player3, player4, player5})

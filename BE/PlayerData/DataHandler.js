@@ -1,7 +1,8 @@
 const axios = require("axios");
 require('dotenv').config()
 
-const API_KEY = process.env.RIOT_API_KEY;
+// const API_KEY = process.env.RIOT_API_KEY;
+const API_KEY = "RGAPI-12830961-02f0-448e-844d-c13489c0d4e3";
 let URL_PREFIX;
 
 
@@ -164,7 +165,14 @@ async function getPlayerMasteries(name, region, champ) {
     }
 }
 
-module.exports = {getMatchHistory, getPlayerMasteries};
+module.exports = {
+    getMatchHistory, 
+    getPlayerMasteries,
+    getPlayerId,
+    getGameIdList,
+    getGameStats,
+    setServer
+};
 
 // getMatchHistory("ct819", "NA1").then(res => console.log(res));
 // "2 4", "TheWanderersWay", "palukawhale", "Thick Rooster", "ct819"
