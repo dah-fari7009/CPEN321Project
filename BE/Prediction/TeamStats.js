@@ -38,7 +38,7 @@ async function TeamStats(names, region) {
     }
     
     let input = tf.tensor([teamStats]);
-    let model = await tf.loadLayersModel('file://BE/Prediction/Model/model.json');
+    let model = await tf.loadLayersModel('file://Prediction/Model/model.json');
     let prediction = await model.predict(input);
     prediction = prediction.arraySync()[0][0];
     console.log(prediction);
