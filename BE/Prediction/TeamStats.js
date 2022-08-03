@@ -30,12 +30,18 @@ async function TeamStats(names, region) {
     sumStats(player3.stats);
     sumStats(player4.stats);
     sumStats(player5.stats);
+
+    let teamStats = [akps, aaps, adps, agps, avps];
+
+    for (let i = 0; i < teamStats.length; i++) {
+        teamStats[i] = teamStats[i] / 5;
+    }
     
-    let input = tf.tensor([[akps, aaps, adps, agps, avps]]);
-    let model = await tf.loadLayersModel('file://Prediction/Model/model.json');
+    let input = tf.tensor([teamStats]);
+    let model = await tf.loadLayersModel('file://BE/Prediction/Model/model.json');
     let prediction = await model.predict(input);
-    prediction.print();
-    prediction = prediction.dataSync()[0];
+    prediction = prediction.arraySync()[0][0];
+    console.log(prediction);
 
     return new Promise(resolve => {
         resolve({prediction, player1, player2, player3, player4, player5})
