@@ -32,7 +32,7 @@ async function TeamStats(names, region) {
     sumStats(player5.stats);
     
     let input = tf.tensor([[akps, aaps, adps, agps, avps]]);
-    let model = await tf.loadLayersModel('file://Model/model.json');
+    let model = await tf.loadLayersModel('file://Prediction/Model/model.json');
     let prediction = await model.predict(input);
     prediction.print();
 
