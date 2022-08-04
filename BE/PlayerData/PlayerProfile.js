@@ -11,7 +11,7 @@ async function getProfile(name, region) {
     let stats = await getMatchHistory(name, region);
 
     if (!stats) {
-        throw `This player ${name} couldnt be found for the specified region. Check the spelling of the region.`
+        throw `This player couldnt be found for the specified region. Check the spelling of the region.`
     }
 
     return { name, region, stats, reviews }

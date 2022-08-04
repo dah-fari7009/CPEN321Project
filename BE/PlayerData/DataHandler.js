@@ -1,9 +1,8 @@
-const { env } = require("@tensorflow/tfjs-node");
 const axios = require("axios");
 require('dotenv').config()
 
 let URL_PREFIX;
-const API_KEY = process.env.RIOT_API_KEY || env.RIOT_API_KEY;
+const API_KEY = process.env.RIOT_API_KEY;
 
 
 function getRiotData(id, gameData) {
@@ -42,11 +41,11 @@ async function getGameIdList(id) {
 }
 
 async function getGameStats(matchId) {
-    return await axios.get(`${URL_PREFIX}/lol/match/v5/matches/${matchId}?api_key=${API_KEY}`).catch(err => console.log(err));
+    return await axios.get(`${URL_PREFIX}/lol/match/v5/matches/${matchId}?api_key=${API_KEY}`);
 }
 
 async function getChamps(id, region) {
-    return await axios.get(`https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=${API_KEY}`).catch(err => console.log(err));
+    return await axios.get(`https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=${API_KEY}`);
 }
 
 
@@ -79,7 +78,8 @@ function getAverage(stat) {
 
 async function getPlayerId(name, region) {
     name = name.replace(/\s/g, "%20");
-    return axios.get(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${API_KEY}`).catch(err => console.log(err));
+    return axios.get(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${API_KEY}`)
+        .catch(e => {throw "Username cannot be found"});
 }
 
 function setServer(region) {
@@ -108,9 +108,6 @@ async function getMatchHistory(name, region) {
     setServer(region);
 
     let player = await getPlayerId(name, region);
-    if (!player) {
-        throw "Username cannot be found";
-    }
 
     let gameIds = await getGameIdList(player.data.puuid);
 

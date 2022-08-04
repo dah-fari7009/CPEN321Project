@@ -41,7 +41,6 @@ async function TeamStats(names, region) {
     let model = await tf.loadLayersModel('file://Prediction/Model/model.json');
     let prediction = await model.predict(input);
     prediction = prediction.arraySync()[0][0];
-    console.log(prediction);
 
     return new Promise(resolve => {
         resolve({prediction, player1, player2, player3, player4, player5})

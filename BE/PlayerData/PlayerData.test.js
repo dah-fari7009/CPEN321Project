@@ -1,7 +1,6 @@
 const PlayerProfile = require("./PlayerProfile.js")
 const DataHandler = require("./DataHandler.js")
 const UserService = require("./UserService");
-const TeamStats = require('../Prediction/TeamStats')
 
 test('Test getMatchHistory() interface - valid username/region', () => {
     const DataHandler = jest.requireActual('./DataHandler.js');
@@ -402,23 +401,6 @@ test("getFromDB() - null name", async () => {
         expect(e).toMatch("Must include name parameter")
     }
 })
-
-// test("Backend Performance", async () => {
-//     const DataHandler = jest.requireActual('./DataHandler.js');
-//     const UserService = jest.requireActual('./UserService.js');
-//     const PlayerProfile = jest.requireActual('./PlayerProfile.js');
-    
-//     let startTime = performance.now();
-
-//     let ids = ["2 4", "jinxxxtentacion", "Xerzx", "clwm gktehrm", "Momoiskii"];
-//     let region = "NA1";
-//     let stats = await TeamStats(ids, region);
-//     console.log(stats);
-
-//     let endTime = performance.now();
-//     console.log(endTime - startTime);
-
-// })
 
 // Gets called after each test to remove test entries from DB
 afterEach(async () => {
