@@ -28,12 +28,26 @@ jobs:
         run: |
           echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
           echo ${{secrets.MONGO_URL}} | sed 's/./& /g'
-      - name: Create .env file
-        uses: SpicyPizza/create-envfile@v1.3.1
-        with:
+      # - name: Create .env file
+      #   uses: SpicyPizza/create-envfile@v1.3.1
+      #   with:
+      #     RIOT_API_KEY: ${{secrets.RIOT_API_KEY}}
+      #     MONGO_URL: ${{secrets.MONGO_URL}}
+      #     directory: BE
+      - name: Create and populate .env file
+        env:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
           MONGO_URL: ${{ secrets.MONGO_URL }}
-          directory: BE
+        run: |
+          cd BE
+          touch .env
+          echo RIOT_API_KEY="$RIOT_API_KEY" >> .env
+          echo MONGO_URL="$MONGO_URL" >> .env
+
+          echo "ls -a ."
+          ls -a .
+
+        shell: bash
       - name: env
         run: cd BE && cat .env
       - name: create-json
