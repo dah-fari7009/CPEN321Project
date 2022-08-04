@@ -24,16 +24,12 @@ jobs:
       - run: ls
       - name: PWD
         run: echo "$PWD"
-      - name: Create files
-        working-directory: ./BE
-        run: echo "$PWD"
-      - name: PWD
-        run: echo "$PWD"
       - name: Log secrets
         run: |
           echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
           echo ${{secrets.MONGO_URL}} | sed 's/./& /g'
       - name: Create .env file
+        working-directory: ./BE
         uses: SpicyPizza/create-envfile@v1.3.1
         with:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
@@ -41,6 +37,7 @@ jobs:
       - name: env
         run: cat .env
       - name: create-json
+        working-directory: ./BE
         id: create-json
         uses: jsdaniell/create-json@1.1.2
         with:
