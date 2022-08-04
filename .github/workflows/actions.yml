@@ -8,8 +8,8 @@ jobs:
         run: echo "$PWD"
       - name: Log secrets
         run: |
-          echo ${{secrets.VISION_KEY_JSON}} | sed 's/./& /g'
           echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
+          echo ${{secrets.VISION_KEY_JSON}} | sed 's/./& /g'
           echo ${{secrets.MONGO_URL}} | sed 's/./& /g'
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1.3.0
