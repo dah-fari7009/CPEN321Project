@@ -3,29 +3,7 @@ on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
-    env:
-      RIOT_API_KEY: ${{secrets.RIOT_API_KEY}}
-      MONGO_URL: ${{secrets.MONGO_URL}}
     steps:
-      - run: ls
-      - name: PWD
-        run: echo "$PWD"
-      - name: Log secrets
-        run: |
-          echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
-          echo ${{secrets.MONGO_URL}} | sed 's/./& /g'
-      # - name: Create .env file
-      #   uses: SpicyPizza/create-envfile@v1.3.0
-      #   with:
-      #     RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
-      #     MONGO_URL: ${{ secrets.MONGO_URL }}
-      #     directory: BE
-      - name: create-json
-        id: create-json
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "vision-key.json"
-          json: ${{ secrets.VISION_KEY_JSON }}
       - name: MongoDB in GitHub Actions
         uses: supercharge/mongodb-github-action@1.7.0
       - name: Start MongoDB
@@ -43,6 +21,24 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - run: cd ls
+      - run: ls
+      - name: PWD
+        run: echo "$PWD"
+      - name: Log secrets
+        run: |
+          echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
+          echo ${{secrets.MONGO_URL}} | sed 's/./& /g'
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
+          MONGO_URL: ${{ secrets.MONGO_URL }}
+          directory: BE
+      - name: create-json
+        id: create-json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "vision-key.json"
+          json: ${{ secrets.VISION_KEY_JSON }}
       - run: cd BE && npm install
       - run: cd BE && npm test --runInBand
