@@ -13,7 +13,7 @@ jobs:
         id: create-json
         uses: jsdaniell/create-json@1.1.2
         with:
-          name: "vision-key.json"
+          name: "/home/runner/work/CPEN321Project/CPEN321Project/BE/vision-key.json"
           json: '{
             "type": "service_account",
             "project_id": "cpen-321-project",
