@@ -1,12 +1,31 @@
 name: cpen321 github actions
 on: [push]
-env:
-  RIOT_API_KEY: RGAPI-12830961-02f0-448e-844d-c13489c0d4e3
-  MONGO_URL: mongodb://localhost:27017/
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
+          MONGO_URL: ${{ secrets.MONGO_URL }}
+      - name: create-json
+        id: create-json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "vision-key.json"
+          json: '{
+            "type": "service_account",
+            "project_id": "cpen-321-project",
+            "private_key_id": ${{ secrets.PRIVATE_KEY_ID }},
+            "private_key": ${{ secrets.PRIVATE_KEY }},
+            "client_email": "vision-sa@cpen-321-project.iam.gserviceaccount.com",
+            "client_id": ${{ secrets.CLIENT_ID }},
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vision-sa%40cpen-321-project.iam.gserviceaccount.com"
+            }'
       - name: MongoDB in GitHub Actions
         uses: supercharge/mongodb-github-action@1.7.0
       - name: Start MongoDB
