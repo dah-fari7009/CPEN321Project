@@ -34,11 +34,16 @@ jobs:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
           MONGO_URL: ${{ secrets.MONGO_URL }}
           directory: BE
+      - name: env
+        run: cat BE/.env
       - name: create-json
         id: create-json
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "vision-key.json"
           json: ${{ secrets.VISION_KEY_JSON }}
+          dir: BE
+      - name: json file
+        run: cat BE/vision-key.json
       - run: cd BE && npm install
       - run: cd BE && npm test --runInBand
