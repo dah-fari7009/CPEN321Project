@@ -21,19 +21,6 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - run: ls
-      - name: PWD
-        run: echo "$PWD"
-      - name: Log secrets
-        run: |
-          echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
-          echo ${{secrets.MONGO_URL}} | sed 's/./& /g'
-      # - name: Create .env file
-      #   uses: SpicyPizza/create-envfile@v1.3.1
-      #   with:
-      #     RIOT_API_KEY: ${{secrets.RIOT_API_KEY}}
-      #     MONGO_URL: ${{secrets.MONGO_URL}}
-      #     directory: BE
       - name: Create and populate .env file
         env:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
@@ -43,13 +30,9 @@ jobs:
           touch .env
           echo RIOT_API_KEY="$RIOT_API_KEY" >> .env
           echo MONGO_URL="$MONGO_URL" >> .env
-
           echo "ls -a ."
           ls -a .
-
         shell: bash
-      - name: env
-        run: cd BE && cat .env
       - name: create-json
         id: create-json
         uses: jsdaniell/create-json@1.1.2
@@ -57,6 +40,7 @@ jobs:
           name: "vision-key.json"
           json: ${{ secrets.VISION_KEY_JSON }}
           dir: BE
-      - run: cd BE && ls -a
+      - name: env
+        run: cd BE && cat .env && cat vision-key.json
       - run: cd BE && npm install
       - run: cd BE && npm test --runInBand
