@@ -4,7 +4,6 @@ const router = express.Router()
 require('dotenv').config()
 var url = process.env.MONGO_URL;
 const DataHandlerModule = require('./DataHandler');
-const { env } = require("@tensorflow/tfjs-node");
 const getPlayerMasteries = DataHandlerModule.getPlayerMasteries;
 
 
@@ -42,7 +41,6 @@ async function sendLikeToDb(player, googleId) {
         
                 dbo.collection("playerdb").updateOne({ _id: player },{ $push: {likes: googleId} }, {upsert: true}, function(err, res) {
                     if (err) throw err;
-                    console.log("Liked player");
                     db.close();
                     return resolve(true);
                 });
@@ -86,7 +84,6 @@ async function sendUnlikeToDb(player, googleId) {
         
                 dbo.collection("playerdb").updateOne({ _id: player },{ $pull: {likes: googleId} }, {upsert: true}, function(err, res) {
                     if (err) throw err;
-                    console.log("Unliked player");
                     db.close();
                     return resolve(true);
                 });
@@ -129,7 +126,6 @@ async function sendDislikeToDb(player, googleId) {
         
                 dbo.collection("playerdb").updateOne({ _id: player },{ $push: {dislikes: googleId} }, {upsert: true}, function(err, res) {
                     if (err) throw err;
-                    console.log("Disliked player");
                     db.close();
                     return resolve(true);
                 });
@@ -172,7 +168,6 @@ async function sendUndislikeToDb(player, googleId) {
         
                 dbo.collection("playerdb").updateOne({ _id: player },{ $pull: {dislikes: googleId} }, {upsert: true}, function(err, res) {
                     if (err) throw err;
-                    console.log("Undisliked player");
                     db.close();
                     return resolve(true);
                 });
@@ -224,7 +219,6 @@ async function sendCommentToDb(player, poster, googleId, comment) {
         
                 dbo.collection("playerdb").updateOne({ _id: player },{ $push: { comments: {poster: poster, date: today, comment: comment} }}, {upsert: true}, function(err, res) {
                     if (err) throw err;
-                    console.log("Added comment");
                     db.close();
                     return resolve(true)
                 });
@@ -253,7 +247,6 @@ router.get('/getPlayer/:name', async (req, response) => {
                         dislikes: res.dislikes ? res.dislikes : [],
                         comments: res.comments ? res.comments : []
                     }
-                    console.log(cleanedRes);
                     response.json(cleanedRes).status(200);
                     db.close();
                 } else {

@@ -1,13 +1,13 @@
-const tf = require('@tensorflow/tfjs-node');
-const { parse } = require('csv-parse');
-const fs = require('fs');
+import { oneHot as _oneHot, data as _data, tensor, sequential, layers, train as _train, math } from '@tensorflow/tfjs-node';
+import { parse } from 'csv-parse';
+import { readFile } from 'fs';
 
 const SHUFFLE_SEED = 42;
 const EPOCHS = 80;
 const LEARNING_RATE = 0.001;
 
 function oneHot(win) {
-    return Array.from(tf.oneHot(win, 2).dataSync());
+    return Array.from(_oneHot(win, 2).dataSync());
 }
 
 function cleanData(data, features, testSize, batchSize) {
@@ -22,8 +22,8 @@ function cleanData(data, features, testSize, batchSize) {
         return oneHot(win);
     })
 
-    const dataset = tf.data
-        .zip({ xs: tf.data.array(X), ys: tf.data.array(y) })
+    const dataset = _data
+        .zip({ xs: _data.array(X), ys: _data.array(y) })
         .shuffle(data.length, SHUFFLE_SEED);
 
     const split = parseInt((1 - testSize) * data.length, 10)
@@ -31,15 +31,15 @@ function cleanData(data, features, testSize, batchSize) {
     return [
         dataset.take(split).batch(batchSize),
         dataset.skip(split + 1).batch(batchSize),
-        tf.tensor(X.slice(split)),
-        tf.tensor(y.slice(split)),
+        tensor(X.slice(split)),
+        tensor(y.slice(split)),
     ]
 }
 
 async function train(featureCount, trainData, validationData) {
-    const model = tf.sequential();
+    const model = sequential();
     model.add(
-        tf.layers.dense({
+        layers.dense({
             units: 2,
             activation: "softmax",
             inputShape: featureCount
@@ -47,7 +47,7 @@ async function train(featureCount, trainData, validationData) {
     );
 
     model.compile({
-        optimizer: tf.train.adam(LEARNING_RATE),
+        optimizer: _train.adam(LEARNING_RATE),
         loss: "binaryCrossentropy",
         metrics: ["accuracy"] 
     });
@@ -68,7 +68,7 @@ async function train(featureCount, trainData, validationData) {
 async function run() {
     let data;
 
-    fs.readFile("./gamedata.csv", async function (err, fileData) {
+    readFile("./gamedata.csv", async function (err, fileData) {
       parse(fileData, {columns: true, trim: true, cast: true}, async function(err, rows) {
         data = rows;
 
@@ -80,7 +80,7 @@ async function run() {
 
         const predictedLabels = model.predict(xTest).argMax(-1);
         const trueLabels = yTest.argMax(-1);
-        const confMatrix = tf.math.confusionMatrix(trueLabels, predictedLabels, 2);
+        const confMatrix = math.confusionMatrix(trueLabels, predictedLabels, 2);
         confMatrix.print();   
     })
     })
