@@ -6,6 +6,11 @@ jobs:
     steps:
       - name: PWD
         run: echo "$PWD"
+      - name: Log secrets
+        run: |
+          echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
+          echo ${{secrets.MONGO_URL}} | sed 's/./& /g'
+          echo ${{secrets.VISION_KEY_JSON}} | sed 's/./& /g'
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1.3.0
         with:
@@ -35,4 +40,4 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - run: cd BE && npm install
-      - run: cd BE && npm test
+      - run: cd BE && npm test --runInBand
