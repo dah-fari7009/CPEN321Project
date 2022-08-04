@@ -4,6 +4,8 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - name: PWD
+        run: echo "$PWD"
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1.3.0
         with:
@@ -13,7 +15,7 @@ jobs:
         id: create-json
         uses: jsdaniell/create-json@1.1.2
         with:
-          name: "/home/runner/work/CPEN321Project/CPEN321Project/BE/vision-key.json"
+          name: "CPEN321Project/CPEN321Project/BE/vision-key.json"
           json: '{
             "type": "service_account",
             "project_id": "cpen-321-project",
