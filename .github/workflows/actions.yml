@@ -44,5 +44,5 @@ jobs:
           json: ${{ secrets.VISION_KEY_JSON }}
           dir: BE
       - run: cd BE && ls -a
-      - run: npm install
-      - run: npm test --runInBand
+      - run: cd BE && npm install
+      - run: cd BE && npm test --runInBand
