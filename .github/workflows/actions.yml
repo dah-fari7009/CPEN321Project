@@ -7,7 +7,7 @@ jobs:
       RIOT_API_KEY: ${{secrets.RIOT_API_KEY}}
       MONGO_URL: ${{secrets.MONGO_URL}}
     steps:
-      - run: cd BE
+      - run: ls
       - name: PWD
         run: echo "$PWD"
       - name: Log secrets
