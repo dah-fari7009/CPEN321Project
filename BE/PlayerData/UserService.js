@@ -2,8 +2,9 @@ const MongoClient = require("mongodb");
 const express = require("express");
 const router = express.Router()
 require('dotenv').config()
-var url = process.env.MONGO_URL;
+var url = process.env.MONGO_URL || env.MONGO_URL;
 const DataHandlerModule = require('./DataHandler');
+const { env } = require("@tensorflow/tfjs-node");
 const getPlayerMasteries = DataHandlerModule.getPlayerMasteries;
 
 

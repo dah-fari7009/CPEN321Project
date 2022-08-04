@@ -1,5 +1,8 @@
 name: cpen321 github actions
 on: [push]
+env:
+  RIOT_API_KEY: RGAPI-12830961-02f0-448e-844d-c13489c0d4e3
+  MONGO_URL: mongodb://localhost:27017/
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest

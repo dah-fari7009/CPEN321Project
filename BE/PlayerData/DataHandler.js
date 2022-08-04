@@ -1,8 +1,9 @@
+const { env } = require("@tensorflow/tfjs-node");
 const axios = require("axios");
 require('dotenv').config()
 
-const API_KEY = process.env.RIOT_API_KEY;
 let URL_PREFIX;
+const API_KEY = process.env.RIOT_API_KEY || env.RIOT_API_KEY;
 
 
 function getRiotData(id, gameData) {
