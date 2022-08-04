@@ -35,7 +35,7 @@ jobs:
           MONGO_URL: ${{ secrets.MONGO_URL }}
           directory: BE
       - name: env
-        run: cat .env
+        run: cd BE && cat .env
       - name: create-json
         id: create-json
         uses: jsdaniell/create-json@1.1.2
