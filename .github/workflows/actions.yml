@@ -25,7 +25,7 @@ jobs:
         with:
           name: "vision-key.json"
           json: ${{ secrets.VISION_KEY_JSON }}
-          dir: '/home/runner/work/CPEN321Project/CPEN321Project/BE/'
+          dir: 'BE/'
       - name: MongoDB in GitHub Actions
         uses: supercharge/mongodb-github-action@1.7.0
       - name: Start MongoDB
