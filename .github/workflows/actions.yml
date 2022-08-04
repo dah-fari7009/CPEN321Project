@@ -29,20 +29,20 @@ jobs:
           echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
           echo ${{secrets.MONGO_URL}} | sed 's/./& /g'
       - name: Create .env file
-        working-directory: ./BE
         uses: SpicyPizza/create-envfile@v1.3.1
         with:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
           MONGO_URL: ${{ secrets.MONGO_URL }}
+          directory: BE
       - name: env
         run: cat .env
       - name: create-json
-        working-directory: ./BE
         id: create-json
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "vision-key.json"
           json: ${{ secrets.VISION_KEY_JSON }}
-      - run: ls -a
+          dir: BE
+      - run: cd BE && ls -a
       - run: npm install
       - run: npm test --runInBand
