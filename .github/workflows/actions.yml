@@ -7,6 +7,7 @@ jobs:
       RIOT_API_KEY: ${{secrets.RIOT_API_KEY}}
       MONGO_URL: ${{secrets.MONGO_URL}}
     steps:
+      - run: cd BE
       - name: PWD
         run: echo "$PWD"
       - name: Log secrets
@@ -25,7 +26,6 @@ jobs:
         with:
           name: "vision-key.json"
           json: ${{ secrets.VISION_KEY_JSON }}
-          dir: 'BE/'
       - name: MongoDB in GitHub Actions
         uses: supercharge/mongodb-github-action@1.7.0
       - name: Start MongoDB
