@@ -45,6 +45,6 @@ jobs:
           dir: BE
       - name: json file
         run: cat BE/vision-key.json
-      - run: ls
+      - run: ls -a
       - run: cd BE && npm install
       - run: cd BE && npm test --runInBand
