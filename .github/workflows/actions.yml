@@ -24,6 +24,10 @@ jobs:
       - run: ls
       - name: PWD
         run: echo "$PWD"
+      - name: Create files
+        working-directory: ./BE
+      - name: PWD
+        run: echo "$PWD"
       - name: Log secrets
         run: |
           echo ${{secrets.RIOT_API_KEY}} | sed 's/./& /g'
@@ -33,18 +37,14 @@ jobs:
         with:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
           MONGO_URL: ${{ secrets.MONGO_URL }}
-          directory: BE
       - name: env
-        run: cat BE/.env
+        run: cat .env
       - name: create-json
         id: create-json
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "vision-key.json"
           json: ${{ secrets.VISION_KEY_JSON }}
-          dir: BE
-      - name: json file
-        run: cat BE/vision-key.json
       - run: ls -a
-      - run: cd BE && npm install
-      - run: cd BE && npm test --runInBand
+      - run: npm install
+      - run: npm test --runInBand
