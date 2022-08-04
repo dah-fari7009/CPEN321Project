@@ -119,8 +119,8 @@ async function getMatchHistory(name, region) {
         vps: 0
     }
 
-    for (let i = 0; i < 5; i++) {
-        let gameStats = await getGameStats(gameIds.data[0]);
+    for (let i = 0; i < 1; i++) {
+        let gameStats = await getGameStats(gameIds.data[i]);
         let filteredStats = getRiotData(player.data.puuid, gameStats);
         formattedStats.kps += filteredStats.kps;
         formattedStats.aps += filteredStats.aps;
