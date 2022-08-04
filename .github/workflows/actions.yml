@@ -26,6 +26,7 @@ jobs:
         run: echo "$PWD"
       - name: Create files
         working-directory: ./BE
+        run: echo "$PWD"
       - name: PWD
         run: echo "$PWD"
       - name: Log secrets
