@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         SignInButton signInButton;
 
         Button continueAsGuestButton;
-        SwitchMaterial switchMaterial;
 
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
