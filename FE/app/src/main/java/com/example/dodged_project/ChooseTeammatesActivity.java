@@ -131,7 +131,7 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
             byte[] bArray = byteArrayOutputStream.toByteArray();
             String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
 
