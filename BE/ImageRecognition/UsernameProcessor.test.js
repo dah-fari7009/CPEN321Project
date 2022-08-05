@@ -296,3 +296,6 @@ describe("TEST UPLOADING RIOT IDS BY IMAGE", () => {
         expect(TeamStats.TeamStats).toHaveBeenCalledTimes(1)
     })
 })
+test("Filler", () => {
+    expect(1).toBe(1)
+})

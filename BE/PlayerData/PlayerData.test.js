@@ -409,3 +409,6 @@ afterEach(async () => {
     let exists = await UserService.checkIfRegisteredUser("test_googleId");
     expect(exists).toBe(false);
  });
+test("Filler", () => {
+    expect(1).toBe(1)
+})

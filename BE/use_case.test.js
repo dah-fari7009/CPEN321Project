@@ -3,94 +3,8 @@ const UserService = require("./PlayerData/UserService.js")
 const UsernameProcessor = require('./ImageRecognition/UsernameProcessorController')
 const fs = require('fs')
 
-result = {
-    "prediction": 0.6435593829811463,
-    "player1": {
-      "name": "2 4",
-      "region": "NA1",
-      "stats": {
-        "kps": 0.005612722170252572,
-        "aps": 0.003274087932647334,
-        "dps": 0.00420954162768943,
-        "gps": 7.196913002806361,
-        "vps": 0.007483629560336763
-      },
-      "reviews": {
-        "_id": "2 4",
-        "likes": [],
-        "dislikes": [],
-        "comments": []
-      }
-    },
-    "player2": {
-      "name": "TheWanderersWay",
-      "region": "NA1",
-      "stats": {
-        "kps": 0.0036275695284159614,
-        "aps": 0.0012091898428053204,
-        "dps": 0.004232164449818622,
-        "gps": 6.792623941958888,
-        "vps": 0.006045949214026602
-      },
-      "reviews": {
-        "_id": "TheWanderersWay",
-        "likes": [],
-        "dislikes": [],
-        "comments": []
-      }
-    },
-    "player3": {
-      "name": "palukawhale",
-      "region": "NA1",
-      "stats": {
-        "kps": 0.0006345177664974619,
-        "aps": 0.006979695431472081,
-        "dps": 0.0019035532994923859,
-        "gps": 4.6421319796954315,
-        "vps": 0.02982233502538071
-      },
-      "reviews": {
-        "_id": "palukawhale",
-        "likes": [],
-        "dislikes": [],
-        "comments": []
-      }
-    },
-    "player4": {
-      "name": "Thick Rooster",
-      "region": "NA1",
-      "stats": {
-        "kps": 0.007340485601355167,
-        "aps": 0.0016939582156973462,
-        "dps": 0.002258610954263128,
-        "gps": 9.568605307735742,
-        "vps": 0.012987012987012988
-      },
-      "reviews": {
-        "_id": "Thick Rooster",
-        "likes": [],
-        "dislikes": [],
-        "comments": []
-      }
-    },
-    "player5": {
-      "name": "ct819",
-      "region": "NA1",
-      "stats": {
-        "kps": 0.00258732212160414,
-        "aps": 0.008624407072013798,
-        "dps": 0.0008624407072013799,
-        "gps": 7.630012936610608,
-        "vps": 0.01121172919361794
-      },
-      "reviews": {
-        "_id": "ct819",
-        "likes": [],
-        "dislikes": [],
-        "comments": []
-      }
-    }
-  }
+beforeAll(() => jest.setTimeout(500))
+jest.setTimeout(30000);
 
 // tests without mocking
 
@@ -199,62 +113,50 @@ describe('Review Player', () => {
     })
 
     afterEach(async () => {
+        const UserService = jest.requireActual('./PlayerData/UserService.js');
         await UserService.cleanupTests();
+        let exists = await UserService.checkIfRegisteredUser("test_googleId");
+        expect(exists).toBe(false);
      });
 })
 
 describe('View Game Prediction', () => {
     test('uploadRiotIdsByImage() - invalid image', async () => {
-        const file = fs.readFileSync('ImageRecognition/encodedImage2.txt', 'utf8')
-
-        req = {
-            body : {
-                base64EncodedImage: file,
-                region: "NA1"
-            }
-        }
-
-        res = {
-            json_: undefined, 
-            status_: undefined, 
-            json: function(teamStats) {
-                res.json_ = teamStats
-            }, 
-            status: function(status) {
-                res.status_ = status
-            }
-        }
-
-        await UsernameProcessor.uploadRiotIdsByImage(req, res)
-        expect(res.json_).toBe("All 5 riot ids must be visible")
-        expect(res.status_).toBe(400)
-    })
-
-    test('uploadRiotIdsByImage() - valid image', async () => {
-        const file = fs.readFileSync('ImageRecognition/usernames.txt', 'utf8')
         const UsernameProcessorController = jest.requireActual('./ImageRecognition/UsernameProcessorController.js')
         const TeamStats = jest.requireActual('./Prediction/TeamStats.js')
-
-        const data = Buffer.from(file, 'base64')
     
-        fs.writeFile('./ImageRecognition/usernames.png', data, () => {
-            return
-        })
-    
-        await UsernameProcessorController.parseText('./ImageRecognition/usernames.png').then((ids) => {
+        UsernameProcessorController.parseText('./ImageRecognition/username_img.png').then(async (ids) => {
             if (ids.length != 5) {
                 res.status(400)
                 res.json("All 5 riot ids must be visible")
                 return
             }
     
-            TeamStats.TeamStats(ids, "NA1").then(teamStats => {
-                expect(teamStats.prediction).toBeGreaterThanOrEqual(0)
-            })
+            try {
+                await TeamStats.TeamStats(ids, "NA1")
+            } catch(e) {
+                expect(e).toMatch("Username cannot be found")
+            }
         })
     })
 
-    test('Invalid Region', async() => {
+    test('uploadRiotIdsByImage() - valid image', async () => {
+        const UsernameProcessorController = jest.requireActual('./ImageRecognition/UsernameProcessorController.js')
+        const TeamStats = jest.requireActual('./Prediction/TeamStats.js')
+    
+        UsernameProcessorController.parseText('./ImageRecognition/username_img.png').then(async (ids) => {
+            if (ids.length != 5) {
+                res.status(400)
+                res.json("All 5 riot ids must be visible")
+                return
+            }
+    
+            const teamStats = await TeamStats.TeamStats(ids, "NA1")
+            expect(teamStats.prediction).toBeGreaterThanOrEqual(0)
+        })
+    })
+
+    test('Invalid Region', async () => {
         req = {
             body : {
                 id1: '2 4', 
@@ -283,65 +185,24 @@ describe('View Game Prediction', () => {
     })
 
     test('player not found', async () => {
-        const path = './ImageRecognition/UsernameProcessorController.js'
-        const UsernameProcessor = jest.requireActual(path)
-        req = {
-            body : {
-                id1: 'playerthatwontbefoundalsehflwuafwef', 
-                id2: 'Aarontandude', 
-                id3: 'IronAetos', 
-                id4: 'WatchMeGank', 
-                id5: 'zAddyy', 
-                region: "NA1"
-            }
-        }
-
-        res = {
-            json_: undefined, 
-            status_: undefined, 
-            json: function(teamStats) {
-                res.json_ = teamStats
-            }, 
-            status: function(status) {
-                res.status_ = status
-            }
-        }
+        const TeamStats = jest.requireActual('./Prediction/TeamStats.js')
+        const names = ['wlkejrwlkefjlwkef', 'ItsKaia', 'Ksnyde', 'yasuways', 'BHboy']
         
         try {
-            await UsernameProcessor.uploadRiotIds(req, res)
+            await TeamStats.TeamStats(names, "NA1")
         } catch(e) {
-            expect(res.status_).toBe(400)
             expect(e).toMatch("Username cannot be found")
         }
     })
 
-    // test('all valid ids and region', async () => {
-    //     req = {
-    //         body : {
-    //             id1: '2 4', 
-    //             id2: 'Aarontandude', 
-    //             id3: 'IronAetos', 
-    //             id4: 'WatchMeGank', 
-    //             id5: 'zAddyy', 
-    //             region: "NA1"
-    //         }
-    //     }
+    test('all valid ids and region', async () => {
+        const TeamStats = jest.requireActual('./Prediction/TeamStats.js')
 
-    //     res = {
-    //         json_: undefined, 
-    //         status_: undefined, 
-    //         json: function(teamStats) {
-    //             res.json_ = teamStats
-    //         }, 
-    //         status: function(status) {
-    //             res.status_ = status
-    //         }
-    //     }
-        
-    //     UsernameProcessor.uploadRiotIds(req, res)
-    //     expect(res.json_).toBe(result)
-    //     expect(res.status_).toBe(200)
-    // })
+        const names = ['wela34', 'ItsKaia', 'Ksnyde', 'yasuways', 'BHboy']
+
+        const teamStats = await TeamStats.TeamStats(names, "NA1")
+        expect(teamStats.prediction).toBeGreaterThanOrEqual(0)
+    })
 })
 
 describe('View Player Profile', () => {
