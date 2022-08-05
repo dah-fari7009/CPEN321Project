@@ -45,6 +45,6 @@ jobs:
       - run: cd BE && npm install
       - uses: nick-fields/retry@v2
         with:
-          timeout_seconds: 3
+          timeout_seconds: 200
           max_attempts: 3
           command: cd BE && npm test --runInBand
