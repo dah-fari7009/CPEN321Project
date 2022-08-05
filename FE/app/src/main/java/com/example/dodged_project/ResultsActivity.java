@@ -64,10 +64,10 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
 //            Log.d("LOG", String.valueOf(data));
 //            Log.d("LOG", data.toString());
 
-            JSONArray likesList = (JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("likes");
-//            JSONArray dislikesList = (JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("dislikes");
-
-            Log.d("LOG", String.valueOf(likesList.length()));
+//            JSONArray likesList = (JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("likes");
+////            JSONArray dislikesList = (JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("dislikes");
+//
+//            Log.d("LOG", String.valueOf(likesList.length()));
 
             setPlayerData(data);
             setRegions();
