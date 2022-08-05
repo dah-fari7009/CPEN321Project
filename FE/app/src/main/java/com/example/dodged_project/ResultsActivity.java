@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.dodged_project.data.Player;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,6 +61,14 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
             data = new JSONObject(predictionData);
             prediction = data.getDouble("prediction");
 
+//            Log.d("LOG", String.valueOf(data));
+//            Log.d("LOG", data.toString());
+
+            JSONArray likesList = (JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("likes");
+//            JSONArray dislikesList = (JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("dislikes");
+
+            Log.d("LOG", String.valueOf(likesList.length()));
+
             setPlayerData(data);
             setRegions();
             setUsernames();
@@ -77,8 +86,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
             fragmentBundle.putDoubleArray("user_input_player_gps", gps);
             fragmentBundle.putDoubleArray("user_input_player_vps", vps);
 
-            Log.d("ResultsActivity", data.toString());
-            Log.d("ResultsActivity", String.valueOf(player3.getLikes()));
+//            Log.d("ResultsActivity", data.toString());
+//            Log.d("ResultsActivity", (String) data.getJSONObject("player2").getJSONObject("reviews").get("likes"));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,8 +123,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         player1 = new Player(
                 data.getJSONObject("player1").getString("name"),
                 data.getJSONObject("player1").getString("region"),
-                data.getJSONObject("player1").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player1").getJSONObject("reviews").getInt("dislikes"),
+                ((JSONArray) data.getJSONObject("player1").getJSONObject("reviews").get("likes")).length(),
+                ((JSONArray) data.getJSONObject("player1").getJSONObject("reviews").get("dislikes")).length(),
                 data.getJSONObject("player1").getJSONObject("stats").getDouble("kps"),
                 data.getJSONObject("player1").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player1").getJSONObject("stats").getDouble("dps"),
@@ -127,8 +136,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         player2 = new Player(
                 data.getJSONObject("player2").getString("name"),
                 data.getJSONObject("player2").getString("region"),
-                data.getJSONObject("player2").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player2").getJSONObject("reviews").getInt("dislikes"),
+                ((JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("likes")).length(),
+                ((JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("dislikes")).length(),
                 data.getJSONObject("player2").getJSONObject("stats").getDouble("kps"),
                 data.getJSONObject("player2").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player2").getJSONObject("stats").getDouble("dps"),
@@ -140,8 +149,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         player3 = new Player(
                 data.getJSONObject("player3").getString("name"),
                 data.getJSONObject("player3").getString("region"),
-                data.getJSONObject("player3").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player3").getJSONObject("reviews").getInt("dislikes"),
+                ((JSONArray) data.getJSONObject("player3").getJSONObject("reviews").get("likes")).length(),
+                ((JSONArray) data.getJSONObject("player3").getJSONObject("reviews").get("dislikes")).length(),
                 data.getJSONObject("player3").getJSONObject("stats").getDouble("kps"),
                 data.getJSONObject("player3").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player3").getJSONObject("stats").getDouble("dps"),
@@ -153,8 +162,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         player4 = new Player(
                 data.getJSONObject("player4").getString("name"),
                 data.getJSONObject("player4").getString("region"),
-                data.getJSONObject("player4").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player4").getJSONObject("reviews").getInt("dislikes"),
+                ((JSONArray) data.getJSONObject("player4").getJSONObject("reviews").get("likes")).length(),
+                ((JSONArray) data.getJSONObject("player4").getJSONObject("reviews").get("dislikes")).length(),
                 data.getJSONObject("player4").getJSONObject("stats").getDouble("kps"),
                 data.getJSONObject("player4").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player4").getJSONObject("stats").getDouble("dps"),
@@ -166,8 +175,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         player5 = new Player(
                 data.getJSONObject("player5").getString("name"),
                 data.getJSONObject("player5").getString("region"),
-                data.getJSONObject("player5").getJSONObject("reviews").getInt("likes"),
-                data.getJSONObject("player5").getJSONObject("reviews").getInt("dislikes"),
+                ((JSONArray) data.getJSONObject("player5").getJSONObject("reviews").get("likes")).length(),
+                ((JSONArray) data.getJSONObject("player5").getJSONObject("reviews").get("dislikes")).length(),
                 data.getJSONObject("player5").getJSONObject("stats").getDouble("kps"),
                 data.getJSONObject("player5").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player5").getJSONObject("stats").getDouble("dps"),
