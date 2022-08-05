@@ -25,8 +25,6 @@ import androidx.core.content.FileProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class ChooseTeammatesActivity extends AppCompatActivity {
 
