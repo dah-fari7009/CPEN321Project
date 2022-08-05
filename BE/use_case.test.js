@@ -1,4 +1,3 @@
-const DataHandler = require("./PlayerData/DataHandler.js")
 const UserService = require("./PlayerData/UserService.js")
 const UsernameProcessor = require('./ImageRecognition/UsernameProcessorController')
 const fs = require('fs')
