@@ -9,6 +9,9 @@ app.use(bodyParser.json({ limit: "50mb" }))
 const usernameRouter = require('./ImageRecognition/UsernameProcessor')
 app.use('/image', usernameRouter)
 
+const utilRouter = require('./util')
+app.use('/token', utilRouter)
+
 const userServiceModule = require('./PlayerData/UserService')
 const userServiceRouter = userServiceModule.router
 app.use('/playerdb', userServiceRouter)
