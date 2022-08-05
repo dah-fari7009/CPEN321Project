@@ -217,7 +217,7 @@ async function sendCommentToDb(player, poster, googleId, comment) {
                 if (err) throw err;
                 var dbo = db.db("playerdb");
         
-                dbo.collection("playerdb").updateOne({ _id: player },{ $push: { comments: {poster: poster, date: today, comment: comment} }}, {upsert: true}, function(err, res) {
+                dbo.collection("playerdb").updateOne({ _id: player },{ $push: { comments: {poster, date: today, comment} }}, {upsert: true}, function(err, res) {
                     if (err) throw err;
                     db.close();
                     return resolve(true)

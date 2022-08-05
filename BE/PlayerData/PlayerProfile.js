@@ -14,6 +14,7 @@ async function getProfile(name, region) {
         throw `This player couldnt be found for the specified region. Check the spelling of the region.`
     }
 
-    return { name, region, stats, reviews }
+    let profile = { name, region, stats, reviews };
+    return profile;
 }
 module.exports = { getProfile };
