@@ -9,9 +9,6 @@ import androidx.fragment.app.ListFragment;
 import com.example.dodged_project.data.Player;
 import com.example.dodged_project.data.PlayerArrayAdapter;
 
-
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
