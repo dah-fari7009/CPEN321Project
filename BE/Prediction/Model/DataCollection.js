@@ -15,7 +15,7 @@ async function collectMatches(primer) {
         let gameStats = await DataHandler.getGameStats(id);
 
         let duration = gameStats.data.info.gameDuration;
-        if (duration == 0) {
+        if (duration === 0) {
             continue;
         }
 

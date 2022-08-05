@@ -1,13 +1,12 @@
 package com.example.dodged_project;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.example.dodged_project.data.Player;
 
@@ -55,7 +54,7 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         String predictionData = bundle.getString("response");
         Bundle fragmentBundle = new Bundle();
         fragmentBundle.putString("activity", "ResultsActivity");
-        Bundle likedPlayersBundle = new Bundle();
+//        Bundle likedPlayersBundle = new Bundle();
 
         JSONObject data = new JSONObject();
         double prediction = 0;

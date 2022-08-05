@@ -1,18 +1,14 @@
 package com.example.dodged_project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -27,7 +23,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +35,8 @@ public class UploadedImageActivity extends AppCompatActivity {
 //    private TextView userLoggedInStatusText;
 //    private String selectedRegion;
 
+//wow codacy
+
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +45,7 @@ public class UploadedImageActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_uploaded_image);
 
-        ImageView uploadedImage;
+//        ImageView uploadedImage;
         Button confirmButton;
         Button cancelButton;
 
