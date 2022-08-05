@@ -35,6 +35,8 @@ public class UploadedImageActivity extends AppCompatActivity {
 //    private TextView userLoggedInStatusText;
 //    private String selectedRegion;
 
+//wow codacy
+
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
