@@ -55,7 +55,7 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         String predictionData = bundle.getString("response");
         Bundle fragmentBundle = new Bundle();
         fragmentBundle.putString("activity", "ResultsActivity");
-        Bundle likedPlayersBundle = new Bundle();
+//        Bundle likedPlayersBundle = new Bundle();
 
         JSONObject data = new JSONObject();
         double prediction = 0;

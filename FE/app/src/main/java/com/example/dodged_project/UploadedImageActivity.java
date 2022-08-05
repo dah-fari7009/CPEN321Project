@@ -48,7 +48,7 @@ public class UploadedImageActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_uploaded_image);
 
-        ImageView uploadedImage;
+//        ImageView uploadedImage;
         Button confirmButton;
         Button cancelButton;
 
