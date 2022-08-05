@@ -1,6 +1,5 @@
 const UserService = require("./PlayerData/UserService.js")
 const UsernameProcessor = require('./ImageRecognition/UsernameProcessorController')
-const fs = require('fs')
 
 beforeAll(() => jest.setTimeout(500))
 jest.setTimeout(30000);

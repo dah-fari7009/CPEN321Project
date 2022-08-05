@@ -14,16 +14,11 @@ async function testBackendPerformance() {
     for (let i = 0; i < allIds.length; i++) {
         let startTime = performance.now();
         let region = "NA1";
-        let stats = await TeamStats(allIds[i], region);
+        await TeamStats(allIds[i], region);
         let endTime = performance.now();
         executionDurations.push(endTime - startTime);
     }
-
-    // Get average
-    let sum = 0;
-    for (let j = 0; j < executionDurations.length; j++) {
-        sum += executionDurations[j];
-    }
+    console.log(executionDurations);
 }
 
 async function imageTest() {

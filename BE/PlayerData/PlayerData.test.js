@@ -333,11 +333,11 @@ test("postComment() - any input is null", async () => {
 
 test("postComment() - comment exceeds character limit", async () => {
     const UserService = jest.requireActual('./UserService.js');
-    let longComment = "aaaaaaaaflskkjfjgjlkjfslndlsnflkwejflkwjfelkjew \
-    elkfjlkewjfljwelkfjlwkesdmnv,dnv,smdnvlkjglwjelkfjwelfjlewkjkflkwjfl \
-    kjwelkjfljwelkfjwlkjflkwjflkjwlkfjlwjlkkwjlekjlwkejlkfjwlkeflkweejef \
-    lkjwlkefjwlkekjflkwejlnvd,msdnv,snv,sndv,msddnv,sdnv,msnv,mdns,mnv, \
-    msndv,smdnv"
+    let longComment = "aaaaaaaaflskkjfjgjlkjfslndlsnflkwejflkwjfelkjew" + 
+    "elkfjlkewjfljwelkfjlwkesdmnv,dnv,smdnvlkjglwjelkfjwelfjlewkjkflkwjfl" + 
+    "kjwelkjfljwelkfjwlkjflkwjflkjwlkfjlwjlkkwjlekjlwkejlkfjwlkeflkweejef" + 
+    "lkjwlkefjwlkekjflkwejlnvd,msdnv,snv,sndv,msddnv,sdnv,msnv,mdns,mnv," + 
+    "msndv,smdnv"
 
     await UserService.addRegisteredUser("test_googleId", "test_riot", "test_token");
     let registered = await UserService.checkIfRegisteredUser("test_googleId");
