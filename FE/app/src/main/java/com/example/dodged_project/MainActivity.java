@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 //    private SwitchMaterial switchMaterial;
 
     public static String googleAccountName;
+    public static String googleId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
             updateUI(account);
             Intent chooseTeammatesIntent = new Intent(MainActivity.this, ChooseTeammatesActivity.class);
             googleAccountName = account.getDisplayName();
+            googleId = account.getIdToken();
+            Log.d("MainActivity", googleId);
+
             startActivity(chooseTeammatesIntent);
 
         } catch (ApiException e) {
