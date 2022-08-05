@@ -35,6 +35,7 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
 
     File testFile = null;
     private String currentPhotoPath;
+    public static String currentEncodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,9 +136,11 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
             byte[] bArray = byteArrayOutputStream.toByteArray();
             String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
 
-            Log.d("ChooseActivity", String.valueOf(bitmap));
+            currentEncodedImage = encodedImageFromCamera;
+
+//            Log.d("ChooseActivity", String.valueOf(bitmap));
             Intent uploadedImageActivityIntent = new Intent(ChooseTeammatesActivity.this, UploadedImageActivity.class);
-            uploadedImageActivityIntent.putExtra("encodedImage", encodedImageFromCamera);
+//            uploadedImageActivityIntent.putExtra("encodedImage", encodedImageFromCamera);
             startActivity(uploadedImageActivityIntent);
         }
     }

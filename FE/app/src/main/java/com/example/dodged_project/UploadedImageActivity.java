@@ -61,7 +61,8 @@ public class UploadedImageActivity extends AppCompatActivity {
         }
 
 //        Bitmap imageBitmap = (Bitmap) getIntent().getExtras().get("imageBitmap");
-        String encodedImageFromCamera = getIntent().getExtras().getString("encodedImage");
+//        String encodedImageFromCamera = getIntent().getExtras().getString("encodedImage");
+        String encodedImageFromCamera = ChooseTeammatesActivity.currentEncodedImage;
 
 //        Log.d("UploadedImageActivity", String.valueOf(imageBitmap));
 
