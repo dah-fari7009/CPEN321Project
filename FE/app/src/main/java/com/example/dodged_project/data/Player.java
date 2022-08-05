@@ -2,6 +2,8 @@ package com.example.dodged_project.data;
 
 import android.content.Context;
 
+import org.json.JSONArray;
+
 public class Player {
 
     private String id;
@@ -16,6 +18,8 @@ public class Player {
     private double dps;
     private double gps;
     private double vps;
+    private String[] likedPlayers;
+    private String[] dislikedPlayers;
 //    private JSONObject stats;
 
     public Player(String id, String username, String avatar) {
@@ -30,7 +34,7 @@ public class Player {
         this.dislikes = dislikes;
     }
 
-    public Player(String username, String region, int likes, int dislikes, double kps, double aps, double dps, double gps, double vps) {
+    public Player(String username, String region, int likes, int dislikes, double kps, double aps, double dps, double gps, double vps, String[] likedPlayers, String[] dislikedPlayers) {
         this.username = username;
         this.region = region;
         this.likes = likes;
@@ -40,6 +44,8 @@ public class Player {
         this.dps = dps;
         this.gps = gps;
         this.vps = vps;
+        this.likedPlayers = likedPlayers;
+        this.dislikedPlayers = dislikedPlayers;
     }
 
     public int getAvatarResourceId(Context context) {
@@ -133,6 +139,22 @@ public class Player {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public String[] getLikedPlayers() {
+        return likedPlayers;
+    }
+
+    public void setLikedPlayers(String[] likedPlayers) {
+        this.likedPlayers = likedPlayers;
+    }
+
+    public String[] getDislikedPlayers() {
+        return dislikedPlayers;
+    }
+
+    public void setDislikedPlayers(String[] dislikedPlayers) {
+        this.dislikedPlayers = dislikedPlayers;
     }
 
     //    public JSONObject getStats() {

@@ -126,8 +126,28 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
             playerNumberLikes.setText(String.valueOf(player.getLikes()));
             playerNumberDislikes.setText(String.valueOf(player.getDislikes()));
 
+//            Log.d("LOGLOG", player.getLikedPlayers()[0]);
+//            Log.d("LOGLOG", MainActivity.googleId);
+
 
             if (MainActivity.googleAccountName != null) {
+
+                if(player.getLikedPlayers().length > 0) {
+                    for (int i = 0; i < player.getLikedPlayers().length; i++) {
+                        if (player.getLikedPlayers()[i] == MainActivity.googleId) {
+                            playerLikeImageView.setColorFilter(Color.rgb(0, 255, 0));
+                        }
+                    }
+                }
+
+                if(player.getDislikedPlayers().length > 0) {
+                    for (int i = 0; i < player.getDislikedPlayers().length; i++) {
+                        if (player.getDislikedPlayers()[i] == MainActivity.googleId) {
+                            playerDislikeImageView.setColorFilter(Color.rgb(255, 0, 0));
+                        }
+                    }
+                }
+
                 playerDislikeImageView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -211,11 +231,22 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
         return view;
     }
 
+    public void checkLikedDislikedPlayers(String[] likedPlayers, String[] disLikedPlayers) {
+
+        for(int i = 0; i < likedPlayers.length; i++) {
+            if(likedPlayers[i] == MainActivity.googleId) {
+
+            }
+        }
+
+    }
+
     public void unlikeUser(String userName) {
         String sendUsernamesEndpoint = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/unlike";
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", userName);
+            jsonObject.put("googleid", MainActivity.googleId);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -256,6 +287,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", userName);
+            jsonObject.put("googleid", MainActivity.googleId);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -296,6 +328,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", userName);
+            jsonObject.put("googleid", MainActivity.googleId);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -336,6 +369,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", userName);
+            jsonObject.put("googleid", MainActivity.googleId);
 
         } catch (JSONException e) {
             e.printStackTrace();

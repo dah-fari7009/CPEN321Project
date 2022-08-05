@@ -10,6 +10,8 @@ import com.example.dodged_project.data.Player;
 import com.example.dodged_project.data.PlayerArrayAdapter;
 
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -31,6 +33,26 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
             if(screen.equals("ResultsActivity")) {
 //                String stats = getArguments().getString("user_input_player_stats");
 //                JSONObject[] statsObjectArray = new JSONObject[5];
+
+                String[][] getLikedPlayers = null;
+                String[][] getDislikedPlayers = null;
+
+                Object[] likedObjectArray = (Object[]) getArguments().getSerializable("user_input_player_liked_players");
+                if(likedObjectArray!=null){
+                    getLikedPlayers = new String[likedObjectArray.length][];
+                    for(int i=0;i<likedObjectArray.length;i++){
+                        getLikedPlayers[i]=(String[]) likedObjectArray[i];
+                    }
+                }
+
+                Object[] dislikedObjectArray = (Object[]) getArguments().getSerializable("user_input_player_disliked_players");
+                if(dislikedObjectArray!=null){
+                    getDislikedPlayers = new String[dislikedObjectArray.length][];
+                    for(int i=0;i<dislikedObjectArray.length;i++){
+                        getDislikedPlayers[i]=(String[]) dislikedObjectArray[i];
+                    }
+                }
+
                 createPlayerArrayListForResults(
                         getArguments().getStringArray("user_input_player_names"),
                         getArguments().getStringArray("user_input_player_regions"),
@@ -40,7 +62,9 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
                         getArguments().getDoubleArray("user_input_player_aps"),
                         getArguments().getDoubleArray("user_input_player_dps"),
                         getArguments().getDoubleArray("user_input_player_gps"),
-                        getArguments().getDoubleArray("user_input_player_vps")
+                        getArguments().getDoubleArray("user_input_player_vps"),
+                        getLikedPlayers,
+                        getDislikedPlayers
                 );
             } else {
                 createPlayerArrayList(getArguments().getStringArray("user_input_player_names"));
@@ -67,9 +91,12 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
             double[] playerAPS,
             double[] playerDPS,
             double[] playerGPS,
-            double[] playerVPS
+            double[] playerVPS,
+            String[][] likedPlayers,
+            String[][] dislikedPlayers
     ) {
         for (int i = 0; i < playerUsernames.length; i++) {
+
             Player player = new Player(
                     playerUsernames[i],
                     playerRegion[i],
@@ -79,7 +106,9 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
                     playerAPS[i],
                     playerDPS[i],
                     playerGPS[i],
-                    playerVPS[i]
+                    playerVPS[i],
+                    likedPlayers[i],
+                    dislikedPlayers[i]
             );
             Log.d("Fragment", player.getUsername());
             players.add(player);

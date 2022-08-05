@@ -31,6 +31,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
     private double[] dps = {0, 0, 0, 0, 0};
     private double[] gps = {0, 0, 0, 0, 0};
     private double[] vps = {0, 0, 0, 0, 0};
+    private String[][] likedPlayers = {{""},{""}, {""}, {""}, {""}};
+    private String[][] dislikedPlayers = {{""},{""}, {""}, {""}, {""}};
 
     private Player player1;
     private Player player2;
@@ -53,6 +55,7 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         String predictionData = bundle.getString("response");
         Bundle fragmentBundle = new Bundle();
         fragmentBundle.putString("activity", "ResultsActivity");
+        Bundle likedPlayersBundle = new Bundle();
 
         JSONObject data = new JSONObject();
         double prediction = 0;
@@ -75,6 +78,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
             setLikes();
             setDislikes();
             setStats();
+            setLikedPlayers();
+            setDislikedPlayers();
 
             fragmentBundle.putStringArray("user_input_player_names", usernames);
             fragmentBundle.putStringArray("user_input_player_regions", regions);
@@ -85,6 +90,8 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
             fragmentBundle.putDoubleArray("user_input_player_dps", dps);
             fragmentBundle.putDoubleArray("user_input_player_gps", gps);
             fragmentBundle.putDoubleArray("user_input_player_vps", vps);
+            fragmentBundle.putSerializable("user_input_player_liked_players", likedPlayers);
+            fragmentBundle.putSerializable("user_input_player_disliked_players", dislikedPlayers);
 
 //            Log.d("ResultsActivity", data.toString());
 //            Log.d("ResultsActivity", (String) data.getJSONObject("player2").getJSONObject("reviews").get("likes"));
@@ -129,7 +136,9 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
                 data.getJSONObject("player1").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player1").getJSONObject("stats").getDouble("dps"),
                 data.getJSONObject("player1").getJSONObject("stats").getDouble("gps"),
-                data.getJSONObject("player1").getJSONObject("stats").getDouble("vps")
+                data.getJSONObject("player1").getJSONObject("stats").getDouble("vps"),
+                toStringArray(((JSONArray) data.getJSONObject("player1").getJSONObject("reviews").get("likes"))),
+                toStringArray(((JSONArray) data.getJSONObject("player1").getJSONObject("reviews").get("dislikes")))
 //                data.getJSONObject("player1").getJSONObject("stats")
         );
 
@@ -142,7 +151,9 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
                 data.getJSONObject("player2").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player2").getJSONObject("stats").getDouble("dps"),
                 data.getJSONObject("player2").getJSONObject("stats").getDouble("gps"),
-                data.getJSONObject("player2").getJSONObject("stats").getDouble("vps")
+                data.getJSONObject("player2").getJSONObject("stats").getDouble("vps"),
+                toStringArray(((JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("likes"))),
+                toStringArray(((JSONArray) data.getJSONObject("player2").getJSONObject("reviews").get("dislikes")))
 //                data.getJSONObject("player2").getJSONObject("stats")
         );
 
@@ -155,7 +166,9 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
                 data.getJSONObject("player3").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player3").getJSONObject("stats").getDouble("dps"),
                 data.getJSONObject("player3").getJSONObject("stats").getDouble("gps"),
-                data.getJSONObject("player3").getJSONObject("stats").getDouble("vps")
+                data.getJSONObject("player3").getJSONObject("stats").getDouble("vps"),
+                toStringArray(((JSONArray) data.getJSONObject("player3").getJSONObject("reviews").get("likes"))),
+                toStringArray(((JSONArray) data.getJSONObject("player3").getJSONObject("reviews").get("dislikes")))
 //                data.getJSONObject("player3").getJSONObject("stats")
         );
 
@@ -168,7 +181,9 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
                 data.getJSONObject("player4").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player4").getJSONObject("stats").getDouble("dps"),
                 data.getJSONObject("player4").getJSONObject("stats").getDouble("gps"),
-                data.getJSONObject("player4").getJSONObject("stats").getDouble("vps")
+                data.getJSONObject("player4").getJSONObject("stats").getDouble("vps"),
+                toStringArray(((JSONArray) data.getJSONObject("player4").getJSONObject("reviews").get("likes"))),
+                toStringArray(((JSONArray) data.getJSONObject("player4").getJSONObject("reviews").get("dislikes")))
 //                data.getJSONObject("player4").getJSONObject("stats")
         );
 
@@ -181,7 +196,9 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
                 data.getJSONObject("player5").getJSONObject("stats").getDouble("aps"),
                 data.getJSONObject("player5").getJSONObject("stats").getDouble("dps"),
                 data.getJSONObject("player5").getJSONObject("stats").getDouble("gps"),
-                data.getJSONObject("player5").getJSONObject("stats").getDouble("vps")
+                data.getJSONObject("player5").getJSONObject("stats").getDouble("vps"),
+                toStringArray(((JSONArray) data.getJSONObject("player5").getJSONObject("reviews").get("likes"))),
+                toStringArray(((JSONArray) data.getJSONObject("player5").getJSONObject("reviews").get("dislikes")))
 //                data.getJSONObject("player5").getJSONObject("stats")
         );
     }
@@ -263,5 +280,32 @@ public class ResultsActivity extends AppCompatActivity implements PlayerUsername
         vps[3] = player4.getVps();
         vps[4] = player5.getVps();
 
+    }
+
+    public void setLikedPlayers() {
+        likedPlayers[0] = player1.getLikedPlayers();
+        likedPlayers[1] = player2.getLikedPlayers();
+        likedPlayers[2] = player3.getLikedPlayers();
+        likedPlayers[3] = player4.getLikedPlayers();
+        likedPlayers[4] = player5.getLikedPlayers();
+    }
+
+    public void setDislikedPlayers() {
+        dislikedPlayers[0] = player1.getDislikedPlayers();
+        dislikedPlayers[1] = player2.getDislikedPlayers();
+        dislikedPlayers[2] = player3.getDislikedPlayers();
+        dislikedPlayers[3] = player4.getDislikedPlayers();
+        dislikedPlayers[4] = player5.getDislikedPlayers();
+    }
+
+    public static String[] toStringArray(JSONArray array) {
+        if(array==null)
+            return new String[0];
+
+        String[] arr=new String[array.length()];
+        for(int i=0; i<arr.length; i++) {
+            arr[i]=array.optString(i);
+        }
+        return arr;
     }
 }
