@@ -18,8 +18,8 @@ const uploadRiotIds = (req, res) => {
     const region = req.body.region
 
     if (!region) {
-        res.json("Region must be specified")
         res.status(400)
+        res.json("Region must be specified")
         return
     }
 
@@ -30,12 +30,12 @@ const uploadRiotIds = (req, res) => {
     }
 
     if (!ids[0] || !ids[1] || !ids[2] || !ids[3] || !ids[4]) {
-        res.json("All riot ids must be specified")
         res.status(400)
+        res.json("All riot ids must be specified")
     } else {
         TeamStats.TeamStats(ids, region).then(teamStats => {
-            res.json(teamStats)
             res.status(200);
+            res.json(teamStats)
         })
     }
 }
@@ -58,11 +58,11 @@ const uploadRiotIdsByImage = async (req, res) => {
 
     const data = Buffer.from(base64EncodedImage, 'base64')
     
-    fs.writeFile('usernames.png', data, () => {
+    fs.writeFile('./ImageRecognition/usernames.png', data, () => {
         return
     })
 
-    await parseText('usernames.png').then((ids) => {
+    await parseText('./ImageRecognition/usernames.png').then((ids) => {
         if (ids.length != 5) {
             res.status(400)
             res.json("All 5 riot ids must be visible")
@@ -75,7 +75,7 @@ const uploadRiotIdsByImage = async (req, res) => {
         })
     })
 
-    fs.unlink('usernames.png', () => { return })
+    fs.unlink('./ImageRecognition/usernames.png', () => { return })
 }
 
 async function parseText(fileName) {

@@ -108,7 +108,6 @@ async function getMatchHistory(name, region) {
     setServer(region);
 
     let player = await getPlayerId(name, region);
-
     let gameIds = await getGameIdList(player.data.puuid);
 
     let formattedStats = {

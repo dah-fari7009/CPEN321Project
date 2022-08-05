@@ -43,4 +43,8 @@ jobs:
       - name: env
         run: cd BE && cat .env && cat vision-key.json
       - run: cd BE && npm install
-      - run: cd BE && npm test --runInBand
+      - uses: nick-fields/retry@v2
+        with:
+          timeout_seconds: 3
+          max_attempts: 3
+          command: cd BE && npm test --runInBand

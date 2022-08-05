@@ -3,8 +3,6 @@ const TeamStats = require('../Prediction/TeamStats.js')
 const UsernameProcessor = require('./UsernameProcessorController')
 const fs = require('fs')
 
-jest.setTimeout(90 * 1000)
-
 // TEST UPLOADING RIOT IDS
 
 describe("TEST UPLOADING RIOT IDS", () => {
@@ -296,43 +294,5 @@ describe("TEST UPLOADING RIOT IDS BY IMAGE", () => {
         await UsernameProcessor.uploadRiotIdsByImage(req, res)
         expect(TeamStats.TeamStats).toBe(TeamStats.TeamStats)
         expect(TeamStats.TeamStats).toHaveBeenCalledTimes(1)
-    })
-})
-
-describe('non-functional requirement test', () => {
-    test('image detection accuracy test', async () => {
-        const id1 = 'IronAetos'
-        const id2 = '24'
-        const id3 = 'WatchMeGank'
-        const id4 = 'Aarontandude'
-        const id5 = 'zAddyy'
-        const id6 = 'TheWanderersWay'
-        const id7 = 'palukawhale'
-        const id8 = 'Thick Rooster'
-        const id9 = 'ct819'
-    
-        const test1_ids = await UsernameProcessor.parseText('test_photos/p1.jpg')
-    
-        const test2_ids = await UsernameProcessor.parseText('test_photos/p2.jpg')
-    
-        const test3_ids = await UsernameProcessor.parseText('test_photos/p3.jpg')
-    
-        const test4_ids = await UsernameProcessor.parseText('test_photos/p4.jpg')
-    
-        const test_ids_list_v1 = [test1_ids, test2_ids, test4_ids]
-    
-        test_ids_list_v1.forEach((ids) => {
-            expect(ids).toContain(id1)
-            expect(ids).toContain(id2)
-            expect(ids).toContain(id3)
-            expect(ids).toContain(id4)
-            expect(ids).toContain(id5)
-        })
-    
-        expect(test3_ids).toContain(id2)
-        expect(test3_ids).toContain(id6)
-        expect(test3_ids).toContain(id7)
-        expect(test3_ids).toContain(id8)
-        expect(test3_ids).toContain(id9)
     })
 })
