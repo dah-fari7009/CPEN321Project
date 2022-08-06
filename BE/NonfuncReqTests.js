@@ -1,5 +1,6 @@
 const { performance } = require('perf_hooks');
 const TeamStats = require('./Prediction/TeamStats.js')
+const UsernameProcessor = require('./ImageRecognition/UsernameProcessorController')
 
 async function testBackendPerformance() {   
     let idSet1 = ["2 4", "jinxxxtentacion", "Xerzx", "clwm gktehrm", "Momoiskii"];
@@ -14,7 +15,7 @@ async function testBackendPerformance() {
     for (let i = 0; i < allIds.length; i++) {
         let startTime = performance.now();
         let region = "NA1";
-        await TeamStats(allIds[i], region);
+        await TeamStats.TeamStats(allIds[i], region);
         let endTime = performance.now();
         executionDurations.push(endTime - startTime);
     }

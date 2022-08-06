@@ -226,6 +226,3 @@ describe('View Player Profile', () => {
         }
     })
 })
-test("Filler", () => {
-    expect(1).toBe(1)
-})
