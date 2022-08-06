@@ -45,4 +45,8 @@
     <string name="top_played_champs">Top Played Champions</string>
     <string name="login_to_comment">Please login to comment on the player\'s profile</string>
     <string name="dark_mode_toggle_text">Switch Theme</string>
+    <string name="enter_riot_id_heading">Please enter your RIOT ID</string>
+    <string name="riot_id_label">RIOT ID</string>
+    <string name="riot_id_info">This RIOT ID will be use throughout the app and allows for more player interactivity</string>
+    <string name="riot_id_caution">MUST ENTER A RIOT ID TO PROCEED</string>
 </resources>

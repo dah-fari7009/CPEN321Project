@@ -1,6 +1,7 @@
 package com.example.dodged_project;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,15 +9,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.dodged_project.data.Comment;
 import com.example.dodged_project.data.CommentRecyclerViewAdapter;
@@ -31,6 +34,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerProfileActivity extends AppCompatActivity {
 
@@ -48,6 +53,12 @@ public class PlayerProfileActivity extends AppCompatActivity {
     private String playerProfileURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/getPlayer/";
     private String postCommentURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/comment";
     private String champMasteryURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/getMastery";
+
+    private String fcmPushURL = "https://fcm.googleapis.com/v1/projects/dodged-321/messages:send";
+    private String accessTokenURL = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/token";
+
+    SharedPreferences sharedPreferences;
+    private String accessToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,11 +143,43 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    getAccessToken(PlayerProfileActivity.this, new VolleyCallBack() {
+                        @Override
+                        public void onSuccess() throws JSONException {
+                            // this is where you will call the geofire, here you have the response from the volley.
+                            sendPushNotificationToRiotID(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this, accessToken);
+                        }
+                    });
                     binding.addCommentTextinput.setText("");
                     populateRecyclerView();
                 }
             });
         }
+    }
+
+    // Reference:
+    // https://stackoverflow.com/questions/49342841/android-wait-for-volley-response-for-continue
+    public interface VolleyCallBack {
+        void onSuccess() throws JSONException;
+    }
+
+    private void getAccessToken(Context context, final VolleyCallBack callBack){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, accessTokenURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                accessToken = response;
+                Log.d("ACCESS_TOKEN", accessToken);
+                try {
+                    callBack.onSuccess();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, error -> Log.d("ACCESS_TOKEN", "Error:" + error));
+
+        queue = Volley.newRequestQueue(context);
+        queue.add(stringRequest);
     }
 
     private void populateRecyclerView() {
@@ -182,24 +225,61 @@ public class PlayerProfileActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
-    private void postComment(String comment, String playerUsername, Context context) throws JSONException {
+    private void sendPushNotificationToRiotID(String comment, String playerUsername, Context context, String accessToken) throws JSONException {
+        sharedPreferences = getApplicationContext().getSharedPreferences("spDodgedUser", Context.MODE_PRIVATE);
         JSONObject jsonBody = new JSONObject();
+        JSONObject messageJsonBody = new JSONObject();
+        JSONObject notificationJsonBody = new JSONObject();
+
+        notificationJsonBody.put("title", sharedPreferences.getString("spDodgedUserRiotID", "") + " commented on your profile");
+        notificationJsonBody.put("body", comment);
+
+        messageJsonBody.put("topic", playerUsername);
+        messageJsonBody.put("notification", notificationJsonBody);
+
+        jsonBody.put("message", messageJsonBody);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, fcmPushURL, jsonBody,
+                response ->
+                {
+                    Log.d("PUSH", "PUSH SENT");
+                },
+                error -> {
+                    Log.d("JSON", error.toString());
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String newAccessToken = accessToken.replaceAll("\"", "");
+                String bAuthToken = "Bearer " + newAccessToken;
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", bAuthToken);
+                return params;
+            }
+        };
+        queue = Volley.newRequestQueue(context);
+        queue.add(jsonObjectRequest);
+    }
+
+    private void postComment(String comment, String playerUsername, Context context) throws JSONException {
+        sharedPreferences = getApplicationContext().getSharedPreferences("spDodgedUser", Context.MODE_PRIVATE);
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("googleid", sharedPreferences.getString("spDodgedUserGoogleID", ""));
         jsonBody.put("name", playerUsername);
-        jsonBody.put("poster", MainActivity.googleAccountName);
-        jsonBody.put("date", new SimpleDateFormat("MM/dd/yyyy").format(new Date()));
+        jsonBody.put("poster", sharedPreferences.getString("spDodgedUserRiotID", ""));
         jsonBody.put("comment", comment);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postCommentURL, jsonBody,
                 response ->
                 {
-                    Toast.makeText(getApplicationContext(), "Comment Posted", Toast.LENGTH_SHORT).show();
+                    Log.d("COMMENT", "COMMENT POSTED");
                 },
                 error -> {
-                    Log.d("JSON", error.toString());
+                    Log.d("COMMENT", error.toString());
                 });
         queue = Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
-        Comment commentItem = new Comment(MainActivity.googleAccountName, new SimpleDateFormat("MM/dd/yyyy").format(new Date()), comment, playerUsername);
+        Comment commentItem = new Comment(sharedPreferences.getString("spDodgedUserRiotID", ""), new SimpleDateFormat("MM/dd/yyyy").format(new Date()), comment, playerUsername);
         commentsArrayList.add(0, commentItem);
     }
 

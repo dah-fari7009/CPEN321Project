@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "866888300756",
+    "firebase_url": "https://dodged-321-default-rtdb.firebaseio.com",
+    "project_id": "dodged-321",
+    "storage_bucket": "dodged-321.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866888300756:android:62d9de1b71a378c9442341",
+        "android_client_info": {
+          "package_name": "com.example.dodged_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866888300756-e9skfug8745hkno9eanac66fioa5rda9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dodged_project",
+            "certificate_hash": "bc7e71fb44c9e1c749bdba9d179f15795b38b0f4"
+          }
+        },
+        {
+          "client_id": "866888300756-31ft5dbmqcj1qqvsj9q65kg82o9mgqjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6rIie02J-hQqXm_boXj-B_otAFymJTSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866888300756-31ft5dbmqcj1qqvsj9q65kg82o9mgqjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
