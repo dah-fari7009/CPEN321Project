@@ -146,7 +146,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     try {
-                        sendPushNotificationToRiotID(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this, getAccessToken(PlayerProfileActivity.this));
+                        sendPushNotificationToRiotID(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this, accessToken);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -169,6 +169,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 accessToken = response;
+                Log.d("ACCESS_TOKEN", accessToken);
             }
         }, error -> Log.d("ACCESS_TOKEN", "Error:" + error));
 
@@ -184,6 +185,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                 response ->
                 {
                     try {
+                        getAccessToken(PlayerProfileActivity.this);
                         commentsArray = response.getJSONArray("comments");
                         //Log.d("JSON", response.getJSONArray("comments").toString());
                         for (int i = 0; i < commentsArray.length(); i++) {
@@ -239,8 +241,11 @@ public class PlayerProfileActivity extends AppCompatActivity {
                 }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                String newAccessToken = accessToken.replaceAll("\"", "");
+                String bAuthToken = "Bearer " + newAccessToken;
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", accessToken);
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", bAuthToken);
                 return params;
             }
         };
@@ -259,10 +264,10 @@ public class PlayerProfileActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postCommentURL, jsonBody,
                 response ->
                 {
-                    Toast.makeText(getApplicationContext(), "Comment Posted", Toast.LENGTH_SHORT).show();
+                    Log.d("COMMENT", "COMMENT POSTED");
                 },
                 error -> {
-                    Log.d("JSON", error.toString());
+                    Log.d("COMMENT", error.toString());
                 });
         queue = Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
