@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,7 +32,7 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
 //    private TextView userLoggedInStatusText;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    File testFile = null;
+//    File testFile = null;
     private String currentPhotoPath;
     public static String currentEncodedImage;
 
