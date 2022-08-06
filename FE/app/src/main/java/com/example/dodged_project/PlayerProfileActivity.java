@@ -157,6 +157,8 @@ public class PlayerProfileActivity extends AppCompatActivity {
         }
     }
 
+    // Reference:
+    // https://stackoverflow.com/questions/49342841/android-wait-for-volley-response-for-continue
     public interface VolleyCallBack {
         void onSuccess() throws JSONException;
     }
