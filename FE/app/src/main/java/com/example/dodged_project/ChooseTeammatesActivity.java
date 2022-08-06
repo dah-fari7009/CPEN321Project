@@ -1,18 +1,6 @@
 package com.example.dodged_project;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -22,16 +10,20 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class ChooseTeammatesActivity extends AppCompatActivity {
 
@@ -40,8 +32,9 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
 //    private TextView userLoggedInStatusText;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    File testFile = null;
+//    File testFile = null;
     private String currentPhotoPath;
+    public static String currentEncodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,13 +131,15 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
             byte[] bArray = byteArrayOutputStream.toByteArray();
             String encodedImageFromCamera = Base64.encodeToString(bArray, Base64.DEFAULT);
 
-            Log.d("ChooseActivity", String.valueOf(bitmap));
+            currentEncodedImage = encodedImageFromCamera;
+
+//            Log.d("ChooseActivity", String.valueOf(bitmap));
             Intent uploadedImageActivityIntent = new Intent(ChooseTeammatesActivity.this, UploadedImageActivity.class);
-            uploadedImageActivityIntent.putExtra("encodedImage", encodedImageFromCamera);
+//            uploadedImageActivityIntent.putExtra("encodedImage", encodedImageFromCamera);
             startActivity(uploadedImageActivityIntent);
         }
     }
@@ -173,39 +168,39 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
         startActivity(backToMainIntent);
     }
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        return image;
-    }
+//    private File createImageFile() throws IOException {
+//        // Create an image file name
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        String imageFileName = "JPEG_" + timeStamp + "_";
+//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File image = File.createTempFile(
+//                imageFileName,  /* prefix */
+//                ".jpg",         /* suffix */
+//                storageDir      /* directory */
+//        );
+//        return image;
+//    }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-//                Log.d("ChooseActivity", String.valueOf(testFile));
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.dodged_project.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-        }
-    }
+//    private void dispatchTakePictureIntent() {
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        // Ensure that there's a camera activity to handle the intent
+//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+//            // Create the File where the photo should go
+//            File photoFile = null;
+//            try {
+//                photoFile = createImageFile();
+//            } catch (IOException ex) {
+//                // Error occurred while creating the File
+//            }
+//            // Continue only if the File was successfully created
+//            if (photoFile != null) {
+////                Log.d("ChooseActivity", String.valueOf(testFile));
+//                Uri photoURI = FileProvider.getUriForFile(this,
+//                        "com.example.dodged_project.fileprovider",
+//                        photoFile);
+//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//            }
+//        }
+//    }
 }

@@ -1,7 +1,6 @@
 package com.example.dodged_project;
 
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -16,7 +15,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 import android.view.KeyEvent;
@@ -24,13 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.action.CoordinatesProvider;
-import androidx.test.espresso.action.GeneralClickAction;
-import androidx.test.espresso.action.Press;
-import androidx.test.espresso.action.Tap;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
