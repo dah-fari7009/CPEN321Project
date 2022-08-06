@@ -7,7 +7,7 @@ test('Test getMatchHistory() interface - valid username/region', () => {
 
     DataHandler.getMatchHistory("2 4", "NA1").then(res => {
         // Can't test for specific values since they will change after
-        // games are played, but greater than 0 is indicator it worked
+        // games are played, but greater than 0 is indicator it worked.
         expect(res["kps"]).toBeGreaterThanOrEqual(0);
         expect(res["aps"]).toBeGreaterThanOrEqual(0)
         expect(res["dps"]).toBeGreaterThanOrEqual(0);
