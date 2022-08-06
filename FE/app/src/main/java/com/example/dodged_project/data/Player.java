@@ -27,19 +27,19 @@ public class Player {
         this.avatar = avatar;
     }
 
-    public Player(String username, String region, int likes, int dislikes, double kps, double aps, double dps, double gps, double vps, String[] likedPlayers, String[] dislikedPlayers) {
-        this.username = username;
-        this.region = region;
-        this.likes = likes;
-        this.dislikes = dislikes;
-        this.kps = kps;
-        this.aps = aps;
-        this.dps = dps;
-        this.gps = gps;
-        this.vps = vps;
-        this.likedPlayers = likedPlayers;
-        this.dislikedPlayers = dislikedPlayers;
-    }
+//    public Player(String username, String region, int likes, int dislikes, double kps, double aps, double dps, double gps, double vps, String[] likedPlayers, String[] dislikedPlayers) {
+//        this.username = username;
+//        this.region = region;
+//        this.likes = likes;
+//        this.dislikes = dislikes;
+//        this.kps = kps;
+//        this.aps = aps;
+//        this.dps = dps;
+//        this.gps = gps;
+//        this.vps = vps;
+//        this.likedPlayers = likedPlayers;
+//        this.dislikedPlayers = dislikedPlayers;
+//    }
 
     public Player(String username, String region) {
         this.username = username;
