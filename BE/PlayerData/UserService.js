@@ -289,6 +289,15 @@ router.post('/add_user', async(req, res) => {
     })
 })
 
+router.post('/get_riotId', async(req, res) => {
+    let googleId = req.body.googleId
+
+    getRiotId(googleId).then((result) => {
+        res.json(result[0].username)
+        res.status(200)
+    })
+})
+
 // Separate function that can be called from player profile class
 async function getFromDB(player) {
 
@@ -322,6 +331,21 @@ async function getFromDB(player) {
     
     })
 
+}
+
+async function getRiotId(googleId) {
+    return new Promise((resolve) => {
+        MongoClient.MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("playerdb");
+    
+            dbo.collection("userdb").find({ _id: googleId }).toArray(function(err, res) {
+                if (err) throw err
+                db.close()
+                return resolve(res)
+            });
+        });
+    })
 }
 
 async function getUserToken(riotId) {
