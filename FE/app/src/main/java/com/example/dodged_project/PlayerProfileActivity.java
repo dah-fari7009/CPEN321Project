@@ -143,16 +143,41 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    try {
-                        sendPushNotificationToRiotID(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this, accessToken);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    getAccessToken(PlayerProfileActivity.this, new VolleyCallBack() {
+                        @Override
+                        public void onSuccess() throws JSONException {
+                            // this is where you will call the geofire, here you have the response from the volley.
+                            sendPushNotificationToRiotID(binding.addCommentTextinput.getText().toString(), finalPlayerUsername, PlayerProfileActivity.this, accessToken);
+                        }
+                    });
                     binding.addCommentTextinput.setText("");
                     populateRecyclerView();
                 }
             });
         }
+    }
+
+    public interface VolleyCallBack {
+        void onSuccess() throws JSONException;
+    }
+
+    private void getAccessToken(Context context, final VolleyCallBack callBack){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, accessTokenURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                accessToken = response;
+                Log.d("ACCESS_TOKEN", accessToken);
+                try {
+                    callBack.onSuccess();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, error -> Log.d("ACCESS_TOKEN", "Error:" + error));
+
+        queue = Volley.newRequestQueue(context);
+        queue.add(stringRequest);
     }
 
     private void populateRecyclerView() {
@@ -161,29 +186,12 @@ public class PlayerProfileActivity extends AppCompatActivity {
         commentRecyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private String getAccessToken(Context context){
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, accessTokenURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                accessToken = response;
-                Log.d("ACCESS_TOKEN", accessToken);
-            }
-        }, error -> Log.d("ACCESS_TOKEN", "Error:" + error));
-
-        queue = Volley.newRequestQueue(context);
-        queue.add(stringRequest);
-
-        return accessToken;
-    }
-
     private void getComments(String finalPlayerUsername, Context context){
         commentsArrayList.clear();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, playerProfileURL, null,
                 response ->
                 {
                     try {
-                        getAccessToken(PlayerProfileActivity.this);
                         commentsArray = response.getJSONArray("comments");
                         //Log.d("JSON", response.getJSONArray("comments").toString());
                         for (int i = 0; i < commentsArray.length(); i++) {

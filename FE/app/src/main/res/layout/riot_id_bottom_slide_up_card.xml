@@ -60,7 +60,8 @@
                         android:background="@color/white"
                         android:maxLines="1"
                         android:paddingVertical="2dp"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:textColor="@color/black"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
