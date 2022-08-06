@@ -54,7 +54,7 @@ async function train(featureCount, trainData, validationData) {
 
     await model.fitDataset(trainData, {
         epochs: EPOCHS,
-        validationData: validationData,
+        validationData,
         callbacks: {
             onEpochEnd: async (epochs, logs) => {
                 console.log(logs);
@@ -67,7 +67,13 @@ async function train(featureCount, trainData, validationData) {
 
 async function run() {
     fs.readFile("./gamedata.csv", async function (err, fileData) {
+        if (err) {
+            throw err;
+        }
         parse(fileData, {columns: true, trim: true, cast: true}, async function(err, rows) {
+            if (err) {
+                throw err;
+            }
             const features = ['kps', 'aps', 'dps', 'gps', 'vps'];
             const [trainSet, validationSet, xTest, yTest] = cleanData(rows, features, 0.2, 16);
 
