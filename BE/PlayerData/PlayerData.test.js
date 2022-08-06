@@ -68,8 +68,6 @@ test('Test getPlayerMasteries() interface - Valid champ, valid region', () => {
     })
 })
 
-// // NOTE: for tests with non existing values, there may be Axios errors that get logged in console
-// // this is expected behaviour, note the tests still pass.
 test('Test getPlayerMasteries() interface - non existent username', async () => {
     const DataHandler = jest.requireActual('./DataHandler.js');
 
@@ -409,6 +407,3 @@ afterEach(async () => {
     let exists = await UserService.checkIfRegisteredUser("test_googleId");
     expect(exists).toBe(false);
  });
-test("Filler", () => {
-    expect(1).toBe(1)
-})

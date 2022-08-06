@@ -132,24 +132,33 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
 
             if (MainActivity.googleAccountName != null) {
 
-                if(player.getLikedPlayers().length > 0) {
-                    for (int i = 0; i < player.getLikedPlayers().length; i++) {
-//                        Log.d("LOGLOG", player.getLikedPlayers()[i]);
-//                        Log.d("LOGLOG", MainActivity.googleId);
-//                        Log.d("LOGLOG", String.valueOf(player.getLikedPlayers()[i].equals(MainActivity.googleId)));
-                        if (player.getLikedPlayers()[i].equals(MainActivity.googleId)) {
-                            playerLikeImageView.setColorFilter(Color.rgb(0, 255, 0));
-                        }
-                    }
+                boolean liked = checkLikedPlayers(player);
+                boolean disliked = checkDislikedPlayers(player);
+
+                if(liked) {
+                    playerLikeImageView.setColorFilter(Color.rgb(0, 255, 0));
                 }
 
-                if(player.getDislikedPlayers().length > 0) {
-                    for (int i = 0; i < player.getDislikedPlayers().length; i++) {
-                        if (player.getDislikedPlayers()[i].equals(MainActivity.googleId)) {
-                            playerDislikeImageView.setColorFilter(Color.rgb(255, 0, 0));
-                        }
-                    }
+                if(disliked) {
+                    playerDislikeImageView.setColorFilter(Color.rgb(255, 0, 0));
+
                 }
+
+//                if(player.getLikedPlayers().length > 0) {
+//                    for (int i = 0; i < player.getLikedPlayers().length; i++) {
+//                        if (player.getLikedPlayers()[i].equals(MainActivity.googleId)) {
+//                            playerLikeImageView.setColorFilter(Color.rgb(0, 255, 0));
+//                        }
+//                    }
+//                }
+//
+//                if(player.getDislikedPlayers().length > 0) {
+//                    for (int i = 0; i < player.getDislikedPlayers().length; i++) {
+//                        if (player.getDislikedPlayers()[i].equals(MainActivity.googleId)) {
+//                            playerDislikeImageView.setColorFilter(Color.rgb(255, 0, 0));
+//                        }
+//                    }
+//                }
 
 
                 playerDislikeImageView.setOnClickListener(new View.OnClickListener() {
@@ -207,8 +216,6 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
                 playerDislikeImageView.setEnabled(false);
             }
 
-
-
             CardView userProfileCard = view.findViewById(R.id.alt_card_view);
             userProfileCard.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -234,6 +241,29 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player>{
 
         return view;
     }
+
+    public boolean checkLikedPlayers(Player player) {
+        if (player.getLikedPlayers().length > 0) {
+            for (int i = 0; i < player.getLikedPlayers().length; i++) {
+                if (player.getLikedPlayers()[i].equals(MainActivity.googleId)) {
+//                    playerLikeImageView.setColorFilter(Color.rgb(0, 255, 0));
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean checkDislikedPlayers(Player player) {
+        if(player.getDislikedPlayers().length > 0) {
+            for (int i = 0; i < player.getDislikedPlayers().length; i++) {
+                if (player.getDislikedPlayers()[i].equals(MainActivity.googleId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public void unlikeUser(String userName) {
         String sendUsernamesEndpoint = "http://ec2-52-32-39-246.us-west-2.compute.amazonaws.com:8080/playerdb/unlike";

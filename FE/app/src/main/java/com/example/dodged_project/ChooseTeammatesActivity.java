@@ -32,7 +32,7 @@ public class ChooseTeammatesActivity extends AppCompatActivity {
 //    private TextView userLoggedInStatusText;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    File testFile = null;
+//    File testFile = null;
     private String currentPhotoPath;
     public static String currentEncodedImage;
 

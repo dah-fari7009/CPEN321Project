@@ -1,7 +1,6 @@
 package com.example.dodged_project;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
@@ -96,18 +95,27 @@ public class PlayerUsernamesFragment extends ListFragment implements PlayerArray
 
             Player player = new Player(
                     playerUsernames[i],
-                    playerRegion[i],
-                    playerLikes[i],
-                    playerDislikes[i],
-                    playerKPS[i],
-                    playerAPS[i],
-                    playerDPS[i],
-                    playerGPS[i],
-                    playerVPS[i],
-                    likedPlayers[i],
-                    dislikedPlayers[i]
+                    playerRegion[i]
+//                    playerLikes[i],
+//                    playerDislikes[i],
+//                    playerKPS[i],
+//                    playerAPS[i],
+//                    playerDPS[i],
+//                    playerGPS[i],
+//                    playerVPS[i],
+//                    likedPlayers[i],
+//                    dislikedPlayers[i]
             );
-            Log.d("Fragment", player.getUsername());
+            player.setLikes(playerLikes[i]);
+            player.setDislikes(playerDislikes[i]);
+            player.setKps(playerKPS[i]);
+            player.setAps(playerAPS[i]);
+            player.setDps(playerDPS[i]);
+            player.setGps(playerGPS[i]);
+            player.setVps(playerVPS[i]);
+            player.setLikedPlayers(likedPlayers[i]);
+            player.setDislikedPlayers(dislikedPlayers[i]);
+//            Log.d("Fragment", player.getUsername());
             players.add(player);
         }
     }
