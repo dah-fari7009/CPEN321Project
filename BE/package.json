@@ -16,6 +16,12 @@
   "devDependencies": {
     "jest": "^28.1.3"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx,ts}",
+      "!**/node_modules/**"
+    ]
+  },
   "scripts": {
     "test": "jest"
   }
